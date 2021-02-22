@@ -1,0 +1,15 @@
+C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\bin\Debug\net5.0\DAL.deps.json
+C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\bin\Debug\net5.0\DAL.dll
+C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\bin\Debug\net5.0\ref\DAL.dll
+C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\bin\Debug\net5.0\DAL.pdb
+C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\bin\Debug\net5.0\Common.dll
+C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\bin\Debug\net5.0\Common.pdb
+C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\obj\Debug\net5.0\DAL.csprojAssemblyReference.cache
+C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\obj\Debug\net5.0\DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\obj\Debug\net5.0\DAL.AssemblyInfoInputs.cache
+C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\obj\Debug\net5.0\DAL.AssemblyInfo.cs
+C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\obj\Debug\net5.0\DAL.csproj.CoreCompileInputs.cache
+C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\obj\Debug\net5.0\DAL.csproj.CopyComplete
+C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\obj\Debug\net5.0\DAL.dll
+C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\obj\Debug\net5.0\ref\DAL.dll
+C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\obj\Debug\net5.0\DAL.pdb

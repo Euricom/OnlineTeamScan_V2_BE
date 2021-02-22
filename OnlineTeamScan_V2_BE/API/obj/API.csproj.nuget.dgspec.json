@@ -1,0 +1,265 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\API\\API.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\API\\API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\API\\API.csproj",
+        "projectName": "API",
+        "projectPath": "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\API\\API.csproj",
+        "packagesPath": "C:\\Users\\herte\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\API\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\herte\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\BL\\BL.csproj": {
+                "projectPath": "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\BL\\BL.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[8.1.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\BL\\BL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\BL\\BL.csproj",
+        "projectName": "BL",
+        "projectPath": "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\BL\\BL.csproj",
+        "packagesPath": "C:\\Users\\herte\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\BL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\herte\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\DAL\\DAL.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[10.1.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\Common\\Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\Common\\Common.csproj",
+        "projectName": "Common",
+        "projectPath": "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\Common\\Common.csproj",
+        "packagesPath": "C:\\Users\\herte\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\Common\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\herte\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\DAL\\DAL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\DAL\\DAL.csproj",
+        "projectName": "DAL",
+        "projectPath": "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\DAL\\DAL.csproj",
+        "packagesPath": "C:\\Users\\herte\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\DAL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\herte\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\Common\\Common.csproj": {
+                "projectPath": "C:\\Users\\herte\\Documents\\GitHub\\OnlineTeamScan_V2_BE\\OnlineTeamScan_V2_BE\\Common\\Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[10.1.1, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
