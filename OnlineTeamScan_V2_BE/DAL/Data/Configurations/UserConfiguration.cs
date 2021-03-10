@@ -19,9 +19,15 @@ namespace DAL.Data.Configurations
 
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.Property(t => t.Id).ValueGeneratedOnAdd();
+            builder.ToTable("tbl_users");
+            builder.Property(u => u.Id).HasColumnName("id").ValueGeneratedOnAdd();
+            builder.Property(u => u.Email).HasColumnName("email").HasColumnType("varchar(100)").IsRequired();
+            builder.Property(u => u.Firstname).HasColumnName("firstname").HasColumnType("varchar(70)").IsRequired();
+            builder.Property(u => u.Lastname).HasColumnName("lastname").HasColumnType("varchar(70)").IsRequired();
+            builder.Property(u => u.Password).HasColumnName("password").HasColumnType("varchar(50)").IsRequired();
 
-            builder.HasKey(t => t.Id).IsClustered();
+            builder.HasKey(u => u.Id).IsClustered();
+            builder.HasIndex(u => u.Email).IsUnique();
         }
     }
 }
