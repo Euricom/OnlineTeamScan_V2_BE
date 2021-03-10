@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-    public class Interpretation
+    public class Language
     {
         public int Id { get; set; }
-        public int MyProperty { get; set; }
-        public string MyProperty { get; set; }
+        public string Name { get; set; }
+        public string Code { get; set; }
     }
 }

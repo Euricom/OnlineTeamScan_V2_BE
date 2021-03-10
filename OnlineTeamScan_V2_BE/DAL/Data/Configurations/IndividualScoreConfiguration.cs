@@ -1,0 +1,38 @@
+﻿using AutoMapper;
+using DAL.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAL.Data.Configurations
+{
+    public class IndividualScoreConfiguration : Profile, IEntityTypeConfiguration<IndividualScore>
+    {
+        public IndividualScoreConfiguration()
+        {
+
+        }
+
+        public void Configure(EntityTypeBuilder<IndividualScore> builder)
+        {
+            builder.ToTable("tbl_individualscores");
+            builder.Property(i => i.Id).HasColumnName("id").ValueGeneratedOnAdd();
+            builder.Property(i => i.TeamMemberId).HasColumnName("teammember_id").IsRequired();
+            builder.Property(i => i.TeamscanId).HasColumnName("teamscan_id").IsRequired();
+            builder.Property(i => i.ScoreTrust).HasColumnName("score_trust").HasColumnType("decimal(3,2)").IsRequired();
+            builder.Property(i => i.ScoreConflict).HasColumnName("score_conflict").HasColumnType("decimal(3,2)").IsRequired();
+            builder.Property(i => i.ScoreCommitment).HasColumnName("score_commitment").HasColumnType("decimal(3,2)").IsRequired();
+            builder.Property(i => i.ScoreAccountability).HasColumnName("score_accountability").HasColumnType("decimal(3,2)").IsRequired();
+            builder.Property(i => i.ScoreResults).HasColumnName("score_results").HasColumnType("decimal(3,2)").IsRequired();
+
+            builder.HasKey(i => i.Id).IsClustered();
+            builder.HasOne(i => i.TeamMember).WithMany().HasForeignKey(f => f.TeamMemberId).IsRequired();
+            builder.HasOne(i => i.Teamscan).WithMany().HasForeignKey(f => f.TeamscanId).IsRequired();
+            builder.HasIndex(i => new { i.TeamMemberId, i.TeamscanId }).IsUnique();
+        }
+    }
+}
