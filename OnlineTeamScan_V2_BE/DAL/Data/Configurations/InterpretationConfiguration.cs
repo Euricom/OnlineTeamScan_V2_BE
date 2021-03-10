@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Data.Configurations
 {
-    public class TeamscanConfiguration
+    public class InterpretationConfiguration
     {
     }
 }
