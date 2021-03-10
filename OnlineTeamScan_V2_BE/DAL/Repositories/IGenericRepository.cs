@@ -18,5 +18,6 @@ namespace DAL.Repositories
         public TReadDto Add(TCreateDto createDto);
         public void Delete(int id);
         public TReadDto Update(TUpdateDto updateDto);
+        public void SaveChanges();
     }
 }

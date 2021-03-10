@@ -1,4 +1,5 @@
 ﻿using DAL.Data;
+using DAL.Repositories.TeamRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,6 +9,7 @@ namespace DAL
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
+            services.AddTransient<ITeamRepository, TeamRepository>();
             return services;
         }
 

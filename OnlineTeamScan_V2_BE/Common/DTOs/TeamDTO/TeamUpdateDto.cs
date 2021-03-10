@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Models
+namespace Common.DTOs.TeamDTO
 {
-    public interface IModel
+    public class TeamUpdateDto
     {
         public int Id { get; set; }
+        public string TeamName { get; set; }
     }
 }

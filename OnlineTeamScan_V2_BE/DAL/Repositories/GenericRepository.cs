@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    class GenericRepository<TEntity, TReadDto, TCreateDto, TUpdateDto> : IGenericRepository<TEntity, TReadDto, TCreateDto, TUpdateDto>
+    public class GenericRepository<TEntity, TReadDto, TCreateDto, TUpdateDto> : IGenericRepository<TEntity, TReadDto, TCreateDto, TUpdateDto>
         where TEntity : class
         where TReadDto : class
         where TCreateDto : class
@@ -29,7 +29,7 @@ namespace DAL.Repositories
 
         public TReadDto GetById(int id)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<TReadDto>(_dbSet.Find(id));
         }
 
         public IEnumerable<TReadDto> GetAll(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includeProperties)
@@ -56,17 +56,31 @@ namespace DAL.Repositories
 
         public TReadDto Add(TCreateDto createDto)
         {
-            throw new NotImplementedException();
+            var entity = _dbSet.Add(_mapper.Map<TEntity>(createDto));
+            SaveChanges();
+
+            return _mapper.Map<TReadDto>(entity.Entity);
         }
 
         public TReadDto Update(TUpdateDto updateDto)
         {
-            throw new NotImplementedException();
+            var entity = _dbSet.Update(_mapper.Map<TEntity>(updateDto));
+            SaveChanges();
+
+            return _mapper.Map<TReadDto>(entity.Entity);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            TEntity entity = _dbSet.Find(id);
+
+            _dbSet.Remove(_mapper.Map<TEntity>(entity));
+            SaveChanges();
+        }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
         }
     }
 }

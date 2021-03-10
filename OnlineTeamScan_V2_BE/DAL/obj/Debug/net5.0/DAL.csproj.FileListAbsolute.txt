@@ -1,4 +1,6 @@
 C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\bin\Debug\net5.0\DAL.deps.json
+C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\bin\Debug\net5.0\DAL.runtimeconfig.json
+C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\bin\Debug\net5.0\DAL.runtimeconfig.dev.json
 C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\bin\Debug\net5.0\DAL.dll
 C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\bin\Debug\net5.0\ref\DAL.dll
 C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\bin\Debug\net5.0\DAL.pdb
@@ -13,3 +15,4 @@ C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\ob
 C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\obj\Debug\net5.0\DAL.dll
 C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\obj\Debug\net5.0\ref\DAL.dll
 C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\obj\Debug\net5.0\DAL.pdb
+C:\Users\herte\Documents\GitHub\OnlineTeamScan_V2_BE\OnlineTeamScan_V2_BE\DAL\obj\Debug\net5.0\DAL.genruntimeconfig.cache
