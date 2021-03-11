@@ -26,7 +26,7 @@ namespace DAL.Data.Configurations
 
             builder.HasKey(t => new { t.TeamMemberId, t.TeamscanId });
             builder.HasOne(t => t.TeamMember).WithMany().HasForeignKey(f => f.TeamMemberId).IsRequired();
-            builder.HasOne(t => t.Teamscan).WithMany().HasForeignKey(f => f.TeamscanId).IsRequired();
+            builder.HasOne(t => t.Teamscan).WithMany().HasForeignKey(f => f.TeamscanId).OnDelete(DeleteBehavior.Restrict).IsRequired();
         }
     }
 }
