@@ -28,7 +28,9 @@ namespace DAL.Data.Configurations
             builder.HasIndex(l => new { l.Name, l.Code }).IsUnique();
 
             builder.HasData(
-                new Language { Id = 1, Name = "Nederlands", Code = "nl" }
+                new Language { Id = 1, Name = "Nederlands", Code = "nl" },
+                new Language { Id = 2, Name = "English", Code = "en" },
+                new Language { Id = 3, Name = "Français", Code = "fr" }
                 );
         }
     }

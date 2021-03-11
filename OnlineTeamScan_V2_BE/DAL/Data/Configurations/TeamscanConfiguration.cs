@@ -33,7 +33,7 @@ namespace DAL.Data.Configurations
 
             builder.HasKey(t => t.Id).IsClustered();
             builder.HasOne(t => t.Team).WithMany().HasForeignKey(f => f.TeamId).IsRequired();
-            builder.HasOne(t => t.StartedBy).WithMany().HasForeignKey(f => f.StartedBy).IsRequired();
+            builder.HasOne(t => t.StartedBy).WithMany().HasForeignKey(f => f.StartedById).OnDelete(DeleteBehavior.Restrict).IsRequired();
             builder.HasIndex(t => new { t.TeamId, t.Title }).IsUnique();
         }
     }

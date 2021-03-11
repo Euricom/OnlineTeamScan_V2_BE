@@ -31,7 +31,7 @@ namespace DAL.Data.Configurations
 
             builder.HasKey(i => i.Id).IsClustered();
             builder.HasOne(i => i.TeamMember).WithMany().HasForeignKey(f => f.TeamMemberId).IsRequired();
-            builder.HasOne(i => i.Teamscan).WithMany().HasForeignKey(f => f.TeamscanId).IsRequired();
+            builder.HasOne(i => i.Teamscan).WithMany().HasForeignKey(f => f.TeamscanId).OnDelete(DeleteBehavior.Restrict).IsRequired();
             builder.HasIndex(i => new { i.TeamMemberId, i.TeamscanId }).IsUnique();
         }
     }
