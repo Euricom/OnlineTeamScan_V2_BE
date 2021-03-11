@@ -1,4 +1,5 @@
 ﻿using BL.Services.TeamServices;
+using BL.Services.UserServices;
 using DAL;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,6 +10,7 @@ namespace BL
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddTransient<ITeamService, TeamService>();
+            services.AddTransient<IUserService, UserService>();
             return services;
         }
 

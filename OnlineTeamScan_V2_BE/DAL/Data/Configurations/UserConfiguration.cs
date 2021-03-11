@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Common.DTOs.UserDTO;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -14,7 +15,7 @@ namespace DAL.Data.Configurations
     {
         public UserConfiguration()
         {
-
+            CreateMap<User, UserReadDto>().ReverseMap();
         }
 
         public void Configure(EntityTypeBuilder<User> builder)
