@@ -279,11 +279,11 @@ namespace DAL.Migrations
                     title = table.Column<string>(type: "varchar(50)", nullable: false),
                     start_date = table.Column<DateTime>(type: "date", nullable: false),
                     end_date = table.Column<DateTime>(type: "date", nullable: true),
-                    score_trust = table.Column<decimal>(type: "decimal(3,2)", nullable: true),
-                    score_conflict = table.Column<decimal>(type: "decimal(3,2)", nullable: true),
-                    score_commitment = table.Column<decimal>(type: "decimal(3,2)", nullable: true),
-                    score_accountability = table.Column<decimal>(type: "decimal(3,2)", nullable: true),
-                    score_results = table.Column<decimal>(type: "decimal(3,2)", nullable: true)
+                    score_trust = table.Column<decimal>(type: "decimal(3,2)", nullable: false, defaultValue: 0m),
+                    score_conflict = table.Column<decimal>(type: "decimal(3,2)", nullable: false, defaultValue: 0m),
+                    score_commitment = table.Column<decimal>(type: "decimal(3,2)", nullable: false, defaultValue: 0m),
+                    score_accountability = table.Column<decimal>(type: "decimal(3,2)", nullable: false, defaultValue: 0m),
+                    score_results = table.Column<decimal>(type: "decimal(3,2)", nullable: false, defaultValue: 0m)
                 },
                 constraints: table =>
                 {
