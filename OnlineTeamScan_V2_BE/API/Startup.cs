@@ -1,10 +1,13 @@
 using BL;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Text;
 
 namespace API
 {
@@ -25,6 +28,20 @@ namespace API
 
             services.SetupRepositories();
             services.AddServices();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidAudience = Configuration["Jwt:Audience"],
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                };
+            });
         }
        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -37,6 +54,8 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

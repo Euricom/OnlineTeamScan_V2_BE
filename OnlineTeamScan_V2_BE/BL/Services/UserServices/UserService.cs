@@ -1,4 +1,5 @@
 ﻿using Common.DTOs.UserDTO;
+using DAL.Repositories;
 using DAL.Repositories.UserRepositories;
 using System;
 using System.Collections.Generic;
@@ -10,21 +11,21 @@ namespace BL.Services.UserServices
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UserService(IUserRepository repository)
+        public UserService(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<UserReadDto> GetAllUsers()
         {
-            return _repository.GetAll();
+            return _unitOfWork.UserRepository.GetAll();
         }
 
         public Task<UserReadDto> GetUser(string email, string password)
         {
-            return _repository.GetUser(email, password);
+            return _unitOfWork.UserRepository.GetUser(email, password);
         }
     }
 }

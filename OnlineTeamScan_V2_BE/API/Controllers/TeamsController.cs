@@ -1,5 +1,6 @@
 ﻿using BL.Services.TeamServices;
 using Common.DTOs.TeamDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TeamsController : ControllerBase

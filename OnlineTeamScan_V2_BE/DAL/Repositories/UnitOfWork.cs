@@ -3,6 +3,7 @@ using DAL.Data;
 using DAL.Repositories.IndividualScoreRepositories;
 using DAL.Repositories.TeamRepositories;
 using DAL.Repositories.TeamscanRepositories;
+using DAL.Repositories.UserRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace DAL.Repositories
         private IIndividualScoreRepository _individualScoreRepository;
         private ITeamRepository _teamRepository;
         private ITeamscanRepository _teamscanRepository;
+        private IUserRepository _userRepository;
 
         public UnitOfWork(OnlineTeamScanContext context, IMapper mapper)
         {
@@ -38,6 +40,11 @@ namespace DAL.Repositories
         public ITeamscanRepository TeamscanRepository
         {
             get { return _teamscanRepository ??= new TeamscanRepository(_context, _mapper); }
+        }
+
+        public IUserRepository UserRepository
+        {
+            get { return _userRepository ??= new UserRepository(_context, _mapper); }
         }
 
         public void Commit()
