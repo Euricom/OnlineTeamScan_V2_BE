@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using DAL.Data;
+﻿using DAL.Data;
 using DAL.Repositories.IndividualScoreRepositories;
 using DAL.Repositories.TeamRepositories;
 using DAL.Repositories.TeamscanRepositories;
@@ -14,35 +13,38 @@ namespace DAL.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly OnlineTeamScanContext _context;
-        private readonly IMapper _mapper;
         private IIndividualScoreRepository _individualScoreRepository;
         private ITeamRepository _teamRepository;
         private ITeamscanRepository _teamscanRepository;
 
-        public UnitOfWork(OnlineTeamScanContext context, IMapper mapper)
+        public UnitOfWork(OnlineTeamScanContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public IIndividualScoreRepository IndividualScoreRepository
         {
-            get { return _individualScoreRepository ??= new IndividualScoreRepository(_context, _mapper); }
+            get { return _individualScoreRepository ??= new IndividualScoreRepository(_context); }
         }
 
         public ITeamRepository TeamRepository
         {
-            get { return _teamRepository ??= new TeamRepository(_context, _mapper); }
+            get { return _teamRepository ??= new TeamRepository(_context); }
         }
 
         public ITeamscanRepository TeamscanRepository
         {
-            get { return _teamscanRepository ??= new TeamscanRepository(_context, _mapper); }
+            get { return _teamscanRepository ??= new TeamscanRepository(_context); }
         }
 
         public void Commit()
         {
-            _context.SaveChanges();
+            _context.SaveChanges();          
+        }
+
+        public void Rollback()
+        {
+            _context.Dispose();
         }
     }
 }

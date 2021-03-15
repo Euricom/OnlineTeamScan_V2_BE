@@ -1,8 +1,12 @@
-﻿using Common.DTOs.AnswerDTO;
+﻿using AutoMapper;
+using Common.DTOs.AnswerDTO;
 using Common.DTOs.IndividualScoreDTO;
 using Common.DTOs.TeamscanDTO;
+using DAL.Models;
 using DAL.Repositories;
 using DAL.Repositories.IndividualScoreRepositories;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,31 +17,26 @@ namespace BL.Services.IndividualScoreServices
 {
     public class IndividualScoreService : IIndividualScoreService
     {
-        /*private readonly IIndividualScoreRepository _repository;
-
-        public IndividualScoreService(IIndividualScoreRepository repository)
-        {
-            _repository = repository;
-        }*/
-
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public IndividualScoreService(IUnitOfWork unitOfWork)
+        public IndividualScoreService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public IndividualScoreReadDto GetIndividualScoreById(int id)
         {
-            return _unitOfWork.IndividualScoreRepository.GetById(id);
+            return _mapper.Map<IndividualScoreReadDto>(_unitOfWork.IndividualScoreRepository.GetById(id));
         }
 
         public IEnumerable<IndividualScoreReadDto> GetAllIndividualScores()
         {
-            return _unitOfWork.IndividualScoreRepository.GetAll();
+            return _mapper.Map<IEnumerable<IndividualScoreReadDto>>(_unitOfWork.IndividualScoreRepository.GetAll());
         }
       
-        public IndividualScoreReadDto AddScore(int teamMemberId, int teamscanId, List<AnswerReadDto> list)
+        public IndividualScoreReadDto AddIndividualScore(int teamMemberId, int teamscanId, List<AnswerReadDto> list)
         {
             int sumTrust = 0, sumConflict = 0, sumCommitment = 0, sumAccountability = 0, sumResults = 0;
 
@@ -80,9 +79,22 @@ namespace BL.Services.IndividualScoreServices
                 ScoreResults = totalResults != 0 ? Math.Round((decimal)sumResults / totalResults, 2) : 0
             };
 
-            var newIndividualScore = _unitOfWork.IndividualScoreRepository.Add(individualScoreCreateDto);
-            _unitOfWork.Commit();
-            return newIndividualScore;
+            try
+            {
+                var newIndividualScore = _unitOfWork.IndividualScoreRepository.Add(_mapper.Map<IndividualScore>(individualScoreCreateDto));
+                _unitOfWork.Commit();
+                return _mapper.Map<IndividualScoreReadDto>(newIndividualScore);
+            }
+            catch (DbUpdateException ex) when ((ex.InnerException as SqlException)?.Number == 547)
+            {
+                _unitOfWork.Rollback();
+                throw new Exception($"Please enter a valid teamscanid and teammemberid", ex);
+            }
+            catch (DbUpdateException ex) when ((ex.InnerException as SqlException)?.Number == 2601)
+            {
+                _unitOfWork.Rollback();
+                throw new Exception($"Cannot have a duplicate score with teammemberid {teamMemberId} and teamscanid {teamscanId}", ex);
+            }
         }
 
         public void CalculateTeamscore(int teamscanId)
@@ -107,7 +119,7 @@ namespace BL.Services.IndividualScoreServices
                 ScoreResults = Math.Round(sumResults / totalScores, 2)
             };
 
-            _unitOfWork.TeamscanRepository.UpdateScores(teamscanUpdateDto);
+            _unitOfWork.TeamscanRepository.UpdateScores(_mapper.Map<Teamscan>(teamscanUpdateDto));
             _unitOfWork.Commit();
         }
     }

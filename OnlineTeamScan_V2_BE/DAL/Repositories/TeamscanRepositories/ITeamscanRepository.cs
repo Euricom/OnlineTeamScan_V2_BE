@@ -1,6 +1,4 @@
-﻿using Common.DTOs.IndividualScoreDTO;
-using Common.DTOs.TeamscanDTO;
-using DAL.Models;
+﻿using DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.TeamscanRepositories
 {
-    public interface ITeamscanRepository : IGenericRepository<Teamscan, TeamscanReadDto, object, object>
+    public interface ITeamscanRepository : IGenericRepository<Teamscan>
     {
-        public TeamscanReadDto UpdateScores(TeamscanUpdateDto teamscanUpdateDto);
+        public Teamscan UpdateScores(Teamscan teamscan);
     }
 }
