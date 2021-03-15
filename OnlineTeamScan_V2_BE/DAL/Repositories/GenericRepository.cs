@@ -57,7 +57,7 @@ namespace DAL.Repositories
         public TReadDto Add(TCreateDto createDto)
         {
             var entity = _dbSet.Add(_mapper.Map<TEntity>(createDto));
-            SaveChanges();
+            //SaveChanges();
 
             return _mapper.Map<TReadDto>(entity.Entity);
         }
@@ -65,7 +65,7 @@ namespace DAL.Repositories
         public TReadDto Update(TUpdateDto updateDto)
         {
             var entity = _dbSet.Update(_mapper.Map<TEntity>(updateDto));
-            SaveChanges();
+            //SaveChanges();
 
             return _mapper.Map<TReadDto>(entity.Entity);
         }
@@ -75,12 +75,12 @@ namespace DAL.Repositories
             TEntity entity = _dbSet.Find(id);
 
             _dbSet.Remove(_mapper.Map<TEntity>(entity));
-            SaveChanges();
+            //SaveChanges();
         }
 
-        public void SaveChanges()
-        {
-            _context.SaveChanges();
-        }
+        //public void SaveChanges()
+        //{
+        //    _context.SaveChanges();
+        //}
     }
 }

@@ -1,6 +1,5 @@
 ﻿using DAL.Data;
 using DAL.Repositories.TeamRepositories;
-using DAL.Repositories.UserRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,8 +9,10 @@ namespace DAL
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddTransient<ITeamRepository, TeamRepository>();
-            services.AddTransient<IUserRepository, UserRepository>();
+            /*services.AddTransient<ITeamRepository, TeamRepository>();
+            services.AddTransient<ITeamscanRepository, TeamscanRepository>();
+            services.AddTransient<IIndividualScoreRepository, IndividualScoreRepository>();*/
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
 

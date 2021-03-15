@@ -43,7 +43,7 @@ namespace API.Controllers
                 return BadRequest();
 
             var team = _service.AddTeam(teamCreateDto);
-            return CreatedAtAction(nameof(GetTeamById), new { Id = team.Id}, team);
+            return CreatedAtAction(nameof(GetTeamById), new { Id = team.Id }, team);
         }
 
         [HttpPut]

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Common.DTOs.IndividualScoreDTO;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -14,7 +15,8 @@ namespace DAL.Data.Configurations
     {
         public IndividualScoreConfiguration()
         {
-
+            CreateMap<IndividualScore, IndividualScoreReadDto>();
+            CreateMap<IndividualScoreCreateDto, IndividualScore>();
         }
 
         public void Configure(EntityTypeBuilder<IndividualScore> builder)

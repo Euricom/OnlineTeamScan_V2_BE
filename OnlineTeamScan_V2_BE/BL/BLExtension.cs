@@ -1,4 +1,6 @@
-﻿using BL.Services.TeamServices;
+﻿using BL.Services.IndividualScoreServices;
+using BL.Services.TeamscanServices;
+using BL.Services.TeamServices;
 using BL.Services.UserServices;
 using DAL;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +13,8 @@ namespace BL
         {
             services.AddTransient<ITeamService, TeamService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ITeamscanService, TeamscanService>();
+            services.AddTransient<IIndividualScoreService, IndividualScoreService>();
             return services;
         }
 
