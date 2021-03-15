@@ -14,11 +14,11 @@ namespace DAL.Models
         public string Title { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public decimal? ScoreTrust { get; set; }
-        public decimal? ScoreConflict { get; set; }
-        public decimal? ScoreCommitment { get; set; }
-        public decimal? ScoreAccountability { get; set; }
-        public decimal? ScoreResults { get; set; }
+        public decimal ScoreTrust { get; set; }
+        public decimal ScoreConflict { get; set; }
+        public decimal ScoreCommitment { get; set; }
+        public decimal ScoreAccountability { get; set; }
+        public decimal ScoreResults { get; set; }
 
         public User StartedBy { get; set; }
         public Team Team { get; set; }

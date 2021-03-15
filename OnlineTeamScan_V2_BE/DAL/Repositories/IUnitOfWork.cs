@@ -15,5 +15,7 @@ namespace DAL.Repositories
         public ITeamRepository TeamRepository { get; }
         public ITeamscanRepository TeamscanRepository { get; }
         public void Commit();
+
+        public void Rollback();
     }
 }

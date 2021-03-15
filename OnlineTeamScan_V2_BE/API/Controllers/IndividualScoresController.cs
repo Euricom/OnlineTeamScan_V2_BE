@@ -2,6 +2,8 @@
 using Common.DTOs.AnswerDTO;
 using Common.DTOs.IndividualScoreDTO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,9 +42,16 @@ namespace API.Controllers
         [HttpPost("{teamMemberId}/{teamscanId}")]
         public ActionResult<IndividualScoreReadDto> AddScore(int teamMemberId, int teamscanId, [FromBody] List<AnswerReadDto> list)
         {
-            var individualScore = _service.AddScore(teamMemberId, teamscanId, list);
-            _service.CalculateTeamscore(teamscanId);
-            return CreatedAtAction(nameof(GetIndividualScoreById), new { Id = individualScore.Id }, individualScore);
+            try
+            {
+                var individualScore = _service.AddIndividualScore(teamMemberId, teamscanId, list);
+                _service.CalculateTeamscore(teamscanId);
+                return CreatedAtAction(nameof(GetIndividualScoreById), new { Id = individualScore.Id }, individualScore);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }          
         }
     }
 }

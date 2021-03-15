@@ -7,17 +7,13 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    public interface IGenericRepository<TEntity, TReadDto, TCreateDto, TUpdateDto>
+    public interface IGenericRepository<TEntity>
         where TEntity : class
-        where TReadDto : class
-        where TCreateDto : class
-        where TUpdateDto : class
     {
-        public TReadDto GetById(int id);
-        public IEnumerable<TReadDto> GetAll(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includeProperties);
-        public TReadDto Add(TCreateDto createDto);
+        public TEntity GetById(int id);
+        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includeProperties);
+        public TEntity Add(TEntity entity);
         public void Delete(int id);
-        public TReadDto Update(TUpdateDto updateDto);
-        //public void SaveChanges();
+        public TEntity Update(TEntity entity);
     }
 }

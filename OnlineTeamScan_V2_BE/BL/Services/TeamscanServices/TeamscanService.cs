@@ -1,6 +1,5 @@
-﻿using Common.DTOs.TeamscanDTO;
+﻿using AutoMapper;
 using DAL.Repositories;
-using DAL.Repositories.TeamscanRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,18 +10,13 @@ namespace BL.Services.TeamscanServices
 {
     public class TeamscanService : ITeamscanService
     {
-        /*private readonly ITeamscanRepository _repository;
-
-        public TeamscanService(ITeamscanRepository repository)
-        {
-            _repository = repository;
-        }*/
-
         private readonly IUnitOfWork _unitOfWOrk;
+        private readonly IMapper _mapper;
 
-        public TeamscanService(IUnitOfWork unitOfWork) 
+        public TeamscanService(IUnitOfWork unitOfWork, IMapper mapper) 
         {
             _unitOfWOrk = unitOfWork;
+            _mapper = mapper;
         }
 
     }

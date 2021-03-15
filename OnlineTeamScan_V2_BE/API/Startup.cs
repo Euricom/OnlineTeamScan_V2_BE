@@ -23,7 +23,7 @@ namespace API
             services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.SetupRepositories();
+            services.SetupRepositories();            
             services.AddServices();
         }
        
