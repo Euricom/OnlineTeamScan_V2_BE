@@ -1,5 +1,7 @@
-﻿using BL.Services.UserServices;
+﻿using API.Validators.UserValidators;
+using BL.Services.UserServices;
 using Common.DTOs.UserDTO;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -29,8 +31,10 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> GenerateToken(UserTokenDto _userData)
         {
+            UserTokenValidator validator = new UserTokenValidator();
+            ValidationResult result = validator.Validate(_userData);
 
-            if (_userData != null && _userData.Email != null && _userData.Password != null)
+            if (result.IsValid)
             {
                 var user = await _service.GetUser(_userData.Email, _userData.Password);
 
@@ -62,7 +66,7 @@ namespace API.Controllers
             }
             else
             {
-                return BadRequest();
+                return BadRequest(result.Errors);
             }
         }
     }
