@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Common.DTOs.TeamscanDTO;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -14,7 +15,8 @@ namespace DAL.Data.Configurations
     {
         public TeamscanConfiguration()
         {
-
+            CreateMap<Teamscan, TeamscanReadDto>();
+            CreateMap<TeamscanUpdateDto, Teamscan>();
         }
         public void Configure(EntityTypeBuilder<Teamscan> builder)
         {

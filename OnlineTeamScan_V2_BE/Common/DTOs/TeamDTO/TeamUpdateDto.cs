@@ -9,6 +9,6 @@ namespace Common.DTOs.TeamDTO
     public class TeamUpdateDto
     {
         public int Id { get; set; }
-        public string TeamName { get; set; }
+        public string Name { get; set; }
     }
 }

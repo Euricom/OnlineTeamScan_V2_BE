@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common.DTOs.TeamDTO
+namespace Common.DTOs.UserDTO
 {
-    public class TeamReadDto
+    public class UserReadDto
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
     }
 }

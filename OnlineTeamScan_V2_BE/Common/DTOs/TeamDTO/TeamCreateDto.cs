@@ -8,6 +8,7 @@ namespace Common.DTOs.TeamDTO
 {
     public class TeamCreateDto
     {
-        public string TeamName { get; set; }
+        public int TeamleaderId { get; set; }
+        public string Name { get; set; }
     }
 }
