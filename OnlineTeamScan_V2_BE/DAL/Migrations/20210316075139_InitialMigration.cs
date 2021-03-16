@@ -283,7 +283,8 @@ namespace DAL.Migrations
                     score_conflict = table.Column<decimal>(type: "decimal(3,2)", nullable: false, defaultValue: 0m),
                     score_commitment = table.Column<decimal>(type: "decimal(3,2)", nullable: false, defaultValue: 0m),
                     score_accountability = table.Column<decimal>(type: "decimal(3,2)", nullable: false, defaultValue: 0m),
-                    score_results = table.Column<decimal>(type: "decimal(3,2)", nullable: false, defaultValue: 0m)
+                    score_results = table.Column<decimal>(type: "decimal(3,2)", nullable: false, defaultValue: 0m),
+                    TeamId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -295,6 +296,12 @@ namespace DAL.Migrations
                         principalTable: "tbl_teams",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_tbl_teamscans_tbl_teams_TeamId1",
+                        column: x => x.TeamId1,
+                        principalTable: "tbl_teams",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_tbl_teamscans_tbl_users_startedby_id",
                         column: x => x.startedby_id,
@@ -654,6 +661,11 @@ namespace DAL.Migrations
                 table: "tbl_teamscans",
                 columns: new[] { "team_id", "title" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tbl_teamscans_TeamId1",
+                table: "tbl_teamscans",
+                column: "TeamId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tbl_users_email",
