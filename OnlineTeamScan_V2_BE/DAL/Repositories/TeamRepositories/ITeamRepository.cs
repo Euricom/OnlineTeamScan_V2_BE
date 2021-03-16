@@ -1,5 +1,4 @@
-﻿using Common.DTOs.TeamDTO;
-using DAL.Models;
+﻿using DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.TeamRepositories
 {
-    public interface ITeamRepository : IGenericRepository<Team, TeamReadDto, TeamCreateDto, TeamUpdateDto>
+    public interface ITeamRepository : IGenericRepository<Team>
     {
+        public IEnumerable<Team> GetAllTeamsWithTeamscans(int userId);
+        public IEnumerable<Team> GetAllTeamsByUser(int userId);
     }
 }

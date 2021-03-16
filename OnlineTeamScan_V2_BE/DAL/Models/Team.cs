@@ -14,5 +14,6 @@ namespace DAL.Models
         public DateTime? LastTeamScan { get; set; }
 
         public User Teamleader { get; set; }
+        public ICollection<Teamscan> Teamscans { get; set; }
     }
 }

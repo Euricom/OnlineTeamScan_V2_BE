@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using Common.DTOs.AnswerDTO;
-using Common.DTOs.IndividualScoreDTO;
-using Common.DTOs.TeamscanDTO;
-using DAL.Data;
+﻿using DAL.Data;
 using DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -12,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.IndividualScoreRepositories
 {
-    public class IndividualScoreRepository : GenericRepository<IndividualScore, IndividualScoreReadDto, IndividualScoreCreateDto, object>, IIndividualScoreRepository
+    public class IndividualScoreRepository : GenericRepository<IndividualScore>, IIndividualScoreRepository
     {
-        public IndividualScoreRepository(OnlineTeamScanContext context, IMapper mapper) : base(context, mapper)
+        public IndividualScoreRepository(OnlineTeamScanContext context) : base(context)
         { }
 
-        public IEnumerable<IndividualScoreReadDto> GetAllByTeamscan(int teamscanId)
+        public IEnumerable<IndividualScore> GetAllByTeamscan(int teamscanId)
         {
-            return _mapper.Map<IEnumerable<IndividualScoreReadDto>> (_dbSet.Where(i => i.TeamscanId == teamscanId).ToList());
+            return GetAll(filter: i => i.TeamscanId == teamscanId);
         }
     }
 }

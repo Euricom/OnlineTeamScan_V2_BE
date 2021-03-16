@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(OnlineTeamScanContext))]
-    [Migration("20210311093350_InitialMigration")]
+    [Migration("20210316081214_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1161,24 +1161,34 @@ namespace DAL.Migrations
                         .HasColumnType("date")
                         .HasColumnName("end_date");
 
-                    b.Property<decimal?>("ScoreAccountability")
+                    b.Property<decimal>("ScoreAccountability")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(3,2)")
+                        .HasDefaultValue(0m)
                         .HasColumnName("score_accountability");
 
-                    b.Property<decimal?>("ScoreCommitment")
+                    b.Property<decimal>("ScoreCommitment")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(3,2)")
+                        .HasDefaultValue(0m)
                         .HasColumnName("score_commitment");
 
-                    b.Property<decimal?>("ScoreConflict")
+                    b.Property<decimal>("ScoreConflict")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(3,2)")
+                        .HasDefaultValue(0m)
                         .HasColumnName("score_conflict");
 
-                    b.Property<decimal?>("ScoreResults")
+                    b.Property<decimal>("ScoreResults")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(3,2)")
+                        .HasDefaultValue(0m)
                         .HasColumnName("score_results");
 
-                    b.Property<decimal?>("ScoreTrust")
+                    b.Property<decimal>("ScoreTrust")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(3,2)")
+                        .HasDefaultValue(0m)
                         .HasColumnName("score_trust");
 
                     b.Property<DateTime>("StartDate")
@@ -1431,7 +1441,7 @@ namespace DAL.Migrations
                         .IsRequired();
 
                     b.HasOne("DAL.Models.Team", "Team")
-                        .WithMany()
+                        .WithMany("Teamscans")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1469,6 +1479,11 @@ namespace DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("PreferredLanguage");
+                });
+
+            modelBuilder.Entity("DAL.Models.Team", b =>
+                {
+                    b.Navigation("Teamscans");
                 });
 #pragma warning restore 612, 618
         }

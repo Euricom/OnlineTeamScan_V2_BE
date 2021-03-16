@@ -26,7 +26,7 @@ namespace BL
 
         public static IServiceCollection RegisterContext(this IServiceCollection services, string connectionString)
         {
-            services.AddOnlineTeamScanContext(connectionString);
+            services.AddOnlineTeamScanContext(connectionString);           
             return services;
         }
     }

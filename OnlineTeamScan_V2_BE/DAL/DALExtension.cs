@@ -10,9 +10,6 @@ namespace DAL
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            /*services.AddTransient<ITeamRepository, TeamRepository>();
-            services.AddTransient<ITeamscanRepository, TeamscanRepository>();
-            services.AddTransient<IIndividualScoreRepository, IndividualScoreRepository>();*/
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
