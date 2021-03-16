@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.UserRepositories
 {
-    public class UserRepository : GenericRepository<User, UserReadDto, UserCreateDto, UserUpdateDto>, IUserRepository
+    public class UserRepository : GenericRepository<User>, IUserRepository
     {
-        public UserRepository(OnlineTeamScanContext context, IMapper mapper) : base(context, mapper)
+        public UserRepository(OnlineTeamScanContext context) : base(context)
         { }
 
-        public async Task<UserReadDto> GetUser(string email, string password)
+        public async Task<User> GetUser(string email, string password)
         {
-            return _mapper.Map<UserReadDto>(await _dbSet.FirstOrDefaultAsync(u => u.Email == email && u.Password == password));
+            return await _dbSet.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
         }
     }
 }

@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.UserRepositories
 {
-    public interface IUserRepository : IGenericRepository<User, UserReadDto, UserCreateDto, UserUpdateDto>
+    public interface IUserRepository : IGenericRepository<User>
     {
-        public Task<UserReadDto> GetUser(string email, string password);
+        public Task<User> GetUser(string email, string password);
     }
 }

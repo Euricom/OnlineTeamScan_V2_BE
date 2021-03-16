@@ -41,7 +41,7 @@ namespace DAL.Repositories
 
         public IUserRepository UserRepository
         {
-            get { return _userRepository ??= new UserRepository(_context, _mapper); }
+            get { return _userRepository ??= new UserRepository(_context); }
         }
 
         public void Commit()
