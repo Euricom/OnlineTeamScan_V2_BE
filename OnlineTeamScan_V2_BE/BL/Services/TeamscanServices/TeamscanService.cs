@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Common.DTOs.TeamscanDTO;
 using DAL.Repositories;
 using System;
 using System.Collections.Generic;
@@ -19,5 +20,9 @@ namespace BL.Services.TeamscanServices
             _mapper = mapper;
         }
 
+        public IEnumerable<TeamscanReadDto> GetAllTeamscansByTeam(int teamId)
+        {
+            return _mapper.Map<IEnumerable<TeamscanReadDto>>(_unitOfWOrk.TeamscanRepository.GetAllTeamscansByTeam(teamId));
+        }
     }
 }

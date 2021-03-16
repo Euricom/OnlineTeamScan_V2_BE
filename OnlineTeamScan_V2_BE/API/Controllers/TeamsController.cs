@@ -42,6 +42,12 @@ namespace API.Controllers
             return Ok(_service.GetAllTeamsWithTeamscans(userId));
         }
 
+        [HttpGet("user/{userId}")]
+        public ActionResult<IEnumerable<TeamReadDto>> GetAllTeamsByUser(int userId)
+        {
+            return Ok(_service.GetAllTeamsByUser(userId));
+        }
+
         [HttpPost]
         public ActionResult<TeamReadDto> AddTeam(TeamCreateDto teamCreateDto)
         {

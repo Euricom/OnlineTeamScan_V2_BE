@@ -13,6 +13,11 @@ namespace DAL.Repositories.TeamscanRepositories
         public TeamscanRepository(OnlineTeamScanContext context) : base(context)
         { }
 
+        public IEnumerable<Teamscan> GetAllTeamscansByTeam(int teamId)
+        {
+            return GetAll(x => x.TeamId == teamId);
+        }
+
         public Teamscan UpdateScores(Teamscan teamscan)
         {
             var entry = _context.Entry(teamscan);
