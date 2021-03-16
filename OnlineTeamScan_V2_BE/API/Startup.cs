@@ -15,8 +15,6 @@ namespace API
 {
     public class Startup
     {
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,11 +26,12 @@ namespace API
         {
             services.AddCors(options =>
             {
-                options.AddPolicy(name: MyAllowSpecificOrigins,
+                options.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+                /*options.AddPolicy(name: MyAllowSpecificOrigins,
                              builder =>
                              {
                                  builder.WithOrigins("http://localhost:3000", "*");
-                             });
+                             });*/
             });
 
             services.RegisterContext(Configuration.GetConnectionString("OnlineTeamScanConnectionString"));
@@ -65,7 +64,8 @@ namespace API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(MyAllowSpecificOrigins);
+            app.UseCors(options => options.AllowAnyOrigin());
+            /*app.UseCors(MyAllowSpecificOrigins);*/
 
             app.UseHttpsRedirection();
 
