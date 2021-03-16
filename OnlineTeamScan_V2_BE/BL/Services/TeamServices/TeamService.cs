@@ -31,6 +31,11 @@ namespace BL.Services.TeamServices
             return _mapper.Map<IEnumerable<TeamReadDto>>(_unitOfWork.TeamRepository.GetAll());
         }
 
+        public IEnumerable<TeamReadDto> GetAllTeamsWithTeamscans(int userId)
+        {
+            return _mapper.Map<IEnumerable<TeamReadDto>>(_unitOfWork.TeamRepository.GetAllTeamsWithTeamscans(userId)); ;
+        }
+
         public TeamReadDto AddTeam(TeamCreateDto teamCreateDto)
         {
             var newTeam = _unitOfWork.TeamRepository.Add(_mapper.Map<Team>(teamCreateDto));
@@ -49,6 +54,6 @@ namespace BL.Services.TeamServices
         {
             _unitOfWork.TeamRepository.Delete(id);
             _unitOfWork.Commit();
-        }
+        }       
     }
 }

@@ -12,5 +12,10 @@ namespace DAL.Repositories.TeamRepositories
     {
         public TeamRepository(OnlineTeamScanContext context) : base(context)
         { }
+
+        public IEnumerable<Team> GetAllTeamsWithTeamscans(int userId)
+        {
+            return GetAll(team => team.TeamleaderId == userId, includeProperties: x => x.Teamscans);
+        }
     }
 }

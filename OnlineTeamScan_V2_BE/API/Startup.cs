@@ -23,7 +23,7 @@ namespace API
         {           
             services.RegisterContext(Configuration.GetConnectionString("OnlineTeamScanConnectionString"));
             services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<TeamCreateValidator>());
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.SetupRepositories();            

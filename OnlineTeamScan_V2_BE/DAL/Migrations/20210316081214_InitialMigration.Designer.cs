@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(OnlineTeamScanContext))]
-    [Migration("20210316075139_InitialMigration")]
+    [Migration("20210316081214_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1203,9 +1203,6 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasColumnName("team_id");
 
-                    b.Property<int?>("TeamId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("varchar(50)")
@@ -1215,8 +1212,6 @@ namespace DAL.Migrations
                         .IsClustered();
 
                     b.HasIndex("StartedById");
-
-                    b.HasIndex("TeamId1");
 
                     b.HasIndex("TeamId", "Title")
                         .IsUnique();
@@ -1446,14 +1441,10 @@ namespace DAL.Migrations
                         .IsRequired();
 
                     b.HasOne("DAL.Models.Team", "Team")
-                        .WithMany()
+                        .WithMany("Teamscans")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("DAL.Models.Team", null)
-                        .WithMany("Teamscans")
-                        .HasForeignKey("TeamId1");
 
                     b.Navigation("StartedBy");
 
