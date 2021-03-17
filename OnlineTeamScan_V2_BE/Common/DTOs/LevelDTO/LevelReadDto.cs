@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Models
+namespace Common.DTOs.LevelDTO
 {
-    public class Level
+    public class LevelReadDto
     {
         public int Id { get; set; }
         public decimal LowerLimit { get; set; }

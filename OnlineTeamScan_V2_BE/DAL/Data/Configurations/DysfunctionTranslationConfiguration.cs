@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Common.DTOs.DysfunctionTranslationDTO;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -14,7 +15,7 @@ namespace DAL.Data.Configurations
     {
         public DysfunctionTranslationConfiguration()
         {
-
+            CreateMap<DysfunctionTranslation, DysfunctionTranslationReadDto>();
         }
 
         public void Configure(EntityTypeBuilder<DysfunctionTranslation> builder)

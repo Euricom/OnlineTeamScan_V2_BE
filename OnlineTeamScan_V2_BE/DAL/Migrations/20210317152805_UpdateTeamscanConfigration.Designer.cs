@@ -4,14 +4,16 @@ using DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(OnlineTeamScanContext))]
-    partial class OnlineTeamScanContextModelSnapshot : ModelSnapshot
+    [Migration("20210317152805_UpdateTeamscanConfigration")]
+    partial class UpdateTeamscanConfigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1230,7 +1232,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("StartedById");
 
-                    b.HasIndex("TeamId", "Title", "Number")
+                    b.HasIndex("TeamId", "Title")
                         .IsUnique();
 
                     b.ToTable("tbl_teamscans");

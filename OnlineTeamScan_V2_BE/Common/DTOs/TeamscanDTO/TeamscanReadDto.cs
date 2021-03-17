@@ -14,6 +14,7 @@ namespace Common.DTOs.TeamscanDTO
         public UserReadDto StartedBy { get; set; }
         public TeamReadDto Team { get; set; }
         public string Title { get; set; }
+        public int Number { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public decimal ScoreTrust { get; set; }

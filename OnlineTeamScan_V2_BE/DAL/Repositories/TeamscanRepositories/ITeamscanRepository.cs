@@ -11,5 +11,6 @@ namespace DAL.Repositories.TeamscanRepositories
     {
         public Teamscan UpdateScores(Teamscan teamscan);
         public IEnumerable<Teamscan> GetAllTeamscansByTeam(int teamId);
+        public Teamscan GetPreviousTeamscan(int teamId, int teamNumber);
     }
 }

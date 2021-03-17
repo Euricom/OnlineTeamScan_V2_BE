@@ -25,5 +25,18 @@ namespace API.Controllers
         {
             return Ok(_service.GetAllTeamscansByTeam(teamId));
         }
+
+        [HttpGet("previous/{teamscanId}")]
+        public ActionResult<TeamscanReadDto> GetPreviousTeamscan(int teamscanId)
+        {
+            var teamscan = _service.GetPreviousTeamscan(teamscanId);
+
+            if (teamscan != null)
+            {
+                return Ok(teamscan);
+            }
+
+            return Ok(_service.GetTeamscanById(teamscanId));
+        }
     }
 }

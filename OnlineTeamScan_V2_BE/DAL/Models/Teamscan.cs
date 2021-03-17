@@ -12,6 +12,7 @@ namespace DAL.Models
         public int StartedById { get; set; }
         public int TeamId { get; set; }
         public string Title { get; set; }
+        public int Number { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public decimal ScoreTrust { get; set; }

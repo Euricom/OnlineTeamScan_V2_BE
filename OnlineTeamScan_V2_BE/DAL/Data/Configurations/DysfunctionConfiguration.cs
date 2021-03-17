@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Common.DTOs.DysfunctionDTO;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -14,7 +15,7 @@ namespace DAL.Data.Configurations
     {
         public DysfunctionConfiguration()
         {
-
+            CreateMap<Dysfunction, DysfunctionReadDto>();
         }
 
         public void Configure(EntityTypeBuilder<Dysfunction> builder)

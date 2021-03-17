@@ -25,6 +25,7 @@ namespace DAL.Data.Configurations
             builder.Property(t => t.StartedById).HasColumnName("startedby_id").IsRequired();
             builder.Property(t => t.TeamId).HasColumnName("team_id").IsRequired();
             builder.Property(t => t.Title).HasColumnName("title").HasColumnType("varchar(50)").IsRequired();
+            builder.Property(t => t.Number).HasColumnName("number").HasColumnType("int").IsRequired();
             builder.Property(t => t.StartDate).HasColumnName("start_date").HasColumnType("date").IsRequired();
             builder.Property(t => t.EndDate).HasColumnName("end_date").HasColumnType("date");
             builder.Property(t => t.ScoreTrust).HasColumnName("score_trust").HasColumnType("decimal(3,2)").HasDefaultValue(0).IsRequired();
@@ -36,7 +37,7 @@ namespace DAL.Data.Configurations
             builder.HasKey(t => t.Id).IsClustered();
             builder.HasOne(t => t.Team).WithMany(c => c.Teamscans).HasForeignKey(f => f.TeamId).IsRequired();
             builder.HasOne(t => t.StartedBy).WithMany().HasForeignKey(f => f.StartedById).OnDelete(DeleteBehavior.Restrict).IsRequired();
-            builder.HasIndex(t => new { t.TeamId, t.Title }).IsUnique();
+            builder.HasIndex(t => new { t.TeamId, t.Title, t.Number }).IsUnique();
         }
     }
 }

@@ -20,9 +20,26 @@ namespace BL.Services.TeamscanServices
             _mapper = mapper;
         }
 
+        public TeamscanReadDto GetTeamscanById(int teamscanId)
+        {
+            return _mapper.Map<TeamscanReadDto>(_unitOfWOrk.TeamscanRepository.GetById(teamscanId));
+        }
+
         public IEnumerable<TeamscanReadDto> GetAllTeamscansByTeam(int teamId)
         {
             return _mapper.Map<IEnumerable<TeamscanReadDto>>(_unitOfWOrk.TeamscanRepository.GetAllTeamscansByTeam(teamId));
+        }
+
+        public TeamscanReadDto GetPreviousTeamscan(int teamscanId)
+        {
+            var teamscan = _unitOfWOrk.TeamscanRepository.GetById(teamscanId);
+
+            if (teamscan != null)
+            {
+                return _mapper.Map<TeamscanReadDto>(_unitOfWOrk.TeamscanRepository.GetPreviousTeamscan(teamscan.TeamId, teamscan.Number - 1));
+            }
+
+            return null;
         }
     }
 }

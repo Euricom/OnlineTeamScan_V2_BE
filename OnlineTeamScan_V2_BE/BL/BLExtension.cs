@@ -1,4 +1,6 @@
-﻿using BL.Services.IndividualScoreServices;
+﻿using BL.Services.DysfunctionTranslationServices;
+using BL.Services.IndividualScoreServices;
+using BL.Services.LevelServices;
 using BL.Services.TeamscanServices;
 using BL.Services.TeamServices;
 using DAL;
@@ -13,6 +15,8 @@ namespace BL
             services.AddTransient<ITeamService, TeamService>();
             services.AddTransient<ITeamscanService, TeamscanService>();
             services.AddTransient<IIndividualScoreService, IndividualScoreService>();
+            services.AddTransient<ILevelService, LevelService>();
+            services.AddTransient<IDysfunctionTranslationService, DysfunctionTranslationService>();
             return services;
         }
 

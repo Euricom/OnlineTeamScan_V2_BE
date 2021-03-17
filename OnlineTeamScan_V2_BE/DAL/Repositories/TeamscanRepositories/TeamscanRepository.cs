@@ -15,7 +15,7 @@ namespace DAL.Repositories.TeamscanRepositories
 
         public IEnumerable<Teamscan> GetAllTeamscansByTeam(int teamId)
         {
-            return GetAll(x => x.TeamId == teamId);
+            return GetAll(x => x.TeamId == teamId && x.EndDate != null);
         }
 
         public Teamscan UpdateScores(Teamscan teamscan)
@@ -28,6 +28,11 @@ namespace DAL.Repositories.TeamscanRepositories
             entry.Property(x => x.ScoreResults).IsModified = true;
 
             return entry.Entity;
+        }
+
+        public Teamscan GetPreviousTeamscan(int teamId, int teamNumber)
+        {
+            return _dbSet.Where(x => x.TeamId == teamId && x.Number == teamNumber).FirstOrDefault();
         }
     }
 }
