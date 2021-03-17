@@ -1,7 +1,11 @@
 ﻿using API.Validators.UserValidators;
 using BL.Services.UserServices;
+using Common.DTOs.Authentication;
 using Common.DTOs.UserDTO;
+using DAL.Models;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +15,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -19,55 +24,85 @@ namespace API.Controllers
     [ApiController]
     public class AuthenticateController : ControllerBase
     {
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole<int>> _roleManager;
         public IConfiguration _configuration;
         private readonly IUserService _service;
 
-        public AuthenticateController(IConfiguration config, IUserService service)
+        public AuthenticateController(IUserService service, UserManager<User> userManager,
+            RoleManager<IdentityRole<int>> roleManager,
+            IConfiguration configuration)
         {
-            _configuration = config;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _configuration = configuration;
             _service = service;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> GenerateToken(UserTokenDto _userData)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
-            UserTokenValidator validator = new UserTokenValidator();
-            ValidationResult result = validator.Validate(_userData);
 
-            if (result.IsValid)
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
-                var user = await _service.GetUser(_userData.Email, _userData.Password);
+                /*var userRoles = await userManager.GetRolesAsync(user);*/
 
-                if (user != null)
+                var authClaims = new List<Claim>
                 {
-                    //create claims details based on the user information
-                    var claims = new[] {
-                    new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
+                    new Claim(ClaimTypes.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                    new Claim("Id", user.Id.ToString()),
-                    new Claim("FirstName", user.Firstname),
-                    new Claim("LastName", user.Lastname),
-                    new Claim("Email", user.Email)
-                   };
+                };
 
-                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-
-                    var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-                    var token = new JwtSecurityToken(_configuration["Jwt:Issuer"], _configuration["Jwt:Audience"], claims, expires: DateTime.UtcNow.AddDays(1), signingCredentials: signIn);
-
-                    return Ok(new JwtSecurityTokenHandler().WriteToken(token));
-                }
-                else
+                /*foreach (var userRole in userRoles)
                 {
-                    return BadRequest("Invalid credentials");
-                }
+                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                }*/
+
+                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+
+                var token = new JwtSecurityToken(
+                    issuer: _configuration["JWT:ValidIssuer"],
+                    audience: _configuration["JWT:ValidAudience"],
+                    expires: DateTime.Now.AddHours(24),
+                    claims: authClaims,
+                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                );
+                return Ok(new
+                {
+                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    expiration = token.ValidTo,
+                    id = user.Id,
+                    langId = user.PreferredLanguageId
+                });
             }
-            else
+            return Unauthorized();
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterModel model)
+        {
+            var userName =
+                $"{Regex.Replace(model.FirstName, @"\s+", "")}{Regex.Replace(model.LastName, @"\s+", "")}";
+            var userExists = await _userManager.FindByEmailAsync(model.Email);
+
+            if (userExists != null)
             {
-                return BadRequest(result.Errors);
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new Response
+                    { Status = "Error", Message = "Er bestaat al een gebruiker met dezelfde gebruikersnaam." });
             }
+
+            var user = new User()
+            {
+                UserName = userName,
+                Email = model.Email,
+                Firstname = model.FirstName,
+                Lastname = model.LastName,
+                PreferredLanguageId = 1
+            };
+            return Ok( await _userManager.CreateAsync(user, model.Password));
+
         }
     }
 }

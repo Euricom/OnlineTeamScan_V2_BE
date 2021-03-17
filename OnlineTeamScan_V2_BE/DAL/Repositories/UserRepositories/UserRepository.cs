@@ -16,9 +16,5 @@ namespace DAL.Repositories.UserRepositories
         public UserRepository(OnlineTeamScanContext context) : base(context)
         { }
 
-        public async Task<User> GetUser(string email, string password)
-        {
-            return await _dbSet.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
-        }
     }
 }

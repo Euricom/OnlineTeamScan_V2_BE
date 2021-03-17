@@ -10,6 +10,5 @@ namespace DAL.Repositories.UserRepositories
 {
     public interface IUserRepository : IGenericRepository<User>
     {
-        public Task<User> GetUser(string email, string password);
     }
 }

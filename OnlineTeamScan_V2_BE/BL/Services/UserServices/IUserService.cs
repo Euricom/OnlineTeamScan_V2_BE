@@ -9,7 +9,7 @@ namespace BL.Services.UserServices
 {
     public interface IUserService
     {
+        public UserReadDto GetUserById(int id);
         public IEnumerable<UserReadDto> GetAllUsers();
-        public Task<UserReadDto> GetUser(string email, string password);
     }
 }

@@ -20,10 +20,23 @@ namespace API.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        public IEnumerable<UserReadDto> GetAllUsers()
+        [HttpGet("{id}")]
+        public ActionResult<UserReadDto> GetUserById(int id)
         {
-            return _service.GetAllUsers();
+            var user = _service.GetUserById(id);
+
+            if (user != null)
+            {
+                return Ok(user);
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<UserReadDto>> GetAllUsers()
+        {
+            return Ok(_service.GetAllUsers());
         }
     }
 }

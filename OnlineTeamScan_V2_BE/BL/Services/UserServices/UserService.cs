@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using Common.DTOs.UserDTO;
+using DAL.Models;
 using DAL.Repositories;
 using DAL.Repositories.UserRepositories;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +28,9 @@ namespace BL.Services.UserServices
         {
             return _mapper.Map<IEnumerable<UserReadDto>>(_unitOfWork.UserRepository.GetAll());
         }
-
-        public Task<UserReadDto> GetUser(string email, string password)
+        public UserReadDto GetUserById(int id)
         {
-            return _mapper.Map<Task<UserReadDto>>(_unitOfWork.UserRepository.GetUser(email, password));
+            return _mapper.Map<UserReadDto>(_unitOfWork.UserRepository.GetById(id));
         }
     }
 }

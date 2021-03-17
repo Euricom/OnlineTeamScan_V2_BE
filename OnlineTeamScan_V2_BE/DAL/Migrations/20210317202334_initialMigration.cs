@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class initialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,6 +48,20 @@ namespace DAL.Migrations
                 {
                     table.PrimaryKey("PK_tbl_levels", x => x.id)
                         .Annotation("SqlServer:Clustered", true);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tbl_roles",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(type: "varchar(30)", nullable: false),
+                    display_label = table.Column<string>(type: "varchar(30)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tbl_roles", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -102,16 +116,28 @@ namespace DAL.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    preferred_language_id = table.Column<int>(type: "int", nullable: false),
-                    email = table.Column<string>(type: "varchar(100)", nullable: false),
+                    preferred_language_id = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
                     firstname = table.Column<string>(type: "varchar(70)", nullable: false),
                     lastname = table.Column<string>(type: "varchar(70)", nullable: false),
-                    password = table.Column<string>(type: "varchar(50)", nullable: false)
+                    password = table.Column<string>(type: "varchar(50)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    email = table.Column<string>(type: "varchar(100)", nullable: false),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbl_users", x => x.id)
-                        .Annotation("SqlServer:Clustered", true);
+                    table.PrimaryKey("PK_tbl_users", x => x.id);
                     table.ForeignKey(
                         name: "FK_tbl_users_tbl_languages_preferred_language_id",
                         column: x => x.preferred_language_id,
@@ -173,6 +199,31 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "tbl_role_translations",
+                columns: table => new
+                {
+                    role_id = table.Column<int>(type: "int", nullable: false),
+                    language_id = table.Column<int>(type: "int", nullable: false),
+                    translation = table.Column<string>(type: "varchar(30)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tbl_role_translations", x => new { x.role_id, x.language_id });
+                    table.ForeignKey(
+                        name: "FK_tbl_role_translations_tbl_languages_language_id",
+                        column: x => x.language_id,
+                        principalTable: "tbl_languages",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_tbl_role_translations_tbl_roles_role_id",
+                        column: x => x.role_id,
+                        principalTable: "tbl_roles",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "tbl_question_translations",
                 columns: table => new
                 {
@@ -214,6 +265,30 @@ namespace DAL.Migrations
                     table.ForeignKey(
                         name: "FK_tbl_teams_tbl_users_teamleader_id",
                         column: x => x.teamleader_id,
+                        principalTable: "tbl_users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tbl_user_roles",
+                columns: table => new
+                {
+                    user_id = table.Column<int>(type: "int", nullable: false),
+                    role_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tbl_user_roles", x => new { x.user_id, x.role_id });
+                    table.ForeignKey(
+                        name: "FK_tbl_user_roles_tbl_roles_role_id",
+                        column: x => x.role_id,
+                        principalTable: "tbl_roles",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_tbl_user_roles_tbl_users_user_id",
+                        column: x => x.user_id,
                         principalTable: "tbl_users",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -393,20 +468,25 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "tbl_roles",
+                columns: new[] { "id", "display_label", "name" },
+                values: new object[] { 1, "Teamleader", "Teamleader" });
+
+            migrationBuilder.InsertData(
                 table: "tbl_dysfunction_translations",
                 columns: new[] { "dysfunction_id", "language_id", "name" },
                 values: new object[,]
                 {
-                    { 1, 2, "Trust" },
-                    { 3, 2, "Commitment" },
+                    { 2, 2, "Conflict" },
+                    { 1, 1, "Vertrouwen" },
                     { 4, 2, "Accountability" },
                     { 5, 2, "Results" },
-                    { 1, 1, "Vertrouwen" },
                     { 2, 1, "Conflict" },
+                    { 3, 1, "Commitment" },
+                    { 1, 2, "Trust" },
                     { 5, 1, "Resultaat" },
-                    { 4, 1, "Aanspreekbaarheid" },
-                    { 2, 2, "Conflict" },
-                    { 3, 1, "Commitment" }
+                    { 3, 2, "Commitment" },
+                    { 4, 1, "Aanspreekbaarheid" }
                 });
 
             migrationBuilder.InsertData(
@@ -418,7 +498,7 @@ namespace DAL.Migrations
                     { 4, 2, 1 },
                     { 7, 3, 1 },
                     { 13, 5, 1 },
-                    { 2, 1, 2 },
+                    { 5, 2, 2 },
                     { 8, 3, 2 },
                     { 11, 4, 2 },
                     { 14, 5, 2 },
@@ -427,7 +507,7 @@ namespace DAL.Migrations
                     { 9, 3, 3 },
                     { 12, 4, 3 },
                     { 15, 5, 3 },
-                    { 5, 2, 2 },
+                    { 2, 1, 2 },
                     { 10, 4, 1 }
                 });
 
@@ -452,14 +532,14 @@ namespace DAL.Migrations
                     { 37, 5, (byte)37 },
                     { 31, 5, (byte)31 },
                     { 29, 5, (byte)29 },
+                    { 1, 1, (byte)1 },
                     { 25, 5, (byte)25 },
                     { 14, 5, (byte)14 },
                     { 6, 1, (byte)6 },
                     { 10, 1, (byte)10 },
                     { 13, 1, (byte)13 },
                     { 17, 1, (byte)17 },
-                    { 22, 1, (byte)22 },
-                    { 32, 1, (byte)32 }
+                    { 22, 1, (byte)22 }
                 });
 
             migrationBuilder.InsertData(
@@ -467,6 +547,7 @@ namespace DAL.Migrations
                 columns: new[] { "id", "dysfunction_id", "number" },
                 values: new object[,]
                 {
+                    { 32, 1, (byte)32 },
                     { 33, 1, (byte)33 },
                     { 2, 2, (byte)2 },
                     { 4, 2, (byte)4 },
@@ -492,9 +573,13 @@ namespace DAL.Migrations
                     { 30, 3, (byte)30 },
                     { 28, 3, (byte)28 },
                     { 24, 3, (byte)24 },
-                    { 16, 4, (byte)16 },
-                    { 1, 1, (byte)1 }
+                    { 16, 4, (byte)16 }
                 });
+
+            migrationBuilder.InsertData(
+                table: "tbl_role_translations",
+                columns: new[] { "language_id", "role_id", "translation" },
+                values: new object[] { 1, 1, "Teamleider" });
 
             migrationBuilder.InsertData(
                 table: "tbl_interpretation_translations",
@@ -623,6 +708,17 @@ namespace DAL.Migrations
                 column: "dysfunction_id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_tbl_role_translations_language_id",
+                table: "tbl_role_translations",
+                column: "language_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tbl_roles_name",
+                table: "tbl_roles",
+                column: "name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tbl_teammembers_team_id_email",
                 table: "tbl_teammembers",
                 columns: new[] { "team_id", "email" },
@@ -656,6 +752,11 @@ namespace DAL.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_tbl_user_roles_role_id",
+                table: "tbl_user_roles",
+                column: "role_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tbl_users_email",
                 table: "tbl_users",
                 column: "email",
@@ -685,7 +786,13 @@ namespace DAL.Migrations
                 name: "tbl_question_translations");
 
             migrationBuilder.DropTable(
+                name: "tbl_role_translations");
+
+            migrationBuilder.DropTable(
                 name: "tbl_teamscan_members");
+
+            migrationBuilder.DropTable(
+                name: "tbl_user_roles");
 
             migrationBuilder.DropTable(
                 name: "tbl_interpretations");
@@ -698,6 +805,9 @@ namespace DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "tbl_teamscans");
+
+            migrationBuilder.DropTable(
+                name: "tbl_roles");
 
             migrationBuilder.DropTable(
                 name: "tbl_levels");

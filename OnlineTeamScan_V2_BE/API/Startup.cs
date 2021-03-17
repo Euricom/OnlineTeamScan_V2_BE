@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
+using API.Authentication;
 
 namespace API
 {
@@ -27,11 +28,13 @@ namespace API
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
-                /*options.AddPolicy(name: MyAllowSpecificOrigins,
+                options.AddDefaultPolicy(
                              builder =>
                              {
-                                 builder.WithOrigins("http://localhost:3000", "*");
-                             });*/
+                                 builder.AllowAnyOrigin();
+                                 builder.AllowAnyMethod();
+                                 builder.AllowAnyHeader();
+                             });
             });
 
             services.RegisterContext(Configuration.GetConnectionString("OnlineTeamScanConnectionString"));
@@ -42,19 +45,7 @@ namespace API
             services.SetupRepositories();            
             services.AddServices();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            {
-                options.RequireHttpsMetadata = false;
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidAudience = Configuration["Jwt:Audience"],
-                    ValidIssuer = Configuration["Jwt:Issuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-                };
-            });
+            services.SetupAuthentication(Configuration);
         }
        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -64,7 +55,7 @@ namespace API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(options => options.AllowAnyOrigin());
+            app.UseCors();
             /*app.UseCors(MyAllowSpecificOrigins);*/
 
             app.UseHttpsRedirection();
