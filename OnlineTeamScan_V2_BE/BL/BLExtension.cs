@@ -3,6 +3,7 @@ using BL.Services.IndividualScoreServices;
 using BL.Services.LevelServices;
 using BL.Services.TeamscanServices;
 using BL.Services.TeamServices;
+using BL.Services.UserServices;
 using DAL;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,6 +14,7 @@ namespace BL
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddTransient<ITeamService, TeamService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddTransient<ITeamscanService, TeamscanService>();
             services.AddTransient<IIndividualScoreService, IndividualScoreService>();
             services.AddTransient<ILevelService, LevelService>();

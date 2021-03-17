@@ -21,6 +21,9 @@ namespace DAL.Data
         public DbSet<IndividualScore> IndividualScores { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<RoleTranslation> RoleTranslations { get; set; }
         public DbSet<Dysfunction> Dysfunctions { get; set; }
         public DbSet<DysfunctionTranslation> DysfunctionTranslations { get; set; }
         public DbSet<Interpretation> Interpretations { get; set; }
@@ -39,6 +42,9 @@ namespace DAL.Data
             modelBuilder.ApplyConfiguration(new IndividualScoreConfiguration());
             modelBuilder.ApplyConfiguration(new LanguageConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new DysfunctionConfiguration());
             modelBuilder.ApplyConfiguration(new DysfunctionTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new InterpretationConfiguration());

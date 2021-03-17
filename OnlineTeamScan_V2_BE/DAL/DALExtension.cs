@@ -1,5 +1,6 @@
 ﻿using DAL.Data;
 using DAL.Repositories;
+using DAL.Repositories.TeamRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

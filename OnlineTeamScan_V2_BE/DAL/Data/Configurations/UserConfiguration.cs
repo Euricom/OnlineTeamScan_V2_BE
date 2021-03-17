@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Common.DTOs.UserDTO;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -14,7 +15,8 @@ namespace DAL.Data.Configurations
     {
         public UserConfiguration()
         {
-
+            CreateMap<User, UserReadDto>().ReverseMap();
+            CreateMap<UserUpdateDto, User>();
         }
 
         public void Configure(EntityTypeBuilder<User> builder)
@@ -25,9 +27,7 @@ namespace DAL.Data.Configurations
             builder.Property(u => u.Email).HasColumnName("email").HasColumnType("varchar(100)").IsRequired();
             builder.Property(u => u.Firstname).HasColumnName("firstname").HasColumnType("varchar(70)").IsRequired();
             builder.Property(u => u.Lastname).HasColumnName("lastname").HasColumnType("varchar(70)").IsRequired();
-            builder.Property(u => u.Password).HasColumnName("password").HasColumnType("varchar(50)").IsRequired();
 
-            builder.HasKey(u => u.Id).IsClustered();
             builder.HasOne(u => u.PreferredLanguage).WithMany().HasForeignKey(f => f.PreferredLanguageId).IsRequired();
             builder.HasIndex(u => u.Email).IsUnique();
         }

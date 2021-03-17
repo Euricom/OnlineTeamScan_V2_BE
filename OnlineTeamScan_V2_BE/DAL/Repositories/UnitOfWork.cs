@@ -4,6 +4,7 @@ using DAL.Repositories.IndividualScoreRepositories;
 using DAL.Repositories.LevelRepositories;
 using DAL.Repositories.TeamRepositories;
 using DAL.Repositories.TeamscanRepositories;
+using DAL.Repositories.UserRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace DAL.Repositories
         private IIndividualScoreRepository _individualScoreRepository;
         private ITeamRepository _teamRepository;
         private ITeamscanRepository _teamscanRepository;
+        private IUserRepository _userRepository;
         private ILevelRepository _levelRepository;
         private IDysfunctionTranslationRepository _dysfunctionTranslationRepository;
 
@@ -49,6 +51,11 @@ namespace DAL.Repositories
         public IDysfunctionTranslationRepository DysfunctionTranslationRepository
         {
             get { return _dysfunctionTranslationRepository ??= new DysfunctionTranslationRepository(_context); }
+        }
+
+        public IUserRepository UserRepository
+        {
+            get { return _userRepository ??= new UserRepository(_context); }
         }
 
         public void Commit()

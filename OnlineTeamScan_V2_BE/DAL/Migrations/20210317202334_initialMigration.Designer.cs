@@ -4,14 +4,16 @@ using DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(OnlineTeamScanContext))]
-    partial class OnlineTeamScanContextModelSnapshot : ModelSnapshot
+    [Migration("20210317202334_initialMigration")]
+    partial class initialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -473,11 +475,6 @@ namespace DAL.Migrations
                         .HasColumnName("id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("char(7)")
-                        .HasColumnName("color");
-
                     b.Property<decimal>("LowerLimit")
                         .HasColumnType("decimal(3,2)")
                         .HasColumnName("lower_limit");
@@ -495,30 +492,20 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            Color = "#F95656",
                             LowerLimit = 1m,
                             UpperLimit = 3.24m
                         },
                         new
                         {
                             Id = 2,
-                            Color = "#FFD54A",
                             LowerLimit = 3.25m,
                             UpperLimit = 3.74m
                         },
                         new
                         {
                             Id = 3,
-                            Color = "#93EB5F",
                             LowerLimit = 3.75m,
                             UpperLimit = 5m
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Color = "#D8D8D8",
-                            LowerLimit = 0m,
-                            UpperLimit = 0m
                         });
                 });
 
@@ -1238,10 +1225,6 @@ namespace DAL.Migrations
                         .HasColumnType("date")
                         .HasColumnName("end_date");
 
-                    b.Property<int>("Number")
-                        .HasColumnType("int")
-                        .HasColumnName("number");
-
                     b.Property<decimal>("ScoreAccountability")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(3,2)")
@@ -1294,7 +1277,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("StartedById");
 
-                    b.HasIndex("TeamId", "Title", "Number")
+                    b.HasIndex("TeamId", "Title")
                         .IsUnique();
 
                     b.ToTable("tbl_teamscans");
@@ -1366,6 +1349,11 @@ namespace DAL.Migrations
 
                     b.Property<string>("NormalizedUserName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("password");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
