@@ -18,7 +18,7 @@ namespace API.Authentication
         public static void SetupAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             // For Identity  
-            services.AddIdentity<User, IdentityRole<int>>()
+            services.AddIdentity<User, IdentityRole<int>>(o => o.User.AllowedUserNameCharacters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ")
                 .AddEntityFrameworkStores<OnlineTeamScanContext>()
                 .AddDefaultTokenProviders();
 

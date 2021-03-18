@@ -46,18 +46,12 @@ namespace API.Controllers
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
-                /*var userRoles = await userManager.GetRolesAsync(user);*/
 
                 var authClaims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
-
-                /*foreach (var userRole in userRoles)
-                {
-                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-                }*/
 
                 var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
@@ -76,21 +70,23 @@ namespace API.Controllers
                     langId = user.PreferredLanguageId
                 });
             }
-            return Unauthorized();
+            return StatusCode(StatusCodes.Status401Unauthorized,
+                    new Response
+                    { Status = "Error", Message = "De e-mail en het wachtwoord komen niet overeen."});
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            var userName =
-                $"{Regex.Replace(model.FirstName, @"\s+", "")}{Regex.Replace(model.LastName, @"\s+", "")}";
+            var userName = $"{model.FirstName} {model.LastName}";
+                
             var userExists = await _userManager.FindByEmailAsync(model.Email);
 
             if (userExists != null)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     new Response
-                    { Status = "Error", Message = "Er bestaat al een gebruiker met dezelfde gebruikersnaam." });
+                    { Status = "Error", Message = "Er bestaat al een gebruiker met dezelfde e-mail." });
             }
 
             var user = new User()
@@ -101,7 +97,21 @@ namespace API.Controllers
                 Lastname = model.LastName,
                 PreferredLanguageId = 1
             };
-            return Ok( await _userManager.CreateAsync(user, model.Password));
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (!result.Succeeded)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new Response
+                    {
+                        Status = "Error",
+                        Message = "Er is iets fout gegaan. Kijk de gegevens na en probeer opnieuw."
+                    });
+            }
+
+            return Ok(new Response
+            { Status = "Success", Message = $"Gebruiker succesvol aangemaakt. E-mail: {user.Email}" });
 
         }
     }
