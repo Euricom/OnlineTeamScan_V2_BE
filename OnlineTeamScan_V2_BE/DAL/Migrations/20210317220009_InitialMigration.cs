@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -42,7 +42,8 @@ namespace DAL.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     lower_limit = table.Column<decimal>(type: "decimal(3,2)", nullable: false),
-                    upper_limit = table.Column<decimal>(type: "decimal(3,2)", nullable: false)
+                    upper_limit = table.Column<decimal>(type: "decimal(3,2)", nullable: false),
+                    color = table.Column<string>(type: "char(7)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -119,7 +120,6 @@ namespace DAL.Migrations
                     preferred_language_id = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
                     firstname = table.Column<string>(type: "varchar(70)", nullable: false),
                     lastname = table.Column<string>(type: "varchar(70)", nullable: false),
-                    password = table.Column<string>(type: "varchar(50)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     email = table.Column<string>(type: "varchar(100)", nullable: false),
@@ -352,6 +352,7 @@ namespace DAL.Migrations
                     startedby_id = table.Column<int>(type: "int", nullable: false),
                     team_id = table.Column<int>(type: "int", nullable: false),
                     title = table.Column<string>(type: "varchar(50)", nullable: false),
+                    number = table.Column<int>(type: "int", nullable: false),
                     start_date = table.Column<DateTime>(type: "date", nullable: false),
                     end_date = table.Column<DateTime>(type: "date", nullable: true),
                     score_trust = table.Column<decimal>(type: "decimal(3,2)", nullable: false, defaultValue: 0m),
@@ -459,12 +460,13 @@ namespace DAL.Migrations
 
             migrationBuilder.InsertData(
                 table: "tbl_levels",
-                columns: new[] { "id", "lower_limit", "upper_limit" },
+                columns: new[] { "id", "color", "lower_limit", "upper_limit" },
                 values: new object[,]
                 {
-                    { 1, 1m, 3.24m },
-                    { 2, 3.25m, 3.74m },
-                    { 3, 3.75m, 5m }
+                    { 1, "#F95656", 1m, 3.24m },
+                    { 2, "#FFD54A", 3.25m, 3.74m },
+                    { 3, "#93EB5F", 3.75m, 5m },
+                    { 4, "#D8D8D8", 0m, 0m }
                 });
 
             migrationBuilder.InsertData(
@@ -746,9 +748,9 @@ namespace DAL.Migrations
                 column: "startedby_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tbl_teamscans_team_id_title",
+                name: "IX_tbl_teamscans_team_id_title_number",
                 table: "tbl_teamscans",
-                columns: new[] { "team_id", "title" },
+                columns: new[] { "team_id", "title", "number" },
                 unique: true);
 
             migrationBuilder.CreateIndex(

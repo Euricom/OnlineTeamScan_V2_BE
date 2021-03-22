@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Common.DTOs.InterpretationTranslationDTO;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -14,7 +15,7 @@ namespace DAL.Data.Configurations
     {
         public InterpretationTranslationConfiguration()
         {
-
+            CreateMap<InterpretationTranslation, InterpretationTranslationReadDto>();
         }
 
         public void Configure(EntityTypeBuilder<InterpretationTranslation> builder)

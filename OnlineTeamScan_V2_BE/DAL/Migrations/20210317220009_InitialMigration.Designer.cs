@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(OnlineTeamScanContext))]
-    [Migration("20210317154343_FixTeamscanConfigration")]
-    partial class FixTeamscanConfigration
+    [Migration("20210317220009_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1090,6 +1090,70 @@ namespace DAL.Migrations
                         });
                 });
 
+            modelBuilder.Entity("DAL.Models.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DisplayLabel")
+                        .IsRequired()
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("display_label");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("tbl_roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DisplayLabel = "Teamleader",
+                            Name = "Teamleader"
+                        });
+                });
+
+            modelBuilder.Entity("DAL.Models.RoleTranslation", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int")
+                        .HasColumnName("role_id");
+
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("int")
+                        .HasColumnName("language_id");
+
+                    b.Property<string>("Translation")
+                        .IsRequired()
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("translation");
+
+                    b.HasKey("RoleId", "LanguageId");
+
+                    b.HasIndex("LanguageId");
+
+                    b.ToTable("tbl_role_translations");
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = 1,
+                            LanguageId = 1,
+                            Translation = "Teamleider"
+                        });
+                });
+
             modelBuilder.Entity("DAL.Models.Team", b =>
                 {
                     b.Property<int>("Id")
@@ -1269,10 +1333,19 @@ namespace DAL.Migrations
                         .HasColumnName("id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("varchar(100)")
                         .HasColumnName("email");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Firstname")
                         .IsRequired()
@@ -1284,10 +1357,26 @@ namespace DAL.Migrations
                         .HasColumnType("varchar(70)")
                         .HasColumnName("lastname");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("password");
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<int>("PreferredLanguageId")
                         .ValueGeneratedOnAdd()
@@ -1295,8 +1384,16 @@ namespace DAL.Migrations
                         .HasDefaultValue(1)
                         .HasColumnName("preferred_language_id");
 
-                    b.HasKey("Id")
-                        .IsClustered();
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique();
@@ -1304,6 +1401,23 @@ namespace DAL.Migrations
                     b.HasIndex("PreferredLanguageId");
 
                     b.ToTable("tbl_users");
+                });
+
+            modelBuilder.Entity("DAL.Models.UserRole", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int")
+                        .HasColumnName("role_id");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("tbl_user_roles");
                 });
 
             modelBuilder.Entity("DAL.Models.DysfunctionTranslation", b =>
@@ -1431,6 +1545,25 @@ namespace DAL.Migrations
                     b.Navigation("Question");
                 });
 
+            modelBuilder.Entity("DAL.Models.RoleTranslation", b =>
+                {
+                    b.HasOne("DAL.Models.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Language");
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("DAL.Models.Team", b =>
                 {
                     b.HasOne("DAL.Models.User", "Teamleader")
@@ -1500,6 +1633,25 @@ namespace DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("PreferredLanguage");
+                });
+
+            modelBuilder.Entity("DAL.Models.UserRole", b =>
+                {
+                    b.HasOne("DAL.Models.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DAL.Models.Team", b =>

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [Authorize]    
+    /*[Authorize]  */  
     [Route("api/[controller]")]
     [ApiController]
     public class TeamsController : ControllerBase
