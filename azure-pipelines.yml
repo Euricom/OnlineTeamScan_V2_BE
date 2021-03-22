@@ -13,3 +13,4 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
+    workingDirectory: 'OnlineTeamScan_V2_BE'
