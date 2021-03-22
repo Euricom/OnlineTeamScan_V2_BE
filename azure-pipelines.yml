@@ -11,6 +11,14 @@ pool:
 
 steps:
 - task: DotNetCoreCLI@2
+  displayName: Build
   inputs:
     command: 'build'
+    workingDirectory: 'OnlineTeamScan_V2_BE'
+    
+- task: DotNetCoreCLI@2
+  displayName: Test
+  inputs:
+    command: 'test'
+    projects: '**/*.test.csproj'
     workingDirectory: 'OnlineTeamScan_V2_BE'
