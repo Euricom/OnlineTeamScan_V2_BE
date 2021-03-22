@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Common.DTOs.TeamMemberDTO;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -14,7 +15,9 @@ namespace DAL.Data.Configurations
     {
         public TeamMemberConfiguration()
         {
-
+            CreateMap<TeamMember, TeamMemberReadDto>();
+            CreateMap<TeamMemberCreateDto, TeamMember>();
+            CreateMap<TeamMemberUpdateDto, TeamMember>();
         }
 
         public void Configure(EntityTypeBuilder<TeamMember> builder)
