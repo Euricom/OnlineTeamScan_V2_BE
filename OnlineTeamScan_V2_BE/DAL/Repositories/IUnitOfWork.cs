@@ -1,5 +1,7 @@
 ﻿using DAL.Repositories.DysfunctionTranslationRepositories;
 using DAL.Repositories.IndividualScoreRepositories;
+using DAL.Repositories.InterpretationRepositories;
+using DAL.Repositories.InterpretationTranslationRepositories;
 using DAL.Repositories.LevelRepositories;
 using DAL.Repositories.TeamRepositories;
 using DAL.Repositories.TeamscanRepositories;
@@ -20,6 +22,8 @@ namespace DAL.Repositories
         public IUserRepository UserRepository { get; }
         public ILevelRepository LevelRepository { get; }
         public IDysfunctionTranslationRepository DysfunctionTranslationRepository { get; }
+        public IInterpretationTranslationRepository InterpretationTranslationRepository { get; }
+        public IInterpretationRepository InterpretationRepository { get; }
         public void Commit();
 
         public void Rollback();
