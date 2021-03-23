@@ -24,10 +24,10 @@ steps:
     workingDirectory: 'OnlineTeamScan_V2_BE'
 
 - task: DotNetCoreCLI@2
-  displayName: Publish
   inputs:
     command: 'publish'
     publishWebProjects: true
+    workingDirectory: 'OnlineTeamScan_V2_BE'
     zipAfterPublish: true
 
 - task: FileTransform@1
