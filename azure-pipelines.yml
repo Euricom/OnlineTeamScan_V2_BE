@@ -28,7 +28,6 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: true
-    workingDirectory: 'OnlineTeamScan_V2_BE'
     zipAfterPublish: true
 
 - task: FileTransform@1
