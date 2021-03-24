@@ -30,8 +30,8 @@ namespace DAL.Data.Configurations
             builder.Property(t => t.Lastname).HasColumnName("lastname").HasColumnType("varchar(70)").IsRequired();
             builder.Property(t => t.IsActive).HasColumnName("is_active").HasColumnType("bit").HasDefaultValue(true).IsRequired();
 
-            builder.HasKey(t => t.Id).IsClustered();
-            builder.HasOne(t => t.Team).WithMany().HasForeignKey(f => f.TeamId).IsRequired();
+            builder.HasKey(t => t.Id).IsClustered();  
+            builder.HasOne(t => t.Team).WithMany(c => c.TeamMembers).HasForeignKey(f => f.TeamId).IsRequired();
             builder.HasIndex(t => new { t.TeamId, t.Email }).IsUnique();
         }
     }
