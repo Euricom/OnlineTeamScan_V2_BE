@@ -27,6 +27,7 @@ namespace DAL.Data.Configurations
             builder.Property(t => t.TeamleaderId).HasColumnName("teamleader_id").IsRequired();
             builder.Property(t => t.Name).HasColumnName("name").HasColumnType("varchar(50)").IsRequired();
             builder.Property(t => t.LastTeamScan).HasColumnName("last_teamscan").HasColumnType("date");
+            builder.Property(t => t.IsTeamscanActive).HasColumnName("is_teamscan_active").HasColumnType("bit").HasDefaultValue(false).IsRequired();
 
             builder.HasKey(t => t.Id).IsClustered();
             builder.HasOne(t => t.Teamleader).WithMany().HasForeignKey(f => f.TeamleaderId).IsRequired();

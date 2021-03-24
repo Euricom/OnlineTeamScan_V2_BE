@@ -12,6 +12,7 @@ namespace DAL.Models
         public int TeamleaderId { get; set; }
         public string Name { get; set; }
         public DateTime? LastTeamScan { get; set; }
+        public bool IsTeamscanActive { get; set; }
 
         public User Teamleader { get; set; }
         public ICollection<Teamscan> Teamscans { get; set; }

@@ -1160,6 +1160,12 @@ namespace DAL.Migrations
                         .HasColumnName("id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("IsTeamscanActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_teamscan_active");
+
                     b.Property<DateTime?>("LastTeamScan")
                         .HasColumnType("date")
                         .HasColumnName("last_teamscan");

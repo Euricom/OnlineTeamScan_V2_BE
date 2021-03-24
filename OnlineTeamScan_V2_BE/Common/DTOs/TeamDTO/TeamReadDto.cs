@@ -1,4 +1,5 @@
 ﻿using Common.DTOs.TeamscanDTO;
+using Common.DTOs.UserDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,10 @@ namespace Common.DTOs.TeamDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public DateTime? LastTeamScan { get; set; }
+        public bool IsTeamscanActive { get; set; }
 
+        public UserReadDto Teamleader { get; set; }
         public ICollection<TeamscanReadDto> Teamscans { get; set; }
     }
 }
