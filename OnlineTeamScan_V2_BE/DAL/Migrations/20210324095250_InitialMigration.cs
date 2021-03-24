@@ -256,7 +256,8 @@ namespace DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     teamleader_id = table.Column<int>(type: "int", nullable: false),
                     name = table.Column<string>(type: "varchar(50)", nullable: false),
-                    last_teamscan = table.Column<DateTime>(type: "date", nullable: true)
+                    last_teamscan = table.Column<DateTime>(type: "date", nullable: true),
+                    is_teamscan_active = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
