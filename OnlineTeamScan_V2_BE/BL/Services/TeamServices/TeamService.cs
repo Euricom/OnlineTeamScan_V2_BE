@@ -31,9 +31,13 @@ namespace BL.Services.TeamServices
             return _mapper.Map<IEnumerable<TeamReadDto>>(_unitOfWork.TeamRepository.GetAll());
         }
 
-        public IEnumerable<TeamReadDto> GetAllTeamsWithTeamscans(int userId)
+        public IEnumerable<TeamReadDto> GetAllTeamsIncludingTeamscans(int userId)
         {
-            return _mapper.Map<IEnumerable<TeamReadDto>>(_unitOfWork.TeamRepository.GetAllTeamsWithTeamscans(userId)); ;
+            return _mapper.Map<IEnumerable<TeamReadDto>>(_unitOfWork.TeamRepository.GetAllTeamsIncludingTeamscans(userId)); ;
+        }
+        public IEnumerable<TeamReadDto> GetAllTeamsIncludingTeamMembers(int userId)
+        {
+            return _mapper.Map<IEnumerable<TeamReadDto>>(_unitOfWork.TeamRepository.GetAllTeamsIncludingTeamMembers(userId)); ;
         }
 
         public IEnumerable<TeamReadDto> GetAllTeamsByUser(int userId)
@@ -59,6 +63,6 @@ namespace BL.Services.TeamServices
         {
             _unitOfWork.TeamRepository.Delete(id);
             _unitOfWork.Commit();
-        }       
+        }
     }
 }

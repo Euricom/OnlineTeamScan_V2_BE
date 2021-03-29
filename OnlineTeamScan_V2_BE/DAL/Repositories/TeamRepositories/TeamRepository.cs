@@ -14,14 +14,20 @@ namespace DAL.Repositories.TeamRepositories
         public TeamRepository(OnlineTeamScanContext context) : base(context)
         { }
 
+
         public IEnumerable<Team> GetAllTeamsByUser(int userId)
         {
             return GetAll(team => team.TeamleaderId == userId);
         }
 
-        public IEnumerable<Team> GetAllTeamsWithTeamscans(int userId)
+        public IEnumerable<Team> GetAllTeamsIncludingTeamMembers(int userId)
         {
-            return GetAll(team => team.TeamleaderId == userId, includeProperties: x => x.Teamscans);
+            return GetAll(filter: team => team.TeamleaderId == userId, includeProperties: x => x.TeamMembers);
+        }
+
+        public IEnumerable<Team> GetAllTeamsIncludingTeamscans(int userId)
+        {
+            return GetAll(filter: team => team.TeamleaderId == userId, includeProperties: x => x.Teamscans);
         }
     }
 }
