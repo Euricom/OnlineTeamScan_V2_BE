@@ -15,6 +15,7 @@ namespace DAL.Models
         public bool IsTeamscanActive { get; set; }
 
         public User Teamleader { get; set; }
+        public ICollection<TeamMember> TeamMembers { get; set; }
         public ICollection<Teamscan> Teamscans { get; set; }
     }
 }

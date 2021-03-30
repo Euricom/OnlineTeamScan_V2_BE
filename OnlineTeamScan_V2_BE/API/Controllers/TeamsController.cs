@@ -39,9 +39,15 @@ namespace API.Controllers
         }
 
         [HttpGet("teamscans/{userId}")]
-        public ActionResult<IEnumerable<TeamReadDto>> GetAllTeamsWithTeamscans(int userId)
+        public ActionResult<IEnumerable<TeamReadDto>> GetAllTeamsIncludingTeamscans(int userId)
         {
-            return Ok(_service.GetAllTeamsWithTeamscans(userId));
+            return Ok(_service.GetAllTeamsIncludingTeamscans(userId));
+        }
+
+        [HttpGet("teammembers/{userId}")]
+        public ActionResult<IEnumerable<TeamReadDto>> GetAllTeamsIncludingTeamMembers(int userId)
+        {
+            return Ok(_service.GetAllTeamsIncludingTeamMembers(userId));
         }
 
         [HttpGet("user/{userId}")]

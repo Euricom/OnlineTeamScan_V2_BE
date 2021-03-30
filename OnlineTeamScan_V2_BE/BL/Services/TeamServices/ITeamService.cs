@@ -11,7 +11,8 @@ namespace BL.Services.TeamServices
     {
         public TeamReadDto GetTeamById(int id);
         public IEnumerable<TeamReadDto> GetAllTeams();
-        public IEnumerable<TeamReadDto> GetAllTeamsWithTeamscans(int userId);
+        public IEnumerable<TeamReadDto> GetAllTeamsIncludingTeamscans(int userId);
+        public IEnumerable<TeamReadDto> GetAllTeamsIncludingTeamMembers(int userId);
         public IEnumerable<TeamReadDto> GetAllTeamsByUser(int userId);
         public TeamReadDto AddTeam(TeamCreateDto teamCreateDto);
         public TeamReadDto UpdateTeam(TeamUpdateDto teamUpdateDto);

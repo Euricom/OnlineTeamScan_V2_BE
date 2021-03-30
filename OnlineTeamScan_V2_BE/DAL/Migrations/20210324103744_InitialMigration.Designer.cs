@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(OnlineTeamScanContext))]
-    [Migration("20210324095250_InitialMigration")]
+    [Migration("20210324103744_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1584,7 +1584,7 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Models.TeamMember", b =>
                 {
                     b.HasOne("DAL.Models.Team", "Team")
-                        .WithMany()
+                        .WithMany("TeamMembers")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1662,6 +1662,8 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.Team", b =>
                 {
+                    b.Navigation("TeamMembers");
+
                     b.Navigation("Teamscans");
                 });
 #pragma warning restore 612, 618

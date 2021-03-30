@@ -28,6 +28,12 @@ namespace BL.Services.UserServices
         {
             return _mapper.Map<IEnumerable<UserReadDto>>(_unitOfWork.UserRepository.GetAll());
         }
+
+        public UserReadDto GetUserByEmail(string email)
+        {
+            return _mapper.Map<UserReadDto>(_unitOfWork.UserRepository.GetAll(u => u.Email == email).FirstOrDefault());
+        }
+
         public UserReadDto GetUserById(int id)
         {
             return _mapper.Map<UserReadDto>(_unitOfWork.UserRepository.GetById(id));

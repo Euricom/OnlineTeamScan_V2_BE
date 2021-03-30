@@ -1582,7 +1582,7 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Models.TeamMember", b =>
                 {
                     b.HasOne("DAL.Models.Team", "Team")
-                        .WithMany()
+                        .WithMany("TeamMembers")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1660,6 +1660,8 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.Team", b =>
                 {
+                    b.Navigation("TeamMembers");
+
                     b.Navigation("Teamscans");
                 });
 #pragma warning restore 612, 618
