@@ -39,6 +39,14 @@ namespace API.Controllers
             _service = service;
         }
 
+        [HttpGet("user")]
+        public ActionResult<UserReadDto> GetUser()
+        {
+            string email = HttpContext.User.FindFirst(ClaimTypes.Email).Value;
+            var user = _service.GetUserByEmail(email);
+            return Ok(user);
+        }
+
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
@@ -49,7 +57,7 @@ namespace API.Controllers
 
                 var authClaims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Email, user.Email), 
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
 
