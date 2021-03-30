@@ -13,7 +13,7 @@ namespace Common.DTOs.TeamDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public DateTime? LastTeamScan { get; set; }
+        public DateTime? LastTeamscan { get; set; }
         public bool IsTeamscanActive { get; set; }
 
         public UserReadDto Teamleader { get; set; }
