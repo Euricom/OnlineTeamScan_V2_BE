@@ -14,6 +14,10 @@ namespace DAL.Repositories.TeamRepositories
         public TeamRepository(OnlineTeamScanContext context) : base(context)
         { }
 
+        public Team GetTeamIncludingTeamMembersById(int id)
+        {
+            return _dbSet.Include(x => x.TeamMembers).Where(x => x.Id == id).FirstOrDefault();
+        }
 
         public IEnumerable<Team> GetAllTeamsByUser(int userId)
         {

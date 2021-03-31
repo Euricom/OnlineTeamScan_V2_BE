@@ -10,6 +10,7 @@ namespace BL.Services.TeamServices
     public interface ITeamService
     {
         public TeamReadDto GetTeamById(int id);
+        public TeamReadDto GetTeamIncludingTeamMembersById(int id);
         public IEnumerable<TeamReadDto> GetAllTeams();
         public IEnumerable<TeamReadDto> GetAllTeamsIncludingTeamscans(int userId);
         public IEnumerable<TeamReadDto> GetAllTeamsIncludingTeamMembers(int userId);
