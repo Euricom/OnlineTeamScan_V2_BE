@@ -33,5 +33,13 @@ namespace DAL.Repositories.TeamRepositories
         {
             return GetAll(filter: team => team.TeamleaderId == userId, includeProperties: x => x.Teamscans);
         }
+
+        public Team UpdateTeam(Team team)
+        {
+            var entry = _context.Entry(team);
+            entry.Property(x => x.Name).IsModified = true;
+
+            return entry.Entity;
+        }
     }
 }
