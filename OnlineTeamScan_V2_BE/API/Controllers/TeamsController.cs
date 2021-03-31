@@ -59,11 +59,19 @@ namespace API.Controllers
         [HttpPost]
         public ActionResult<TeamReadDto> AddTeam(TeamCreateDto teamCreateDto)
         {
+            
             if (teamCreateDto == null)
                 return BadRequest();
 
-            var team = _service.AddTeam(teamCreateDto);
-            return CreatedAtAction(nameof(GetTeamById), new { Id = team.Id }, team);
+            try
+            {
+                var team = _service.AddTeam(teamCreateDto);
+                return CreatedAtAction(nameof(GetTeamById), new { Id = team.Id }, team);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
@@ -72,7 +80,14 @@ namespace API.Controllers
             if (teamUpdateDto == null)
                 return BadRequest();
 
-            return Ok(_service.UpdateTeam(teamUpdateDto));
+            try
+            {
+                return Ok(_service.UpdateTeam(teamUpdateDto));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]

@@ -7,17 +7,13 @@ using System.Threading.Tasks;
 
 namespace API.Validators.TeamValidators
 {
-    public class TeamCreateValidator : AbstractValidator<TeamCreateDto>
+    public class TeamUpdateValidator : AbstractValidator<TeamUpdateDto>
     {
-        public TeamCreateValidator()
+        public TeamUpdateValidator()
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("{PropertyName} cannot be empty")
                 .MaximumLength(50).WithMessage("{PropertyName} is too long");
-
-            RuleFor(x => x.TeamleaderId)
-                .NotNull().WithMessage("{PropertyName} cannot be empty")
-                .GreaterThanOrEqualTo(1).WithMessage("{PropertyName} cannot be less than 0");
         }
     }
 }
