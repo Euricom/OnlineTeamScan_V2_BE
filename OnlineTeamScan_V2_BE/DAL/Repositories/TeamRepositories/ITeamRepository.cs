@@ -9,6 +9,7 @@ namespace DAL.Repositories.TeamRepositories
 {
     public interface ITeamRepository : IGenericRepository<Team>
     {
+        public Team GetTeamIncludingTeamMembersById(int id);
         public IEnumerable<Team> GetAllTeamsIncludingTeamscans(int userId);
         public IEnumerable<Team> GetAllTeamsIncludingTeamMembers(int userId);
         public IEnumerable<Team> GetAllTeamsByUser(int userId);

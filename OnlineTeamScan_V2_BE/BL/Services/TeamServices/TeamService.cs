@@ -26,6 +26,11 @@ namespace BL.Services.TeamServices
             return _mapper.Map<TeamReadDto>(_unitOfWork.TeamRepository.GetById(id));
         }
 
+        public TeamReadDto GetTeamIncludingTeamMembersById(int id)
+        {
+            return _mapper.Map<TeamReadDto>(_unitOfWork.TeamRepository.GetTeamIncludingTeamMembersById(id));
+        }
+
         public IEnumerable<TeamReadDto> GetAllTeams()
         {
             return _mapper.Map<IEnumerable<TeamReadDto>>(_unitOfWork.TeamRepository.GetAll());

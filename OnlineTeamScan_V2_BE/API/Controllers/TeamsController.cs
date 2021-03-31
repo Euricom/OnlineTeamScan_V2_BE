@@ -32,6 +32,17 @@ namespace API.Controllers
             return NotFound();
         }
 
+        [HttpGet("members/{id}")]
+        public ActionResult<TeamReadDto> GetTeamIncludingTeamMembersById(int id)
+        {
+            var team = _service.GetTeamIncludingTeamMembersById(id);
+
+            if (team != null)
+                return Ok(team);
+
+            return NotFound();
+        }
+
         [HttpGet]
         public ActionResult<IEnumerable<TeamReadDto>> GetAllTeams()
         {
