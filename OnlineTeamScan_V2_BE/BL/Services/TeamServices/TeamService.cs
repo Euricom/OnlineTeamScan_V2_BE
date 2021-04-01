@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Common.DTOs.TeamDTO;
+using Common.DTOs.TeamMemberDTO;
 using DAL.Models;
 using DAL.Repositories;
 using Microsoft.Data.SqlClient;
@@ -56,7 +57,18 @@ namespace BL.Services.TeamServices
         {
             try
             {
-                var newTeam = _unitOfWork.TeamRepository.Add(_mapper.Map<Team>(teamCreateDto));
+                var newTeam = _unitOfWork.TeamRepository.Add(_mapper.Map<Team>(teamCreateDto)); 
+                _unitOfWork.Commit();
+                var user = _unitOfWork.UserRepository.GetById(teamCreateDto.TeamleaderId);
+                var newTeamMember = new TeamMemberCreateDto
+                {
+                    Email = user.Email,
+                    Firstname = user.Firstname,
+                    Lastname = user.Lastname,
+                    TeamId = newTeam.Id
+
+                };
+                _unitOfWork.TeamMemberRepository.Add(_mapper.Map<TeamMember>(newTeamMember));
                 _unitOfWork.Commit();
                 return _mapper.Map<TeamReadDto>(newTeam);
             }
