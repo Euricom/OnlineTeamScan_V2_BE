@@ -22,12 +22,22 @@ namespace BL.Services.TeamscanServices
 
         public TeamscanReadDto GetTeamscanById(int teamscanId)
         {
-            return _mapper.Map<TeamscanReadDto>(_unitOfWOrk.TeamscanRepository.GetById(teamscanId));
+            var teamscan = _unitOfWOrk.TeamscanRepository.GetById(teamscanId);
+
+            if (teamscan == null)
+                return null;
+
+            return _mapper.Map<TeamscanReadDto>(teamscan);
         }
 
         public IEnumerable<TeamscanReadDto> GetAllTeamscansByTeam(int teamId)
         {
-            return _mapper.Map<IEnumerable<TeamscanReadDto>>(_unitOfWOrk.TeamscanRepository.GetAllTeamscansByTeam(teamId));
+            var teamscan = _unitOfWOrk.TeamscanRepository.GetAllTeamscansByTeam(teamId);
+
+            if (teamscan == null)
+                return null;
+
+            return _mapper.Map<IEnumerable<TeamscanReadDto>>(teamscan);
         }
 
         public TeamscanReadDto GetPreviousTeamscan(int teamscanId)

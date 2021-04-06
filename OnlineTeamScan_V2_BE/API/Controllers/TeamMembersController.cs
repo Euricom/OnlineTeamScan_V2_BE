@@ -32,7 +32,7 @@ namespace API.Controllers
         }
 
         [HttpGet("team/{teamId}")]
-        public ActionResult<IEnumerable<TeamMemberReadDto>> GetAllTeamsIncludingTeamscans(int teamId)
+        public ActionResult<IEnumerable<TeamMemberReadDto>> GetAllTeamMembersByTeam(int teamId)
         {
             return Ok(_service.GetAllTeamMembersByTeam(teamId));
         }
