@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Common.DTOs.QuestionTranslationDTO;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -14,7 +15,7 @@ namespace DAL.Data.Configurations
     {
         public QuestionTranslationConfiguration()
         {
-
+            CreateMap<QuestionTranslation, QuestionTranslationReadDto>();
         }
 
         public void Configure(EntityTypeBuilder<QuestionTranslation> builder)

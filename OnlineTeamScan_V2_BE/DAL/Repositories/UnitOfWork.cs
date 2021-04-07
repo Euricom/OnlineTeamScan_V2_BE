@@ -4,6 +4,7 @@ using DAL.Repositories.IndividualScoreRepositories;
 using DAL.Repositories.InterpretationRepositories;
 using DAL.Repositories.InterpretationTranslationRepositories;
 using DAL.Repositories.LevelRepositories;
+using DAL.Repositories.QuestionTranslationRepositories;
 using DAL.Repositories.TeamMemberRepositories;
 using DAL.Repositories.TeamRepositories;
 using DAL.Repositories.TeamscanRepositories;
@@ -28,6 +29,7 @@ namespace DAL.Repositories
         private IInterpretationTranslationRepository _interpretationTranslationRepository;
         private IInterpretationRepository _interpretationRepository;
         private ITeamMemberRepository _teamMemberRepository;
+        private IQuestionTranslationRepository _questionTranslationRepository;
 
         public UnitOfWork(OnlineTeamScanContext context)
         {
@@ -77,6 +79,11 @@ namespace DAL.Repositories
         public ITeamMemberRepository TeamMemberRepository
         {
             get { return _teamMemberRepository ??= new TeamMemberRepository(_context); }
+        }
+
+        public IQuestionTranslationRepository QuestionTranslationRepository
+        {
+            get { return _questionTranslationRepository ??= new QuestionTranslationRepository(_context); }
         }
 
         public void Commit()
