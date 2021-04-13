@@ -22,8 +22,19 @@ namespace API.Controllers
             _service = service;
         }
 
+        [HttpGet("include/{id}")]
+        public ActionResult<IndividualScoreReadDto> GetIndividualScoreByIdIncludingTeamscan(Guid id)
+        {
+            var individualScore = _service.GetIndividualScoreByIdIncludingTeamscan(id);
+
+            if (individualScore != null)
+                return Ok(individualScore);
+
+            return NotFound();
+        }
+
         [HttpGet("{id}")]
-        public ActionResult<IndividualScoreReadDto> GetIndividualScoreById(int id)
+        public ActionResult<IndividualScoreReadDto> GetIndividualScoreById(Guid id)
         {
             var individualScore = _service.GetIndividualScoreById(id);
 
@@ -33,25 +44,18 @@ namespace API.Controllers
             return NotFound();
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<IndividualScoreReadDto>> GetAllIndividualScores()
-        {
-            return Ok(_service.GetAllIndividualScores());
-        }
-
-        [HttpPost("{teamMemberId}/{teamscanId}")]
-        public ActionResult<IndividualScoreReadDto> AddScore(int teamMemberId, int teamscanId, [FromBody] List<AnswerReadDto> list)
+        [HttpPut("{id}")]
+        public ActionResult<IndividualScoreReadDto> UpdateScore(Guid id, [FromBody] List<AnswerReadDto> list)
         {
             try
             {
-                var individualScore = _service.AddIndividualScore(teamMemberId, teamscanId, list);
-                _service.CalculateTeamscore(teamscanId);
-                return CreatedAtAction(nameof(GetIndividualScoreById), new { Id = individualScore.Id }, individualScore);
+                var updatedScore = _service.UpdateIndividualScore(id, list);
+                return Ok(updatedScore);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
-            }          
+            }
         }
     }
 }

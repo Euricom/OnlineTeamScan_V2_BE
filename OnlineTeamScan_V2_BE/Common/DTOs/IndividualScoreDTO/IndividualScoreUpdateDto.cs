@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Common.DTOs.IndividualScoreDTO
 {
-    public class IndividualScoreCreateDto
+    public class IndividualScoreUpdateDto
     {
-        public int TeamMemberId { get; set; }
-        public int TeamscanId { get; set; }
+        public Guid Id { get; set; }
         public decimal ScoreTrust { get; set; }
         public decimal ScoreConflict { get; set; }
         public decimal ScoreCommitment { get; set; }
         public decimal ScoreAccountability { get; set; }
         public decimal ScoreResults { get; set; }
+        public bool HasAnswered { get; set; }
     }
 }

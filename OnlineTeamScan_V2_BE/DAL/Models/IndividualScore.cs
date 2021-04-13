@@ -8,7 +8,7 @@ namespace DAL.Models
 {
     public class IndividualScore
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public int TeamMemberId { get; set; }
         public int TeamscanId { get; set; }
         public decimal ScoreTrust { get; set; }
@@ -16,6 +16,7 @@ namespace DAL.Models
         public decimal ScoreCommitment { get; set; }
         public decimal ScoreAccountability { get; set; }
         public decimal ScoreResults { get; set; }
+        public bool HasAnswered { get; set; }
 
         public TeamMember TeamMember { get; set; }
         public Teamscan Teamscan { get; set; }

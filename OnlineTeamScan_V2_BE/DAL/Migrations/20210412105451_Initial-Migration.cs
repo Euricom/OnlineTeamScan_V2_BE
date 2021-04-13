@@ -384,15 +384,15 @@ namespace DAL.Migrations
                 name: "tbl_individualscores",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     teammember_id = table.Column<int>(type: "int", nullable: false),
                     teamscan_id = table.Column<int>(type: "int", nullable: false),
                     score_trust = table.Column<decimal>(type: "decimal(3,2)", nullable: false),
                     score_conflict = table.Column<decimal>(type: "decimal(3,2)", nullable: false),
                     score_commitment = table.Column<decimal>(type: "decimal(3,2)", nullable: false),
                     score_accountability = table.Column<decimal>(type: "decimal(3,2)", nullable: false),
-                    score_results = table.Column<decimal>(type: "decimal(3,2)", nullable: false)
+                    score_results = table.Column<decimal>(type: "decimal(3,2)", nullable: false),
+                    has_answered = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
@@ -406,31 +406,6 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_tbl_individualscores_tbl_teamscans_teamscan_id",
-                        column: x => x.teamscan_id,
-                        principalTable: "tbl_teamscans",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "tbl_teamscan_members",
-                columns: table => new
-                {
-                    teammember_id = table.Column<int>(type: "int", nullable: false),
-                    teamscan_id = table.Column<int>(type: "int", nullable: false),
-                    has_answered = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tbl_teamscan_members", x => new { x.teammember_id, x.teamscan_id });
-                    table.ForeignKey(
-                        name: "FK_tbl_teamscan_members_tbl_teammembers_teammember_id",
-                        column: x => x.teammember_id,
-                        principalTable: "tbl_teammembers",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_tbl_teamscan_members_tbl_teamscans_teamscan_id",
                         column: x => x.teamscan_id,
                         principalTable: "tbl_teamscans",
                         principalColumn: "id",
@@ -619,7 +594,7 @@ namespace DAL.Migrations
                     { 1, 14, "Als het team zijn collectieve resultaten niet haalt gaat elk teamlid spontaan zijn verantwoordelijkheid opnemen om het algemene teamresultaat te verbeteren." },
                     { 1, 9, "Het team heeft een reputatie van hoge prestaties." },
                     { 1, 3, "Teamleden zijn snel in het benoemen van de bijdragen en de successen van de anderen." },
-                    { 1, 36, "eden geven elkaar eerlijke, constructieve en niet manipulerende feedback aan elkaar." },
+                    { 1, 36, "Teamleden geven elkaar eerlijke, constructieve en niet manipulerende feedback aan elkaar." },
                     { 1, 35, "Teamleden houden steeds aan hun beloften en afspraken naar elkaar." },
                     { 1, 29, "Het team bereikt consistent zijn doelstellingen." },
                     { 1, 21, "Het team zorgt ervoor dat de minder presterende teamleden extra druk en een verhoogde verwachting tot presteren voelen." },
@@ -739,11 +714,6 @@ namespace DAL.Migrations
                 column: "teamleader_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tbl_teamscan_members_teamscan_id",
-                table: "tbl_teamscan_members",
-                column: "teamscan_id");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_tbl_teamscans_startedby_id",
                 table: "tbl_teamscans",
                 column: "startedby_id");
@@ -792,16 +762,7 @@ namespace DAL.Migrations
                 name: "tbl_role_translations");
 
             migrationBuilder.DropTable(
-                name: "tbl_teamscan_members");
-
-            migrationBuilder.DropTable(
                 name: "tbl_user_roles");
-
-            migrationBuilder.DropTable(
-                name: "tbl_interpretations");
-
-            migrationBuilder.DropTable(
-                name: "tbl_questions");
 
             migrationBuilder.DropTable(
                 name: "tbl_teammembers");
@@ -810,16 +771,22 @@ namespace DAL.Migrations
                 name: "tbl_teamscans");
 
             migrationBuilder.DropTable(
+                name: "tbl_interpretations");
+
+            migrationBuilder.DropTable(
+                name: "tbl_questions");
+
+            migrationBuilder.DropTable(
                 name: "tbl_roles");
+
+            migrationBuilder.DropTable(
+                name: "tbl_teams");
 
             migrationBuilder.DropTable(
                 name: "tbl_levels");
 
             migrationBuilder.DropTable(
                 name: "tbl_dysfunctions");
-
-            migrationBuilder.DropTable(
-                name: "tbl_teams");
 
             migrationBuilder.DropTable(
                 name: "tbl_users");

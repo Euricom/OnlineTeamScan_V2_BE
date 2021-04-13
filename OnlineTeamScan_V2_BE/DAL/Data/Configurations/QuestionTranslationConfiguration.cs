@@ -65,7 +65,7 @@ namespace DAL.Data.Configurations
                new QuestionTranslation { QuestionId = 33, LanguageId = 1, Text = "Teamleden kunnen makkelijk en spontaan privé zaken met elkaar bespreken." },
                new QuestionTranslation { QuestionId = 34, LanguageId = 1, Text = "Het team houdt zich aan genomen beslissingen." },
                new QuestionTranslation { QuestionId = 35, LanguageId = 1, Text = "Teamleden houden steeds aan hun beloften en afspraken naar elkaar." },
-               new QuestionTranslation { QuestionId = 36, LanguageId = 1, Text = "eden geven elkaar eerlijke, constructieve en niet manipulerende feedback aan elkaar." },
+               new QuestionTranslation { QuestionId = 36, LanguageId = 1, Text = "Teamleden geven elkaar eerlijke, constructieve en niet manipulerende feedback aan elkaar." },
                new QuestionTranslation { QuestionId = 37, LanguageId = 1, Text = "Teamleden hechten weinig belang aan titels, status en aanzien." },
                new QuestionTranslation { QuestionId = 38, LanguageId = 1, Text = "Teamleden steunen groepsbeslissingen, zelfs als dat indruist tegen hun eigen persoonlijke mening." }
                );

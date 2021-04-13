@@ -1,5 +1,6 @@
 ﻿using DAL.Data;
 using DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace DAL.Repositories.TeamscanRepositories
             entry.Property(x => x.ScoreCommitment).IsModified = true;
             entry.Property(x => x.ScoreAccountability).IsModified = true;
             entry.Property(x => x.ScoreResults).IsModified = true;
+            entry.Property(x => x.EndDate).IsModified = true;
 
             return entry.Entity;
         }

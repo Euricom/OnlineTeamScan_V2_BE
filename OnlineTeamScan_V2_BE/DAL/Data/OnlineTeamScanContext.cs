@@ -17,7 +17,6 @@ namespace DAL.Data
         public DbSet<Team> Teams { get; set; }
         public DbSet<TeamMember> TeamMembers { get; set; }
         public DbSet<Teamscan> Teamscans { get; set; }
-        public DbSet<TeamscanMember> TeamscanMembers { get; set; }
         public DbSet<IndividualScore> IndividualScores { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<User> Users { get; set; }
@@ -38,7 +37,6 @@ namespace DAL.Data
             modelBuilder.ApplyConfiguration(new TeamConfiguration());
             modelBuilder.ApplyConfiguration(new TeamMemberConfiguration());
             modelBuilder.ApplyConfiguration(new TeamscanConfiguration());
-            modelBuilder.ApplyConfiguration(new TeamscanMemberConfiguration());
             modelBuilder.ApplyConfiguration(new IndividualScoreConfiguration());
             modelBuilder.ApplyConfiguration(new LanguageConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());

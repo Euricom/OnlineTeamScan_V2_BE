@@ -19,7 +19,6 @@ namespace API.Controllers
             _service = service;
         }
 
-
         [HttpGet("team/{teamId}")]
         public ActionResult<IEnumerable<TeamscanReadDto>> GetAllTeamscansByTeam(int teamId)
         {

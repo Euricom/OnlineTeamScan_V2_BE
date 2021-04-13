@@ -4,14 +4,16 @@ using DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(OnlineTeamScanContext))]
-    partial class OnlineTeamScanContextModelSnapshot : ModelSnapshot
+    [Migration("20210412105451_Initial-Migration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,33 +155,23 @@ namespace DAL.Migrations
                         .HasColumnName("has_answered");
 
                     b.Property<decimal>("ScoreAccountability")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(3,2)")
-                        .HasDefaultValue(0m)
                         .HasColumnName("score_accountability");
 
                     b.Property<decimal>("ScoreCommitment")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(3,2)")
-                        .HasDefaultValue(0m)
                         .HasColumnName("score_commitment");
 
                     b.Property<decimal>("ScoreConflict")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(3,2)")
-                        .HasDefaultValue(0m)
                         .HasColumnName("score_conflict");
 
                     b.Property<decimal>("ScoreResults")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(3,2)")
-                        .HasDefaultValue(0m)
                         .HasColumnName("score_results");
 
                     b.Property<decimal>("ScoreTrust")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(3,2)")
-                        .HasDefaultValue(0m)
                         .HasColumnName("score_trust");
 
                     b.Property<int>("TeamMemberId")

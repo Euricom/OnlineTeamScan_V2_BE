@@ -12,6 +12,6 @@ namespace Common.DTOs.QuestionDTO
         public int Id { get; set; }
         public byte Number { get; set; }
 
-        public DysfunctionReadDto Dysfunction { get; set; }
+        public int DysfunctionId { get; set; }
     }
 }
