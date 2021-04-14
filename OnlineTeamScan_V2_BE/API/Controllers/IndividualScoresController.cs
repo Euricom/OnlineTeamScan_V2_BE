@@ -37,21 +37,6 @@ namespace API.Controllers
         public ActionResult<IEnumerable<IndividualScoreReadDto>> GetAllIndividualScores()
         {
             return Ok(_service.GetAllIndividualScores());
-        }
-
-        [HttpPost("{teamMemberId}/{teamscanId}")]
-        public ActionResult<IndividualScoreReadDto> AddScore(int teamMemberId, int teamscanId, [FromBody] List<AnswerReadDto> list)
-        {
-            try
-            {
-                var individualScore = _service.AddIndividualScore(teamMemberId, teamscanId, list);
-                _service.CalculateTeamscore(teamscanId);
-                return CreatedAtAction(nameof(GetIndividualScoreById), new { Id = individualScore.Id }, individualScore);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }          
-        }
+        }    
     }
 }

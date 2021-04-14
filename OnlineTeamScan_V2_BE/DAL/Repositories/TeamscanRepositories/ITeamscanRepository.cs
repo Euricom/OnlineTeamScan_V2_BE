@@ -9,8 +9,9 @@ namespace DAL.Repositories.TeamscanRepositories
 {
     public interface ITeamscanRepository : IGenericRepository<Teamscan>
     {
-        public Teamscan UpdateScores(Teamscan teamscan);
+        public Teamscan UpdateScores(Teamscan teamscan);  
         public IEnumerable<Teamscan> GetAllTeamscansByTeam(int teamId);
         public Teamscan GetPreviousTeamscan(int teamId, int teamNumber);
+        public int? GetLatestTeamscanNumber(int teamId);
     }
 }

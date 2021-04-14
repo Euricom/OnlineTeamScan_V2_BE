@@ -12,7 +12,6 @@ namespace BL.Services.IndividualScoreServices
     {
         public IndividualScoreReadDto GetIndividualScoreById(int id);
         public IEnumerable<IndividualScoreReadDto> GetAllIndividualScores();
-        public IndividualScoreReadDto AddIndividualScore(int teamMemberId, int teamscanId, List<AnswerReadDto> list);
         public void CalculateTeamscore(int teamscanId);
     }
 }

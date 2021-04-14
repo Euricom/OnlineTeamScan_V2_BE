@@ -34,10 +34,19 @@ namespace DAL.Repositories.TeamRepositories
             return GetAll(filter: team => team.TeamleaderId == userId, includeProperties: x => x.Teamscans);
         }
 
-        public Team UpdateTeam(Team team)
+        public Team UpdateTeamName(Team team)
         {
             var entry = _context.Entry(team);
             entry.Property(x => x.Name).IsModified = true;
+
+            return entry.Entity;
+        }
+
+        public Team UpdateIsTeamscanActive(Team team)
+        {
+            team.IsTeamscanActive = true;
+            var entry = _context.Entry(team);
+            entry.Property(x => x.IsTeamscanActive).IsModified = true;
 
             return entry.Entity;
         }

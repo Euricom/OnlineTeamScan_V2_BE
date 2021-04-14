@@ -8,12 +8,10 @@ namespace Common.DTOs.TeamscanDTO
 {
     public class TeamscanCreateDto
     {
+        public int StartedById { get; set; }
+        public int TeamId { get; set; }
         public string Title { get; set; }
-        public DateTime? EndDate { get; set; }
-        public decimal ScoreTrust { get; set; }
-        public decimal ScoreConflict { get; set; }
-        public decimal ScoreCommitment { get; set; }
-        public decimal ScoreAccountability { get; set; }
-        public decimal ScoreResults { get; set; }
+        public int Number { get; set; }
+        public DateTime StartDate { get; set; }
     }
 }

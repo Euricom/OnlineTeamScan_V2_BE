@@ -79,11 +79,11 @@ namespace BL.Services.TeamServices
             }
         }
 
-        public TeamReadDto UpdateTeam(TeamUpdateDto teamUpdateDto)
+        public TeamReadDto UpdateTeamName(TeamUpdateDto teamUpdateDto)
         {
             try
             {
-                var updatedTeam = _unitOfWork.TeamRepository.UpdateTeam(_mapper.Map<Team>(teamUpdateDto));
+                var updatedTeam = _unitOfWork.TeamRepository.UpdateTeamName(_mapper.Map<Team>(teamUpdateDto));
                 _unitOfWork.Commit();
                 return _mapper.Map<TeamReadDto>(updatedTeam);
             }
