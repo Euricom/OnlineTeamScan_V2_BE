@@ -16,12 +16,12 @@ namespace Tests.Tests
         private readonly Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
         private readonly IMapper _mapper = MapperConfig.Initialize();
 
-        private int id = 1;
-        private string email = "john.smith@gmail.com";
-        private string firstname = "John";
-        private string lastname = "Smith";
-        private bool isActive = true;
-        private int teamId = 1;
+        private readonly int id = 1;
+        private readonly string email = "john.smith@gmail.com";
+        private readonly string firstname = "John";
+        private readonly string lastname = "Smith";
+        private readonly bool isActive = true;
+        private readonly int teamId = 1;
 
         public TeamMemberServiceTests()
         {
@@ -31,7 +31,6 @@ namespace Tests.Tests
         [Fact]
         public void GetTeamMemberById_ShouldReturnTeamMember_WhenTeamMemberExists()
         {
-            // Arrange
             var teamMember = new TeamMember
             {
                 Id = id,
@@ -44,10 +43,8 @@ namespace Tests.Tests
 
             _unitOfWork.Setup(x => x.TeamMemberRepository.GetById(id)).Returns(teamMember);
 
-            // Act
             var result = _service.GetTeamMemberById(id);
 
-            // Assert
             Assert.Equal(id, result.Id);
             Assert.Equal(email, result.Email);
             Assert.Equal(firstname, result.Firstname);
@@ -58,20 +55,16 @@ namespace Tests.Tests
         [Fact]
         public void GetTeamMemberById_ShouldReturnNull_WhenTeamMemberDoesNotExists()
         {
-            // Arrange
             _unitOfWork.Setup(x => x.TeamMemberRepository.GetById(It.IsAny<int>())).Returns(() => null);
 
-            // Act
             var result = _service.GetTeamMemberById(1);
 
-            // Assert
             Assert.Null(result);
         }
 
         [Fact]
         public void AddTeamMember_ShouldAddTeamMember_WhenValidTeamMember()
-        {
-            // Arrange            
+        {         
             var teamMemberCreateDto = new TeamMemberCreateDto
             {
                 TeamId = teamId,
@@ -96,10 +89,8 @@ namespace Tests.Tests
             && x.TeamId == teamMemberCreateDto.TeamId)))
                 .Returns(newTeamMember);           
 
-            // Act
             var result = _service.AddTeamMember(teamMemberCreateDto);
 
-            // Assert
             Assert.Equal(id, result.Id);
             Assert.Equal(email, result.Email);
             Assert.Equal(firstname, result.Firstname);
@@ -109,8 +100,7 @@ namespace Tests.Tests
 
         [Fact]
         public void AddTeamMember_ShouldThrowException_WhenDuplicateTeamMember()
-        {
-            // Arrange            
+        {           
             var teamMemberCreateDto = new TeamMemberCreateDto
             {
                 TeamId = teamId,
@@ -132,17 +122,14 @@ namespace Tests.Tests
             _unitOfWork.Setup(x => x.TeamMemberRepository.Add(It.IsAny<TeamMember>())).Returns(newTeamMember);
             _unitOfWork.Setup(x => x.Commit()).Throws(new DbUpdateException());
 
-            // Act
             var result = Record.Exception(() => _service.AddTeamMember(teamMemberCreateDto));
 
-            // Assert
             Assert.IsType<DbUpdateException>(result);
         }
 
         [Fact]
         public void UpdateTeamMember_ShouldUpdateTeamMember_WhenValidTeamMember()
-        {
-            // Arrange            
+        {           
             var teamMemberUpdateDto = new TeamMemberUpdateDto
             {
                 Id = id,
@@ -169,10 +156,8 @@ namespace Tests.Tests
             && x.IsActive == teamMemberUpdateDto.IsActive)))
                 .Returns(updatedTeamMember);           
 
-            // Act
             var result = _service.UpdateTeamMember(teamMemberUpdateDto);
 
-            // Assert
             Assert.Equal(id, result.Id);
             Assert.Equal(email, result.Email);
             Assert.Equal(firstname, result.Firstname);
@@ -182,8 +167,7 @@ namespace Tests.Tests
 
         [Fact]
         public void UpdateTeamMember_ShouldThrowException_WhenDuplicateTeamMember()
-        {
-            // Arrange            
+        {          
             var teamMemberUpdateDto = new TeamMemberUpdateDto
             {
                 Id = id,
@@ -206,10 +190,8 @@ namespace Tests.Tests
             _unitOfWork.Setup(x => x.TeamMemberRepository.UpdateTeamMember(It.IsAny<TeamMember>())).Returns(updatedTeamMember);
             _unitOfWork.Setup(x => x.Commit()).Throws(new DbUpdateException());
 
-            // Act
             var result = Record.Exception(() => _service.UpdateTeamMember(teamMemberUpdateDto));
 
-            // Assert
             Assert.IsType<DbUpdateException>(result);
         }
     }
