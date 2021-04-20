@@ -29,6 +29,7 @@ namespace BL.Services.IndividualScoreServices
 
         public IndividualScoreReadDto GetIndividualScoreByIdIncludingTeamscan(Guid id)
         {
+
             var individualScore = _unitOfWork.IndividualScoreRepository.GetIndividualScoreByIdIncludingTeamscan(id);
 
             if (individualScore == null)
@@ -46,12 +47,7 @@ namespace BL.Services.IndividualScoreServices
 
             return _mapper.Map<IndividualScoreReadDto>(individualScore);
         }
-
-
-
-
-
-
+        
         public IndividualScoreReadDto UpdateIndividualScore(Guid id, List<AnswerReadDto> list)
         {           
             var individualScoreToUpdate = _unitOfWork.IndividualScoreRepository.GetIndividualScoreById(id);
