@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(OnlineTeamScanContext))]
-    [Migration("20210324103744_InitialMigration")]
+    [Migration("20210415094025_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -143,30 +143,45 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.IndividualScore", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
+
+                    b.Property<bool>("HasAnswered")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("has_answered");
 
                     b.Property<decimal>("ScoreAccountability")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(3,2)")
+                        .HasDefaultValue(0m)
                         .HasColumnName("score_accountability");
 
                     b.Property<decimal>("ScoreCommitment")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(3,2)")
+                        .HasDefaultValue(0m)
                         .HasColumnName("score_commitment");
 
                     b.Property<decimal>("ScoreConflict")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(3,2)")
+                        .HasDefaultValue(0m)
                         .HasColumnName("score_conflict");
 
                     b.Property<decimal>("ScoreResults")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(3,2)")
+                        .HasDefaultValue(0m)
                         .HasColumnName("score_results");
 
                     b.Property<decimal>("ScoreTrust")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(3,2)")
+                        .HasDefaultValue(0m)
                         .HasColumnName("score_trust");
 
                     b.Property<int>("TeamMemberId")
@@ -1308,29 +1323,6 @@ namespace DAL.Migrations
                     b.ToTable("tbl_teamscans");
                 });
 
-            modelBuilder.Entity("DAL.Models.TeamscanMember", b =>
-                {
-                    b.Property<int>("TeamMemberId")
-                        .HasColumnType("int")
-                        .HasColumnName("teammember_id");
-
-                    b.Property<int>("TeamscanId")
-                        .HasColumnType("int")
-                        .HasColumnName("teamscan_id");
-
-                    b.Property<bool>("HasAnswered")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("has_answered");
-
-                    b.HasKey("TeamMemberId", "TeamscanId");
-
-                    b.HasIndex("TeamscanId");
-
-                    b.ToTable("tbl_teamscan_members");
-                });
-
             modelBuilder.Entity("DAL.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -1609,25 +1601,6 @@ namespace DAL.Migrations
                     b.Navigation("StartedBy");
 
                     b.Navigation("Team");
-                });
-
-            modelBuilder.Entity("DAL.Models.TeamscanMember", b =>
-                {
-                    b.HasOne("DAL.Models.TeamMember", "TeamMember")
-                        .WithMany()
-                        .HasForeignKey("TeamMemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DAL.Models.Teamscan", "Teamscan")
-                        .WithMany()
-                        .HasForeignKey("TeamscanId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("TeamMember");
-
-                    b.Navigation("Teamscan");
                 });
 
             modelBuilder.Entity("DAL.Models.User", b =>
