@@ -28,7 +28,12 @@ namespace BL.Services.IndividualScoreServices
 
         public IndividualScoreReadDto GetIndividualScoreById(int id)
         {
-            return _mapper.Map<IndividualScoreReadDto>(_unitOfWork.IndividualScoreRepository.GetById(id));
+            var individualScore = _unitOfWork.IndividualScoreRepository.GetById(id);
+
+            if (individualScore == null)
+                return null;
+
+            return _mapper.Map<IndividualScoreReadDto>(individualScore);
         }
 
         public IEnumerable<IndividualScoreReadDto> GetAllIndividualScores()

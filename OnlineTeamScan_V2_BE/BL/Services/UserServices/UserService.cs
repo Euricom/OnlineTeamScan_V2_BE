@@ -31,12 +31,22 @@ namespace BL.Services.UserServices
 
         public UserReadDto GetUserByEmail(string email)
         {
-            return _mapper.Map<UserReadDto>(_unitOfWork.UserRepository.GetAll(u => u.Email == email).FirstOrDefault());
+            var user = _unitOfWork.UserRepository.GetAll(u => u.Email == email).FirstOrDefault();
+
+            if (user == null)
+                return null;
+
+            return _mapper.Map<UserReadDto>(user);
         }
 
         public UserReadDto GetUserById(int id)
         {
-            return _mapper.Map<UserReadDto>(_unitOfWork.UserRepository.GetById(id));
+            var user = _unitOfWork.UserRepository.GetById(id);
+
+            if (user == null)
+                return null;
+
+            return _mapper.Map<UserReadDto>(user);
         }
     }
 }
