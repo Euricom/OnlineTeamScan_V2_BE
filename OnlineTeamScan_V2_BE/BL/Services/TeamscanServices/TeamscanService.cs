@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BL.Mail;
 using BL.MailTemplates;
 using Common.DTOs.IndividualScoreDTO;
 using Common.DTOs.TeamDTO;
@@ -116,7 +117,9 @@ namespace BL.Services.TeamscanServices
                 _unitOfWork.IndividualScoreRepository.Add(_mapper.Map<IndividualScore>(newIndividualScore));
 
                 if(teamMember.Email != teamleader.Email)
-                    SendInviteTeamscanMailAsync(teamMember, team, newIndividualScore.Id).Wait();
+                {
+                    Mailer.InviteTeamscan(teamMember, team, teamleader, newIndividualScore.Id).Wait();
+                }    
             }
         }
 
@@ -129,28 +132,6 @@ namespace BL.Services.TeamscanServices
 
             var updatedteam = _unitOfWork.TeamRepository.UpdateIsTeamscanActive(teamToUpdate);
             return _mapper.Map<TeamReadDto>(updatedteam);
-        }
-
-        public async Task SendInviteTeamscanMailAsync(TeamMember teamMember, Team team, Guid individualScoreId)
-        {
-            var sendGridClient = new SendGridClient("API_KEY");
-            var sendGridMessage = new SendGridMessage();
-            sendGridMessage.SetFrom("yanu.szapinszky@euri.com", "Euricom");
-            sendGridMessage.AddTo(teamMember.Email, $"{teamMember.Firstname} {teamMember.Lastname}");
-
-            var teamleader = _unitOfWork.UserRepository.GetById(team.TeamleaderId);
-
-            var mailtemplate = new MailTemplateInviteTeamscan
-            {
-                Name = $"{teamMember.Firstname} {teamMember.Lastname}",
-                TeamleaderName = $"{teamleader.Firstname} {teamleader.Lastname}",
-                TeamName = team.Name,
-                Url = $"http://localhost:3000/teamscan/{individualScoreId}"
-            };
-            sendGridMessage.SetTemplateId(mailtemplate.TemplateId);
-            sendGridMessage.SetTemplateData(mailtemplate);
-
-            var response = await sendGridClient.SendEmailAsync(sendGridMessage);
         }
     }
 }
