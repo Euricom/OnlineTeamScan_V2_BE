@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Common.DTOs.QuestionDTO;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -14,7 +15,7 @@ namespace DAL.Data.Configurations
     {
         public QuestionConfiguration()
         {
-
+            CreateMap<Question, QuestionReadDto>();
         }
 
         public void Configure(EntityTypeBuilder<Question> builder)

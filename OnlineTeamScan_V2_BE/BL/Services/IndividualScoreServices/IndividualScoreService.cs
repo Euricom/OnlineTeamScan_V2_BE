@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Common.DTOs.AnswerDTO;
 using Common.DTOs.IndividualScoreDTO;
+using Common.DTOs.TeamDTO;
 using Common.DTOs.TeamscanDTO;
 using DAL.Models;
 using DAL.Repositories;
@@ -26,9 +27,10 @@ namespace BL.Services.IndividualScoreServices
             _mapper = mapper;
         }
 
-        public IndividualScoreReadDto GetIndividualScoreById(int id)
+        public IndividualScoreReadDto GetIndividualScoreByIdIncludingTeamscan(Guid id)
         {
-            var individualScore = _unitOfWork.IndividualScoreRepository.GetById(id);
+
+            var individualScore = _unitOfWork.IndividualScoreRepository.GetIndividualScoreByIdIncludingTeamscan(id);
 
             if (individualScore == null)
                 return null;
@@ -36,14 +38,104 @@ namespace BL.Services.IndividualScoreServices
             return _mapper.Map<IndividualScoreReadDto>(individualScore);
         }
 
-        public IEnumerable<IndividualScoreReadDto> GetAllIndividualScores()
+        public IndividualScoreReadDto GetIndividualScoreById(Guid id)
         {
-            return _mapper.Map<IEnumerable<IndividualScoreReadDto>>(_unitOfWork.IndividualScoreRepository.GetAll());
+            var individualScore = _unitOfWork.IndividualScoreRepository.GetIndividualScoreById(id);
+
+            if (individualScore == null)
+                return null;
+
+            return _mapper.Map<IndividualScoreReadDto>(individualScore);
         }
-      
-        public IndividualScoreReadDto AddIndividualScore(int teamMemberId, int teamscanId, List<AnswerReadDto> list)
+        
+        public IndividualScoreReadDto UpdateIndividualScore(Guid id, List<AnswerReadDto> list)
+        {           
+            var individualScoreToUpdate = _unitOfWork.IndividualScoreRepository.GetIndividualScoreById(id);
+
+            if (individualScoreToUpdate == null)
+                throw new Exception($"Individual score not found");
+
+            if (individualScoreToUpdate.HasAnswered == true)
+                throw new Exception($"This team member has already answered the teamscan");
+
+            var calculatedIndividualScore = CalculateIndividualScore(individualScoreToUpdate.Id, list);
+
+            try
+            {
+                var updatedIndividualScore = _unitOfWork.IndividualScoreRepository.UpdateIndividualScore(_mapper.Map<IndividualScore>(calculatedIndividualScore));
+                UpdateTeamscore(individualScoreToUpdate.TeamscanId, _mapper.Map<IndividualScore>(calculatedIndividualScore));
+                _unitOfWork.Commit();
+                return _mapper.Map<IndividualScoreReadDto>(updatedIndividualScore);
+            }
+            catch (Exception ex)
+            {
+                _unitOfWork.Rollback();
+                throw new Exception($"Something went wrong while updating the individual score", ex);
+            }
+        }
+
+        public void UpdateTeamscore(int teamscanId, IndividualScore updatedScore)
         {
-            int sumTrust = 0, sumConflict = 0, sumCommitment = 0, sumAccountability = 0, sumResults = 0;
+            var teamscanToUpdate = _unitOfWork.TeamscanRepository.GetById(teamscanId);
+
+            if (teamscanToUpdate == null)
+                throw new Exception($"Teamscan not found");
+
+            if (teamscanToUpdate.EndDate != null)
+                throw new Exception($"Teamscan is finished");
+
+            var notAnsweredList = _unitOfWork.IndividualScoreRepository.GetAll(score => score.HasAnswered == false && score.TeamscanId == teamscanId && score.Id != updatedScore.Id);
+            bool isTeamscanFinished = notAnsweredList.Count() == 0 ? true : false;
+
+            var calculatedTeamscan = CalculateTeamscore(teamscanId, updatedScore, isTeamscanFinished);
+            _unitOfWork.TeamscanRepository.UpdateScores(_mapper.Map<Teamscan>(calculatedTeamscan));
+
+            if (isTeamscanFinished)
+                UpdateLastTeamscanOfTeam(teamscanToUpdate.TeamId, calculatedTeamscan.EndDate);
+        }
+
+        public void UpdateLastTeamscanOfTeam(int teamId, DateTime? endDate)
+        {
+            TeamUpdateDto teamUpdateDto = new TeamUpdateDto
+            {
+                Id = teamId,
+                IsTeamscanActive = false,
+                LastTeamScan = endDate
+            };
+
+            _unitOfWork.TeamRepository.UpdateLastTeamscanOfTeam(_mapper.Map<Team>(teamUpdateDto));
+        }
+
+        public TeamscanUpdateDto CalculateTeamscore(int teamscanId, IndividualScore updatedScore, bool isTeamscanFinished)
+        {
+            decimal sumTrust = 0, sumConflict = 0, sumCommitment = 0, sumAccountability = 0, sumResults = 0;
+            var individualScores = _unitOfWork.IndividualScoreRepository.GetAllAnsweredByTeamscan(teamscanId).ToList();
+            individualScores.Add(updatedScore);
+            int totalScores = individualScores.Count();            
+
+            individualScores.ForEach(score => sumTrust += score.ScoreTrust);
+            individualScores.ForEach(score => sumConflict += score.ScoreConflict);
+            individualScores.ForEach(score => sumCommitment += score.ScoreCommitment);
+            individualScores.ForEach(score => sumAccountability += score.ScoreAccountability);
+            individualScores.ForEach(score => sumResults += score.ScoreResults);
+
+            TeamscanUpdateDto teamscanUpdateDto = new TeamscanUpdateDto
+            {
+                Id = teamscanId,
+                EndDate = isTeamscanFinished ? DateTime.Today : null,
+                ScoreTrust = totalScores != 0 ? Math.Round(sumTrust / totalScores, 2) : 0,
+                ScoreConflict = totalScores != 0 ? Math.Round(sumConflict / totalScores, 2) : 0,
+                ScoreCommitment = totalScores != 0 ? Math.Round(sumCommitment / totalScores, 2) : 0,
+                ScoreAccountability = totalScores != 0 ? Math.Round(sumAccountability / totalScores, 2) : 0,
+                ScoreResults = totalScores != 0 ? Math.Round(sumResults / totalScores, 2) : 0
+            };
+
+            return teamscanUpdateDto;            
+        }
+
+        public IndividualScoreUpdateDto CalculateIndividualScore(Guid id, List<AnswerReadDto> list)
+        {
+            decimal sumTrust = 0, sumConflict = 0, sumCommitment = 0, sumAccountability = 0, sumResults = 0;
 
             int totalTrust = list.Where(item => item.DysfunctionId == 1).Count();
             int totalConflict = list.Where(item => item.DysfunctionId == 2).Count();
@@ -51,81 +143,40 @@ namespace BL.Services.IndividualScoreServices
             int totalAccountability = list.Where(item => item.DysfunctionId == 4).Count();
             int totalResults = list.Where(item => item.DysfunctionId == 5).Count();
 
-            foreach (var item in list)
+            foreach (var answer in list)
             {
-                switch (item.DysfunctionId)
+                switch (answer.DysfunctionId)
                 {
                     case 1:
-                        sumTrust += item.Score;
+                        sumTrust += answer.Score;
                         break;
                     case 2:
-                        sumConflict += item.Score;
+                        sumConflict += answer.Score;
                         break;
                     case 3:
-                        sumCommitment += item.Score;
+                        sumCommitment += answer.Score;
                         break;
                     case 4:
-                        sumAccountability += item.Score;
+                        sumAccountability += answer.Score;
                         break;
                     case 5:
-                        sumResults += item.Score;
+                        sumResults += answer.Score;
                         break;
                 }
             }
 
-            IndividualScoreCreateDto individualScoreCreateDto = new IndividualScoreCreateDto
+            IndividualScoreUpdateDto individualScoreUpdateDto = new IndividualScoreUpdateDto
             {
-                TeamMemberId = teamMemberId,
-                TeamscanId = teamscanId,
-                ScoreTrust = totalTrust != 0 ? Math.Round((decimal)sumTrust / totalTrust, 2) : 0,
-                ScoreConflict = totalConflict != 0 ? Math.Round((decimal)sumConflict / totalConflict, 2) : 0,
-                ScoreCommitment = totalCommitment != 0 ? Math.Round((decimal)sumCommitment / totalCommitment, 2) : 0,
-                ScoreAccountability = totalAccountability != 0 ? Math.Round((decimal)sumAccountability / totalAccountability, 2) : 0,
-                ScoreResults = totalResults != 0 ? Math.Round((decimal)sumResults / totalResults, 2) : 0
+                Id = id,
+                HasAnswered = true,
+                ScoreTrust = totalTrust != 0 ? Math.Round(sumTrust / totalTrust, 2) : 0,
+                ScoreConflict = totalConflict != 0 ? Math.Round(sumConflict / totalConflict, 2) : 0,
+                ScoreCommitment = totalCommitment != 0 ? Math.Round(sumCommitment / totalCommitment, 2) : 0,
+                ScoreAccountability = totalAccountability != 0 ? Math.Round(sumAccountability / totalAccountability, 2) : 0,
+                ScoreResults = totalResults != 0 ? Math.Round(sumResults / totalResults, 2) : 0
             };
 
-            try
-            {
-                var newIndividualScore = _unitOfWork.IndividualScoreRepository.Add(_mapper.Map<IndividualScore>(individualScoreCreateDto));
-                _unitOfWork.Commit();
-                return _mapper.Map<IndividualScoreReadDto>(newIndividualScore);
-            }
-            catch (DbUpdateException ex) when ((ex.InnerException as SqlException)?.Number == 547)
-            {
-                _unitOfWork.Rollback();
-                throw new Exception($"Please enter a valid teamscanid and teammemberid", ex);
-            }
-            catch (DbUpdateException ex) when ((ex.InnerException as SqlException)?.Number == 2601)
-            {
-                _unitOfWork.Rollback();
-                throw new Exception($"Cannot have a duplicate score with teammemberid {teamMemberId} and teamscanid {teamscanId}", ex);
-            }
-        }
-
-        public void CalculateTeamscore(int teamscanId)
-        {
-            var individualScores = _unitOfWork.IndividualScoreRepository.GetAllByTeamscan(teamscanId);
-            int totalScores = individualScores.Count();
-            decimal sumTrust = 0, sumConflict = 0, sumCommitment = 0, sumAccountability = 0, sumResults = 0;
-
-            individualScores.ToList().ForEach(i => sumTrust += i.ScoreTrust);
-            individualScores.ToList().ForEach(i => sumConflict += i.ScoreConflict);
-            individualScores.ToList().ForEach(i => sumCommitment += i.ScoreCommitment);
-            individualScores.ToList().ForEach(i => sumAccountability += i.ScoreAccountability);
-            individualScores.ToList().ForEach(i => sumResults += i.ScoreResults);
-
-            TeamscanUpdateDto teamscanUpdateDto = new TeamscanUpdateDto
-            {
-                Id = teamscanId,
-                ScoreTrust = Math.Round(sumTrust / totalScores, 2),
-                ScoreConflict = Math.Round(sumConflict / totalScores, 2),
-                ScoreCommitment = Math.Round(sumCommitment / totalScores, 2),
-                ScoreAccountability = Math.Round(sumAccountability / totalScores, 2),
-                ScoreResults = Math.Round(sumResults / totalScores, 2)
-            };
-
-            _unitOfWork.TeamscanRepository.UpdateScores(_mapper.Map<Teamscan>(teamscanUpdateDto));
-            _unitOfWork.Commit();
+            return individualScoreUpdateDto;
         }
     }
 }

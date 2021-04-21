@@ -3,6 +3,7 @@ using BL.Services.IndividualScoreServices;
 using BL.Services.InterpretationServices;
 using BL.Services.InterpretationTranslationServices;
 using BL.Services.LevelServices;
+using BL.Services.QuestionTranslationServices;
 using BL.Services.TeamMemberServices;
 using BL.Services.TeamscanServices;
 using BL.Services.TeamServices;
@@ -25,6 +26,7 @@ namespace BL
             services.AddTransient<IInterpretationTranslationService, InterpretationTranslationService>();
             services.AddTransient<IInterpretationService, InterpretationService>();
             services.AddTransient<ITeamMemberService, TeamMemberService>();
+            services.AddTransient<IQuestionTranslationService, QuestionTranslationService>();
             return services;
         }
 

@@ -20,14 +20,14 @@ namespace BL.Services.TeamscanServices
             _mapper = mapper;
         }
 
-        public TeamscanReadDto GetTeamscanById(int teamscanId)
+        public TeamscanReadDto GetTeamscanById(int id)
         {
-            var teamscan = _unitOfWOrk.TeamscanRepository.GetById(teamscanId);
+            var teamscan = _unitOfWOrk.TeamscanRepository.GetById(id);
 
             if (teamscan == null)
                 return null;
 
-            return _mapper.Map<TeamscanReadDto>(teamscan);
+            return _mapper.Map<TeamscanReadDto>(teamscan);      
         }
 
         public IEnumerable<TeamscanReadDto> GetAllTeamscansByTeam(int teamId)
@@ -40,16 +40,15 @@ namespace BL.Services.TeamscanServices
             return _mapper.Map<IEnumerable<TeamscanReadDto>>(teamscan);
         }
 
-        public TeamscanReadDto GetPreviousTeamscan(int teamscanId)
+        public TeamscanReadDto GetPreviousTeamscan(int id)
         {
-            var teamscan = _unitOfWOrk.TeamscanRepository.GetById(teamscanId);
+            var teamscan = _unitOfWOrk.TeamscanRepository.GetById(id);
 
             if (teamscan != null)
-            {
                 return _mapper.Map<TeamscanReadDto>(_unitOfWOrk.TeamscanRepository.GetPreviousTeamscan(teamscan.TeamId, teamscan.Number - 1));
-            }
 
             return null;
         }
+
     }
 }
