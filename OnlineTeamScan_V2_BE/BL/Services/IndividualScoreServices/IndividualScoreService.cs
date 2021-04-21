@@ -29,7 +29,6 @@ namespace BL.Services.IndividualScoreServices
 
         public IndividualScoreReadDto GetIndividualScoreByIdIncludingTeamscan(Guid id)
         {
-
             var individualScore = _unitOfWork.IndividualScoreRepository.GetIndividualScoreByIdIncludingTeamscan(id);
 
             if (individualScore == null)
@@ -47,9 +46,9 @@ namespace BL.Services.IndividualScoreServices
 
             return _mapper.Map<IndividualScoreReadDto>(individualScore);
         }
-        
+
         public IndividualScoreReadDto UpdateIndividualScore(Guid id, List<AnswerReadDto> list)
-        {           
+        {
             var individualScoreToUpdate = _unitOfWork.IndividualScoreRepository.GetIndividualScoreById(id);
 
             if (individualScoreToUpdate == null)
@@ -63,7 +62,7 @@ namespace BL.Services.IndividualScoreServices
             try
             {
                 var updatedIndividualScore = _unitOfWork.IndividualScoreRepository.UpdateIndividualScore(_mapper.Map<IndividualScore>(calculatedIndividualScore));
-                UpdateTeamscore(individualScoreToUpdate.TeamscanId, _mapper.Map<IndividualScore>(calculatedIndividualScore));
+                UpdateTeamscore(individualScoreToUpdate.TeamscanId, updatedIndividualScore);
                 _unitOfWork.Commit();
                 return _mapper.Map<IndividualScoreReadDto>(updatedIndividualScore);
             }
@@ -111,7 +110,7 @@ namespace BL.Services.IndividualScoreServices
             decimal sumTrust = 0, sumConflict = 0, sumCommitment = 0, sumAccountability = 0, sumResults = 0;
             var individualScores = _unitOfWork.IndividualScoreRepository.GetAllAnsweredByTeamscan(teamscanId).ToList();
             individualScores.Add(updatedScore);
-            int totalScores = individualScores.Count();            
+            int totalScores = individualScores.Count();
 
             individualScores.ForEach(score => sumTrust += score.ScoreTrust);
             individualScores.ForEach(score => sumConflict += score.ScoreConflict);
@@ -130,7 +129,7 @@ namespace BL.Services.IndividualScoreServices
                 ScoreResults = totalScores != 0 ? Math.Round(sumResults / totalScores, 2) : 0
             };
 
-            return teamscanUpdateDto;            
+            return teamscanUpdateDto;
         }
 
         public IndividualScoreUpdateDto CalculateIndividualScore(Guid id, List<AnswerReadDto> list)

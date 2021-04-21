@@ -22,7 +22,12 @@ namespace BL.Services.LevelServices
 
         public IEnumerable<LevelReadDto> GetAllLevels()
         {
-            return _mapper.Map<IEnumerable<LevelReadDto>>(_unitOfWOrk.LevelRepository.GetAll());
+            var levels = _unitOfWOrk.LevelRepository.GetAll();
+
+            if (levels == null)
+                return null;
+
+            return _mapper.Map<IEnumerable<LevelReadDto>>(levels);
         }
     }
 }

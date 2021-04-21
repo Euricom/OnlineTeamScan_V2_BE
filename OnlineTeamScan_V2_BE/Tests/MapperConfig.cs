@@ -15,6 +15,7 @@ namespace Tests
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new TeamMemberConfiguration());
+                mc.AddProfile(new IndividualScoreConfiguration());
             });
 
             return mappingConfig.CreateMapper();           
