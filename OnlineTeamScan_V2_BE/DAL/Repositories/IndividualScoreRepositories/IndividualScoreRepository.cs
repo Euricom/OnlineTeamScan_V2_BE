@@ -16,7 +16,7 @@ namespace DAL.Repositories.IndividualScoreRepositories
 
         public IndividualScore GetIndividualScoreByIdIncludingTeamscan(Guid id)
         {
-            return _dbSet.Include(x => x.Teamscan.StartedBy)/*.ThenInclude(x => x.StartedBy)*/.Include(x => x.Teamscan.Team).Where(score => score.Id == id).FirstOrDefault();
+            return _dbSet.Include(x => x.Teamscan.StartedBy).Include(x => x.Teamscan.Team).Where(score => score.Id == id).FirstOrDefault();
         }
 
         public IndividualScore GetIndividualScoreById(Guid id)
