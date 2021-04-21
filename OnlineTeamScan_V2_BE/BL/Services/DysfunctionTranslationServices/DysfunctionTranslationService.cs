@@ -22,7 +22,12 @@ namespace BL.Services.DysfunctionTranslationServices
 
         public IEnumerable<DysfunctionTranslationReadDto> GetAllDysfunctionsByLanguage(int languageId)
         {
-            return _mapper.Map<IEnumerable<DysfunctionTranslationReadDto>>(_unitOfWork.DysfunctionTranslationRepository.GetAllDysfunctionsByLanguage(languageId));
+            var dysfunctionTranslations = _unitOfWork.DysfunctionTranslationRepository.GetAllDysfunctionsByLanguage(languageId);
+
+            if (dysfunctionTranslations == null)
+                return null;
+
+            return _mapper.Map<IEnumerable<DysfunctionTranslationReadDto>>(dysfunctionTranslations);
         }
     }
 }
