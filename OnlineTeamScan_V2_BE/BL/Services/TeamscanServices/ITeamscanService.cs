@@ -1,4 +1,5 @@
-﻿using Common.DTOs.TeamscanDTO;
+﻿using Common.DTOs.TeamDTO;
+using Common.DTOs.TeamscanDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace BL.Services.TeamscanServices
     {
         public TeamscanReadDto GetTeamscanById(int id);
         public IEnumerable<TeamscanReadDto> GetAllTeamscansByTeam(int teamId);
-        public TeamscanReadDto GetPreviousTeamscan(int id);
+        public TeamscanReadDto GetPreviousTeamscan(int teamscanId);
+        public TeamReadDto AddTeamscan(int startedById, int teamId);
     }
 }

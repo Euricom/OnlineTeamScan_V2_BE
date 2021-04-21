@@ -86,14 +86,14 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        public ActionResult<TeamReadDto> UpdateTeam(TeamUpdateDto teamUpdateDto)
+        public ActionResult<TeamReadDto> UpdateTeamName(TeamUpdateDto teamUpdateDto)
         {
             if (teamUpdateDto == null)
                 return BadRequest();
 
             try
             {
-                return Ok(_service.UpdateTeam(teamUpdateDto));
+                return Ok(_service.UpdateTeamName(teamUpdateDto));
             }
             catch (Exception ex)
             {

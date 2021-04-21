@@ -387,19 +387,11 @@ namespace DAL.Migrations
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     teammember_id = table.Column<int>(type: "int", nullable: false),
                     teamscan_id = table.Column<int>(type: "int", nullable: false),
-<<<<<<< HEAD:OnlineTeamScan_V2_BE/DAL/Migrations/20210415094025_InitialMigration.cs
                     score_trust = table.Column<decimal>(type: "decimal(3,2)", nullable: false, defaultValue: 0m),
                     score_conflict = table.Column<decimal>(type: "decimal(3,2)", nullable: false, defaultValue: 0m),
                     score_commitment = table.Column<decimal>(type: "decimal(3,2)", nullable: false, defaultValue: 0m),
                     score_accountability = table.Column<decimal>(type: "decimal(3,2)", nullable: false, defaultValue: 0m),
                     score_results = table.Column<decimal>(type: "decimal(3,2)", nullable: false, defaultValue: 0m),
-=======
-                    score_trust = table.Column<decimal>(type: "decimal(3,2)", nullable: false),
-                    score_conflict = table.Column<decimal>(type: "decimal(3,2)", nullable: false),
-                    score_commitment = table.Column<decimal>(type: "decimal(3,2)", nullable: false),
-                    score_accountability = table.Column<decimal>(type: "decimal(3,2)", nullable: false),
-                    score_results = table.Column<decimal>(type: "decimal(3,2)", nullable: false),
->>>>>>> develop:OnlineTeamScan_V2_BE/DAL/Migrations/20210412105451_Initial-Migration.cs
                     has_answered = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -602,7 +594,7 @@ namespace DAL.Migrations
                     { 1, 14, "Als het team zijn collectieve resultaten niet haalt gaat elk teamlid spontaan zijn verantwoordelijkheid opnemen om het algemene teamresultaat te verbeteren." },
                     { 1, 9, "Het team heeft een reputatie van hoge prestaties." },
                     { 1, 3, "Teamleden zijn snel in het benoemen van de bijdragen en de successen van de anderen." },
-                    { 1, 36, "Teamleden geven elkaar eerlijke, constructieve en niet manipulerende feedback aan elkaar." },
+                    { 1, 36, "eden geven elkaar eerlijke, constructieve en niet manipulerende feedback aan elkaar." },
                     { 1, 35, "Teamleden houden steeds aan hun beloften en afspraken naar elkaar." },
                     { 1, 29, "Het team bereikt consistent zijn doelstellingen." },
                     { 1, 21, "Het team zorgt ervoor dat de minder presterende teamleden extra druk en een verhoogde verwachting tot presteren voelen." },

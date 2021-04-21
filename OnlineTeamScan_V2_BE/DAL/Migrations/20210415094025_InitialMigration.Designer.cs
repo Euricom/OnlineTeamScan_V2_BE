@@ -10,11 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(OnlineTeamScanContext))]
-<<<<<<< HEAD:OnlineTeamScan_V2_BE/DAL/Migrations/20210415094025_InitialMigration.Designer.cs
     [Migration("20210415094025_InitialMigration")]
-=======
-    [Migration("20210412105451_Initial-Migration")]
->>>>>>> develop:OnlineTeamScan_V2_BE/DAL/Migrations/20210412105451_Initial-Migration.Designer.cs
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,7 +18,7 @@ namespace DAL.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
+                .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("DAL.Models.Dysfunction", b =>
@@ -1093,7 +1089,7 @@ namespace DAL.Migrations
                         {
                             QuestionId = 36,
                             LanguageId = 1,
-                            Text = "Teamleden geven elkaar eerlijke, constructieve en niet manipulerende feedback aan elkaar."
+                            Text = "eden geven elkaar eerlijke, constructieve en niet manipulerende feedback aan elkaar."
                         },
                         new
                         {

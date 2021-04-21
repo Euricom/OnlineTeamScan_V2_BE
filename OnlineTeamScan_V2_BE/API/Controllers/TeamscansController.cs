@@ -1,4 +1,5 @@
 ﻿using BL.Services.TeamscanServices;
+using Common.DTOs.TeamDTO;
 using Common.DTOs.TeamscanDTO;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,6 +20,17 @@ namespace API.Controllers
             _service = service;
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<TeamscanReadDto> GetTeamscanById(int id)
+        {
+            var teamscan = _service.GetTeamscanById(id);
+
+            if (teamscan != null)
+                return Ok(teamscan);
+
+            return NotFound();
+        }
+
         [HttpGet("team/{teamId}")]
         public ActionResult<IEnumerable<TeamscanReadDto>> GetAllTeamscansByTeam(int teamId)
         {
@@ -36,6 +48,22 @@ namespace API.Controllers
             }
 
             return Ok(_service.GetTeamscanById(teamscanId));
+        }
+
+        [HttpPost("{startedById}/{teamId}")]
+        public ActionResult<TeamReadDto> AddTeamscan(int startedById, int teamId)
+        {
+            if (startedById == 0 || teamId == 0) return BadRequest();
+
+            try
+            {
+                var updatedTeam = _service.AddTeamscan(startedById, teamId);
+                return CreatedAtAction(nameof(GetTeamscanById), new { Id = updatedTeam.Id }, updatedTeam);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

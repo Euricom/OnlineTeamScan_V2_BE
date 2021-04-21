@@ -22,7 +22,7 @@ namespace DAL.Data.Configurations
         public void Configure(EntityTypeBuilder<IndividualScore> builder)
         {
             builder.ToTable("tbl_individualscores");
-            builder.Property(i => i.Id).HasColumnName("id").ValueGeneratedOnAdd();
+            builder.Property(i => i.Id).HasColumnName("id");
             builder.Property(i => i.TeamMemberId).HasColumnName("teammember_id").IsRequired();
             builder.Property(i => i.TeamscanId).HasColumnName("teamscan_id").IsRequired();
             builder.Property(i => i.ScoreTrust).HasColumnName("score_trust").HasColumnType("decimal(3,2)").HasDefaultValue(0).IsRequired();

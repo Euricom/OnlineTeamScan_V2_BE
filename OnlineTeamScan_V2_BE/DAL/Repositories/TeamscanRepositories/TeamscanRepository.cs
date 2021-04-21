@@ -36,5 +36,10 @@ namespace DAL.Repositories.TeamscanRepositories
         {
             return _dbSet.Where(x => x.TeamId == teamId && x.Number == teamNumber).FirstOrDefault();
         }
+
+        public int? GetLatestTeamscanNumber(int teamId)
+        {
+            return _dbSet.Where(teamscan => teamscan.TeamId == teamId).Max(teamscan => (int?)teamscan.Number);
+        }
     }
 }

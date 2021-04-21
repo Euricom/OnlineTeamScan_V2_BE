@@ -16,6 +16,7 @@ namespace DAL.Data.Configurations
         public TeamscanConfiguration()
         {
             CreateMap<Teamscan, TeamscanReadDto>();
+            CreateMap<TeamscanCreateDto, Teamscan>();
             CreateMap<TeamscanUpdateDto, Teamscan>();
         }
         public void Configure(EntityTypeBuilder<Teamscan> builder)
@@ -27,7 +28,7 @@ namespace DAL.Data.Configurations
             builder.Property(t => t.Title).HasColumnName("title").HasColumnType("varchar(50)").IsRequired();
             builder.Property(t => t.Number).HasColumnName("number").HasColumnType("int").IsRequired();
             builder.Property(t => t.StartDate).HasColumnName("start_date").HasColumnType("date").IsRequired();
-            builder.Property(t => t.EndDate).HasColumnName("end_date").HasColumnType("date");
+            builder.Property(t => t.EndDate).HasColumnName("end_date").HasColumnType("date").HasDefaultValue(null);
             builder.Property(t => t.ScoreTrust).HasColumnName("score_trust").HasColumnType("decimal(3,2)").HasDefaultValue(0).IsRequired();
             builder.Property(t => t.ScoreConflict).HasColumnName("score_conflict").HasColumnType("decimal(3,2)").HasDefaultValue(0).IsRequired();
             builder.Property(t => t.ScoreCommitment).HasColumnName("score_commitment").HasColumnType("decimal(3,2)").HasDefaultValue(0).IsRequired();

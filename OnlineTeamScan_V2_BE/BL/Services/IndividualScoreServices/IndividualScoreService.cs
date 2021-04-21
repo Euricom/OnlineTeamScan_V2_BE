@@ -166,6 +166,7 @@ namespace BL.Services.IndividualScoreServices
             }
 
             IndividualScoreUpdateDto individualScoreUpdateDto = new IndividualScoreUpdateDto
+
             {
                 Id = id,
                 HasAnswered = true,
