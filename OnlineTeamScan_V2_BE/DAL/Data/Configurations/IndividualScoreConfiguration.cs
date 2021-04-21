@@ -16,7 +16,7 @@ namespace DAL.Data.Configurations
         public IndividualScoreConfiguration()
         {
             CreateMap<IndividualScore, IndividualScoreReadDto>();
-            CreateMap<IndividualScoreCreateDto, IndividualScore>();
+            CreateMap<IndividualScoreUpdateDto, IndividualScore>();
         }
 
         public void Configure(EntityTypeBuilder<IndividualScore> builder)

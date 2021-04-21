@@ -3,6 +3,7 @@ using DAL.Repositories.IndividualScoreRepositories;
 using DAL.Repositories.InterpretationRepositories;
 using DAL.Repositories.InterpretationTranslationRepositories;
 using DAL.Repositories.LevelRepositories;
+using DAL.Repositories.QuestionTranslationRepositories;
 using DAL.Repositories.TeamMemberRepositories;
 using DAL.Repositories.TeamRepositories;
 using DAL.Repositories.TeamscanRepositories;
@@ -26,6 +27,7 @@ namespace DAL.Repositories
         public IInterpretationTranslationRepository InterpretationTranslationRepository { get; }
         public IInterpretationRepository InterpretationRepository { get; }
         public ITeamMemberRepository TeamMemberRepository { get; }
+        public IQuestionTranslationRepository QuestionTranslationRepository { get; }
         public void Commit();
 
         public void Rollback();

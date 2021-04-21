@@ -9,6 +9,9 @@ namespace DAL.Repositories.IndividualScoreRepositories
 {
     public interface IIndividualScoreRepository : IGenericRepository<IndividualScore>
     {
-        public IEnumerable<IndividualScore> GetAllByTeamscan(int teamscanId);
+        public IndividualScore GetIndividualScoreByIdIncludingTeamscan(Guid id);
+        public IndividualScore GetIndividualScoreById(Guid id);
+        public IEnumerable<IndividualScore> GetAllAnsweredByTeamscan(int teamscanId);
+        public IndividualScore UpdateIndividualScore(IndividualScore individualScore);
     }
 }

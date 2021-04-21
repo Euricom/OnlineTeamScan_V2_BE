@@ -55,15 +55,15 @@ namespace API.Controllers
         {
             if (startedById == 0 || teamId == 0) return BadRequest();
 
-            /*try
-            {*/
+            try
+            {
                 var updatedTeam = _service.AddTeamscan(startedById, teamId);
                 return CreatedAtAction(nameof(GetTeamscanById), new { Id = updatedTeam.Id }, updatedTeam);
-            /*}
+            }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
-            }*/
+            }
         }
     }
 }

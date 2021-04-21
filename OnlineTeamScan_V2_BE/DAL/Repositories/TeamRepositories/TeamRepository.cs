@@ -50,5 +50,14 @@ namespace DAL.Repositories.TeamRepositories
 
             return entry.Entity;
         }
+
+        public Team UpdateLastTeamscanOfTeam(Team team)
+        {
+            var entry = _context.Entry(team);
+            entry.Property(x => x.IsTeamscanActive).IsModified = true;
+            entry.Property(x => x.LastTeamScan).IsModified = true;
+
+            return entry.Entity;
+        }
     }
 }

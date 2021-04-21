@@ -22,8 +22,19 @@ namespace API.Controllers
             _service = service;
         }
 
+        [HttpGet("include/{id}")]
+        public ActionResult<IndividualScoreReadDto> GetIndividualScoreByIdIncludingTeamscan(Guid id)
+        {
+            var individualScore = _service.GetIndividualScoreByIdIncludingTeamscan(id);
+
+            if (individualScore != null)
+                return Ok(individualScore);
+
+            return NotFound();
+        }
+
         [HttpGet("{id}")]
-        public ActionResult<IndividualScoreReadDto> GetIndividualScoreById(int id)
+        public ActionResult<IndividualScoreReadDto> GetIndividualScoreById(Guid id)
         {
             var individualScore = _service.GetIndividualScoreById(id);
 
@@ -33,10 +44,18 @@ namespace API.Controllers
             return NotFound();
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<IndividualScoreReadDto>> GetAllIndividualScores()
+        [HttpPut("{id}")]
+        public ActionResult<IndividualScoreReadDto> UpdateScore(Guid id, [FromBody] List<AnswerReadDto> list)
         {
-            return Ok(_service.GetAllIndividualScores());
-        }    
+            try
+            {
+                var updatedScore = _service.UpdateIndividualScore(id, list);
+                return Ok(updatedScore);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

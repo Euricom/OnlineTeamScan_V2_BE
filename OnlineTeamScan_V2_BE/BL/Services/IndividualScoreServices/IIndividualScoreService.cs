@@ -10,8 +10,8 @@ namespace BL.Services.IndividualScoreServices
 {
     public interface IIndividualScoreService
     {
-        public IndividualScoreReadDto GetIndividualScoreById(int id);
-        public IEnumerable<IndividualScoreReadDto> GetAllIndividualScores();
-        public void CalculateTeamscore(int teamscanId);
+        public IndividualScoreReadDto GetIndividualScoreByIdIncludingTeamscan(Guid id);
+        public IndividualScoreReadDto GetIndividualScoreById(Guid id);
+        public IndividualScoreReadDto UpdateIndividualScore(Guid id, List<AnswerReadDto> list);      
     }
 }

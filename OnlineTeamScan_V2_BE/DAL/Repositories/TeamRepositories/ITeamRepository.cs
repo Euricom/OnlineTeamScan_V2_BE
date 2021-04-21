@@ -15,5 +15,6 @@ namespace DAL.Repositories.TeamRepositories
         public IEnumerable<Team> GetAllTeamsByUser(int userId);
         public Team UpdateTeamName(Team team);
         public Team UpdateIsTeamscanActive(Team team);
+        public Team UpdateLastTeamscanOfTeam(Team team);
     }
 }

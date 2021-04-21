@@ -4,14 +4,20 @@ using DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(OnlineTeamScanContext))]
-    partial class OnlineTeamScanContextModelSnapshot : ModelSnapshot
+<<<<<<< HEAD:OnlineTeamScan_V2_BE/DAL/Migrations/20210415094025_InitialMigration.Designer.cs
+    [Migration("20210415094025_InitialMigration")]
+=======
+    [Migration("20210412105451_Initial-Migration")]
+>>>>>>> develop:OnlineTeamScan_V2_BE/DAL/Migrations/20210412105451_Initial-Migration.Designer.cs
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

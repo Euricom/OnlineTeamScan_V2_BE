@@ -23,7 +23,9 @@ namespace DAL.Repositories
 
         public TEntity GetById(int id)
         {
-            return _dbSet.Find(id);
+            var entity = _dbSet.Find(id);
+            _context.Entry(entity).State = EntityState.Detached;
+            return entity;
         }
 
         public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includeProperties)
