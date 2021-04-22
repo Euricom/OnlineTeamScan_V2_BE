@@ -32,10 +32,10 @@ namespace API.Controllers
             return NotFound();
         }
 
-        [HttpGet("members/{id}")]
-        public ActionResult<TeamReadDto> GetTeamIncludingTeamMembersById(int id)
+        [HttpGet("members/{userId}/{id}")]
+        public ActionResult<TeamReadDto> GetTeamIncludingTeamMembersById(int userId, int id)
         {
-            var team = _service.GetTeamIncludingTeamMembersById(id);
+            var team = _service.GetTeamIncludingTeamMembersById(userId, id);
 
             if (team != null)
                 return Ok(team);
@@ -43,22 +43,16 @@ namespace API.Controllers
             return NotFound();
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<TeamReadDto>> GetAllTeams()
-        {
-            return Ok(_service.GetAllTeams());
-        }
-
         [HttpGet("teamscans/{userId}")]
-        public ActionResult<IEnumerable<TeamReadDto>> GetAllTeamsIncludingTeamscans(int userId)
+        public ActionResult<IEnumerable<TeamReadDto>> GetAllTeamsByUserIncludingTeamscans(int userId)
         {
-            return Ok(_service.GetAllTeamsIncludingTeamscans(userId));
+            return Ok(_service.GetAllTeamsByUserIncludingTeamscans(userId));
         }
 
         [HttpGet("teammembers/{userId}")]
-        public ActionResult<IEnumerable<TeamReadDto>> GetAllTeamsIncludingTeamMembers(int userId)
+        public ActionResult<IEnumerable<TeamReadDto>> GetAllTeamsByUserIncludingTeamMembers(int userId)
         {
-            return Ok(_service.GetAllTeamsIncludingTeamMembers(userId));
+            return Ok(_service.GetAllTeamsByUserIncludingTeamMembers(userId));
         }
 
         [HttpGet("user/{userId}")]

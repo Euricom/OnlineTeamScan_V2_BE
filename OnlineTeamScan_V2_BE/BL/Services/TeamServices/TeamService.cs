@@ -34,28 +34,44 @@ namespace BL.Services.TeamServices
             return _mapper.Map<TeamReadDto>(team);
         }
 
-        public TeamReadDto GetTeamIncludingTeamMembersById(int id)
+        public TeamReadDto GetTeamIncludingTeamMembersById(int userId, int id)
         {
-            return _mapper.Map<TeamReadDto>(_unitOfWork.TeamRepository.GetTeamIncludingTeamMembersById(id));
+            var team = _unitOfWork.TeamRepository.GetTeamIncludingTeamMembersById(id);
+
+            if (team == null || team.TeamleaderId != userId)
+                return null;
+
+            return _mapper.Map<TeamReadDto>(team);
         }
 
-        public IEnumerable<TeamReadDto> GetAllTeams()
+        public IEnumerable<TeamReadDto> GetAllTeamsByUserIncludingTeamscans(int userId)
         {
-            return _mapper.Map<IEnumerable<TeamReadDto>>(_unitOfWork.TeamRepository.GetAll());
+            var teams = _unitOfWork.TeamRepository.GetAllTeamsByUserIncludingTeamscans(userId);
+
+            if (teams == null)
+                return null;
+
+            return _mapper.Map<IEnumerable<TeamReadDto>>(teams);
         }
 
-        public IEnumerable<TeamReadDto> GetAllTeamsIncludingTeamscans(int userId)
+        public IEnumerable<TeamReadDto> GetAllTeamsByUserIncludingTeamMembers(int userId)
         {
-            return _mapper.Map<IEnumerable<TeamReadDto>>(_unitOfWork.TeamRepository.GetAllTeamsIncludingTeamscans(userId)); ;
-        }
-        public IEnumerable<TeamReadDto> GetAllTeamsIncludingTeamMembers(int userId)
-        {
-            return _mapper.Map<IEnumerable<TeamReadDto>>(_unitOfWork.TeamRepository.GetAllTeamsIncludingTeamMembers(userId)); ;
+            var teams = _unitOfWork.TeamRepository.GetAllTeamsByUserIncludingTeamMembers(userId);
+
+            if (teams == null)
+                return null;
+
+            return _mapper.Map<IEnumerable<TeamReadDto>>(teams);
         }
 
         public IEnumerable<TeamReadDto> GetAllTeamsByUser(int userId)
         {
-            return _mapper.Map<IEnumerable<TeamReadDto>>(_unitOfWork.TeamRepository.GetAllTeamsByUser(userId)); ;
+            var teams = _unitOfWork.TeamRepository.GetAllTeamsByUser(userId);
+
+            if (teams == null)
+                return null;
+
+            return _mapper.Map<IEnumerable<TeamReadDto>>(teams);
         }
 
         public TeamReadDto AddTeam(TeamCreateDto teamCreateDto)
@@ -71,7 +87,6 @@ namespace BL.Services.TeamServices
                     Firstname = user.Firstname,
                     Lastname = user.Lastname,
                     TeamId = newTeam.Id
-
                 };
                 _unitOfWork.TeamMemberRepository.Add(_mapper.Map<TeamMember>(newTeamMember));
                 _unitOfWork.Commit();

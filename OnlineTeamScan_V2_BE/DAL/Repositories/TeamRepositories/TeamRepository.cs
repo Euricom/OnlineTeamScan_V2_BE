@@ -24,12 +24,12 @@ namespace DAL.Repositories.TeamRepositories
             return GetAll(team => team.TeamleaderId == userId);
         }
 
-        public IEnumerable<Team> GetAllTeamsIncludingTeamMembers(int userId)
+        public IEnumerable<Team> GetAllTeamsByUserIncludingTeamMembers(int userId)
         {
             return GetAll(filter: team => team.TeamleaderId == userId, includeProperties: x => x.TeamMembers);
         }
 
-        public IEnumerable<Team> GetAllTeamsIncludingTeamscans(int userId)
+        public IEnumerable<Team> GetAllTeamsByUserIncludingTeamscans(int userId)
         {
             return GetAll(filter: team => team.TeamleaderId == userId, includeProperties: x => x.Teamscans);
         }

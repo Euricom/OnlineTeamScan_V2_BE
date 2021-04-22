@@ -10,6 +10,7 @@ namespace BL.Services.TeamscanServices
 {
     public interface ITeamscanService
     {
+        public TeamscanReadDto GetFinishedTeamscanById(int id, int userId);
         public TeamscanReadDto GetTeamscanById(int id);
         public IEnumerable<TeamscanReadDto> GetAllTeamscansByTeam(int teamId);
         public TeamscanReadDto GetPreviousTeamscan(int teamscanId);

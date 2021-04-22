@@ -27,6 +27,16 @@ namespace BL.Services.TeamscanServices
             _mapper = mapper;
         }
 
+        public TeamscanReadDto GetFinishedTeamscanById(int id, int userId)
+        {
+            var teamscan = _unitOfWork.TeamscanRepository.GetFinishedTeamscanById(id, userId);
+
+            if (teamscan == null)
+                return null;
+
+            return _mapper.Map<TeamscanReadDto>(teamscan);
+        }
+
         public TeamscanReadDto GetTeamscanById(int id)
         {
             var teamscan = _unitOfWork.TeamscanRepository.GetById(id);
