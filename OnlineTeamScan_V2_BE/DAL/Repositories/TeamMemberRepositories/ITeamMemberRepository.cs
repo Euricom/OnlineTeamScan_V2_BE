@@ -10,6 +10,7 @@ namespace DAL.Repositories.TeamMemberRepositories
     public interface ITeamMemberRepository : IGenericRepository<TeamMember>
     {
         public IEnumerable<TeamMember> GetAllTeamMembersByTeam(int teamId);
+        public IEnumerable<TeamMember> GetAllActiveTeamMembersByTeam(int teamId);
         public TeamMember UpdateTeamMember(TeamMember teamMember);
     }
 }

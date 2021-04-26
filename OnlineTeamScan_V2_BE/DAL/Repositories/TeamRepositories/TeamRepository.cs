@@ -14,20 +14,50 @@ namespace DAL.Repositories.TeamRepositories
         public TeamRepository(OnlineTeamScanContext context) : base(context)
         { }
 
+        public Team GetTeamIncludingTeamMembersById(int id)
+        {
+            return _dbSet.Include(x => x.TeamMembers).Where(x => x.Id == id).FirstOrDefault();
+        }
 
         public IEnumerable<Team> GetAllTeamsByUser(int userId)
         {
             return GetAll(team => team.TeamleaderId == userId);
         }
 
-        public IEnumerable<Team> GetAllTeamsIncludingTeamMembers(int userId)
+        public IEnumerable<Team> GetAllTeamsByUserIncludingTeamMembers(int userId)
         {
             return GetAll(filter: team => team.TeamleaderId == userId, includeProperties: x => x.TeamMembers);
         }
 
-        public IEnumerable<Team> GetAllTeamsIncludingTeamscans(int userId)
+        public IEnumerable<Team> GetAllTeamsByUserIncludingTeamscans(int userId)
         {
             return GetAll(filter: team => team.TeamleaderId == userId, includeProperties: x => x.Teamscans);
+        }
+
+        public Team UpdateTeamName(Team team)
+        {
+            var entry = _context.Entry(team);
+            entry.Property(x => x.Name).IsModified = true;
+
+            return entry.Entity;
+        }
+
+        public Team UpdateIsTeamscanActive(Team team)
+        {
+            team.IsTeamscanActive = true;
+            var entry = _context.Entry(team);
+            entry.Property(x => x.IsTeamscanActive).IsModified = true;
+
+            return entry.Entity;
+        }
+
+        public Team UpdateLastTeamscanOfTeam(Team team)
+        {
+            var entry = _context.Entry(team);
+            entry.Property(x => x.IsTeamscanActive).IsModified = true;
+            entry.Property(x => x.LastTeamScan).IsModified = true;
+
+            return entry.Entity;
         }
     }
 }

@@ -13,6 +13,11 @@ namespace DAL.Repositories.TeamMemberRepositories
         public TeamMemberRepository(OnlineTeamScanContext context) : base(context)
         { }
 
+        public IEnumerable<TeamMember> GetAllActiveTeamMembersByTeam(int teamId)
+        {
+            return GetAll(teamMember => teamMember.TeamId == teamId && teamMember.IsActive == true);
+        }
+
         public IEnumerable<TeamMember> GetAllTeamMembersByTeam(int teamId)
         {
             return GetAll(x => x.TeamId == teamId);

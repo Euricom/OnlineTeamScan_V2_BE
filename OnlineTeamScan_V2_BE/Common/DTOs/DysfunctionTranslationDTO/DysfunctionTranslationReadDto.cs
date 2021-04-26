@@ -12,7 +12,6 @@ namespace Common.DTOs.DysfunctionTranslationDTO
     {
         public string Name { get; set; }
 
-
         public LanguageReadDto Language { get; set; }
         public DysfunctionReadDto Dysfunction { get; set; }
     }

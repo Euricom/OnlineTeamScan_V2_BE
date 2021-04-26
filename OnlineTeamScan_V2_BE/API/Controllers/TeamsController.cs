@@ -32,22 +32,27 @@ namespace API.Controllers
             return NotFound();
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<TeamReadDto>> GetAllTeams()
+        [HttpGet("members/{userId}/{id}")]
+        public ActionResult<TeamReadDto> GetTeamIncludingTeamMembersById(int userId, int id)
         {
-            return Ok(_service.GetAllTeams());
+            var team = _service.GetTeamIncludingTeamMembersById(userId, id);
+
+            if (team != null)
+                return Ok(team);
+
+            return NotFound();
         }
 
         [HttpGet("teamscans/{userId}")]
-        public ActionResult<IEnumerable<TeamReadDto>> GetAllTeamsIncludingTeamscans(int userId)
+        public ActionResult<IEnumerable<TeamReadDto>> GetAllTeamsByUserIncludingTeamscans(int userId)
         {
-            return Ok(_service.GetAllTeamsIncludingTeamscans(userId));
+            return Ok(_service.GetAllTeamsByUserIncludingTeamscans(userId));
         }
 
         [HttpGet("teammembers/{userId}")]
-        public ActionResult<IEnumerable<TeamReadDto>> GetAllTeamsIncludingTeamMembers(int userId)
+        public ActionResult<IEnumerable<TeamReadDto>> GetAllTeamsByUserIncludingTeamMembers(int userId)
         {
-            return Ok(_service.GetAllTeamsIncludingTeamMembers(userId));
+            return Ok(_service.GetAllTeamsByUserIncludingTeamMembers(userId));
         }
 
         [HttpGet("user/{userId}")]
@@ -59,20 +64,35 @@ namespace API.Controllers
         [HttpPost]
         public ActionResult<TeamReadDto> AddTeam(TeamCreateDto teamCreateDto)
         {
+            
             if (teamCreateDto == null)
                 return BadRequest();
 
-            var team = _service.AddTeam(teamCreateDto);
-            return CreatedAtAction(nameof(GetTeamById), new { Id = team.Id }, team);
+            try
+            {
+                var team = _service.AddTeam(teamCreateDto);
+                return CreatedAtAction(nameof(GetTeamById), new { Id = team.Id }, team);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
-        public ActionResult<TeamReadDto> UpdateTeam(TeamUpdateDto teamUpdateDto)
+        public ActionResult<TeamReadDto> UpdateTeamName(TeamUpdateDto teamUpdateDto)
         {
             if (teamUpdateDto == null)
                 return BadRequest();
 
-            return Ok(_service.UpdateTeam(teamUpdateDto));
+            try
+            {
+                return Ok(_service.UpdateTeamName(teamUpdateDto));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]

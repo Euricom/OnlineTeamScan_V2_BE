@@ -10,12 +10,12 @@ namespace BL.Services.TeamServices
     public interface ITeamService
     {
         public TeamReadDto GetTeamById(int id);
-        public IEnumerable<TeamReadDto> GetAllTeams();
-        public IEnumerable<TeamReadDto> GetAllTeamsIncludingTeamscans(int userId);
-        public IEnumerable<TeamReadDto> GetAllTeamsIncludingTeamMembers(int userId);
+        public TeamReadDto GetTeamIncludingTeamMembersById(int userId, int id);
+        public IEnumerable<TeamReadDto> GetAllTeamsByUserIncludingTeamscans(int userId);
+        public IEnumerable<TeamReadDto> GetAllTeamsByUserIncludingTeamMembers(int userId);
         public IEnumerable<TeamReadDto> GetAllTeamsByUser(int userId);
         public TeamReadDto AddTeam(TeamCreateDto teamCreateDto);
-        public TeamReadDto UpdateTeam(TeamUpdateDto teamUpdateDto);
+        public TeamReadDto UpdateTeamName(TeamUpdateDto teamUpdateDto);
         public void DeleteTeam(int id);
     }
 }

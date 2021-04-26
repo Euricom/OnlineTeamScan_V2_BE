@@ -1,5 +1,6 @@
 ﻿using DAL.Data;
 using DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace DAL.Repositories.TeamscanRepositories
             entry.Property(x => x.ScoreCommitment).IsModified = true;
             entry.Property(x => x.ScoreAccountability).IsModified = true;
             entry.Property(x => x.ScoreResults).IsModified = true;
+            entry.Property(x => x.EndDate).IsModified = true;
 
             return entry.Entity;
         }
@@ -33,6 +35,16 @@ namespace DAL.Repositories.TeamscanRepositories
         public Teamscan GetPreviousTeamscan(int teamId, int teamNumber)
         {
             return _dbSet.Where(x => x.TeamId == teamId && x.Number == teamNumber).FirstOrDefault();
+        }
+
+        public int? GetLatestTeamscanNumber(int teamId)
+        {
+            return _dbSet.Where(teamscan => teamscan.TeamId == teamId).Max(teamscan => (int?)teamscan.Number);
+        }
+
+        public Teamscan GetFinishedTeamscanById(int id, int userId)
+        {
+            return _dbSet.Include(teamscan => teamscan.Team).Where(teamscan => teamscan.Id == id && teamscan.EndDate != null && teamscan.Team.TeamleaderId == userId).FirstOrDefault();
         }
     }
 }
