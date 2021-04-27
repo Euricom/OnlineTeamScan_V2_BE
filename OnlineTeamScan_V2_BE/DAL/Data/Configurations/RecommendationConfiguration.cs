@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Common.DTOs.RecommendationDTO;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -13,7 +14,9 @@ namespace DAL.Data.Configurations
     public class RecommendationConfiguration : Profile, IEntityTypeConfiguration<Recommendation>
     {
         public RecommendationConfiguration()
-        { }
+        {
+            CreateMap<Recommendation, RecommendationReadDto>();
+        }
 
         public void Configure(EntityTypeBuilder<Recommendation> builder)
         {
