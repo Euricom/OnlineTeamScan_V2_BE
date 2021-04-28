@@ -32,10 +32,10 @@ namespace API.Controllers
             return NotFound();
         }
 
-        [HttpGet("members/{userId}/{id}")]
-        public ActionResult<TeamReadDto> GetTeamIncludingTeamMembersById(int userId, int id)
+        [HttpGet("full/{userId}/{id}")]
+        public ActionResult<TeamReadDto> GetFullTeamById(int userId, int id)
         {
-            var team = _service.GetTeamIncludingTeamMembersById(userId, id);
+            var team = _service.GetFullTeamById(userId, id);
 
             if (team != null)
                 return Ok(team);
