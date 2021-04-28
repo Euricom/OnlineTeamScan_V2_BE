@@ -16,13 +16,11 @@ namespace API.Authentication
     public static class AuthenticationExtension
     {
         public static void SetupAuthentication(this IServiceCollection services, IConfiguration configuration)
-        {
-            // For Identity  
+        { 
             services.AddIdentity<User, IdentityRole<int>>(o => o.User.AllowedUserNameCharacters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ")
                 .AddEntityFrameworkStores<OnlineTeamScanContext>()
                 .AddDefaultTokenProviders();
-
-            // Adding Authentication  
+ 
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -30,7 +28,6 @@ namespace API.Authentication
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
 
-                // Adding Jwt Bearer  
                 .AddJwtBearer(options =>
                 {
                     options.SaveToken = true;

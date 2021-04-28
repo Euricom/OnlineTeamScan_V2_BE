@@ -31,6 +31,8 @@ namespace DAL.Data
         public DbSet<LevelTranslation> LevelTranslations { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<QuestionTranslation> QuestionTranslations { get; set; }
+        public DbSet<Recommendation> Recommendations { get; set; }
+        public DbSet<RecommendationTranslation> RecommendationTranslations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -51,6 +53,8 @@ namespace DAL.Data
             modelBuilder.ApplyConfiguration(new LevelTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new QuestionConfiguration());
             modelBuilder.ApplyConfiguration(new QuestionTranslationConfiguration());
+            modelBuilder.ApplyConfiguration(new RecommendationConfiguration());
+            modelBuilder.ApplyConfiguration(new RecommendationTranslationConfiguration());
         }
     }
 }

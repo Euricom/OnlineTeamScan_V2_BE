@@ -34,9 +34,9 @@ namespace BL.Services.TeamServices
             return _mapper.Map<TeamReadDto>(team);
         }
 
-        public TeamReadDto GetTeamIncludingTeamMembersById(int userId, int id)
+        public TeamReadDto GetFullTeamById(int userId, int id)
         {
-            var team = _unitOfWork.TeamRepository.GetTeamIncludingTeamMembersById(id);
+            var team = _unitOfWork.TeamRepository.GetFullTeamById(id);
 
             if (team == null || team.TeamleaderId != userId)
                 return null;

@@ -13,9 +13,7 @@ namespace DAL.Data.Configurations
     public class InterpretationConfiguration : Profile, IEntityTypeConfiguration<Interpretation>
     {
         public InterpretationConfiguration()
-        {
-
-        }
+        { }
 
         public void Configure(EntityTypeBuilder<Interpretation> builder)
         {
