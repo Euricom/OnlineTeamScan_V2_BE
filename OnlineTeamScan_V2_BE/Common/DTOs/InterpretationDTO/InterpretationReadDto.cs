@@ -11,6 +11,8 @@ namespace Common.DTOs.InterpretationDTO
     public class InterpretationReadDto
     {
         public int Id { get; set; }
+        public int DysfunctionId { get; set; }
+        public int LevelId { get; set; }
 
         public DysfunctionReadDto Dysfunction { get; set; }
         public LevelReadDto Level { get; set; }

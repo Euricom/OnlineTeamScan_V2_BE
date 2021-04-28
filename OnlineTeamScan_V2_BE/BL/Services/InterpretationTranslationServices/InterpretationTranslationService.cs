@@ -20,16 +20,12 @@ namespace BL.Services.InterpretationTranslationServices
             _mapper = mapper;
         }
 
-        public IEnumerable<InterpretationTranslationReadDto> GetAllInterpretationTranslationsByLevelAndDysfunctions(int languageId, List<InterpretationTranslationRequestDto> list)
+        public InterpretationTranslationReadDto GetInterpretationTranslationByLevelAndDysfunction(int languageId, int levelId, int dysfunctionId)
         {
-            List<InterpretationTranslationReadDto> interprationTranslations = new List<InterpretationTranslationReadDto>();
-            foreach (var item in list)
-            {
-                var interpretation = _unitOfWork.InterpretationRepository.GetInterpretationByLevelAndDysfunction(item.LevelId, item.DysfunctionId);
-                var interpretationTranslation = _unitOfWork.InterpretationTranslationRepository.GetInterpretationTranslationByLanguage(interpretation.Id, languageId);
-                interprationTranslations.Add(_mapper.Map<InterpretationTranslationReadDto>(interpretationTranslation));
-            }
-            return interprationTranslations;
+            var interpretation = _unitOfWork.InterpretationRepository.GetInterpretationByLevelAndDysfunction(levelId, dysfunctionId);
+            var interpretationTranslation = _unitOfWork.InterpretationTranslationRepository.GetInterpretationTranslationByLanguage(interpretation.Id, languageId);
+
+            return _mapper.Map<InterpretationTranslationReadDto>(interpretationTranslation);
         }
     }
 }
