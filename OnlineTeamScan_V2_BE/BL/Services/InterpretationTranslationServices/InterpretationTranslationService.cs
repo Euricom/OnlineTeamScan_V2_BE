@@ -23,7 +23,14 @@ namespace BL.Services.InterpretationTranslationServices
         public InterpretationTranslationReadDto GetInterpretationTranslationByLevelAndDysfunction(int languageId, int levelId, int dysfunctionId)
         {
             var interpretation = _unitOfWork.InterpretationRepository.GetInterpretationByLevelAndDysfunction(levelId, dysfunctionId);
+
+            if (interpretation == null)
+                return null;
+
             var interpretationTranslation = _unitOfWork.InterpretationTranslationRepository.GetInterpretationTranslationByLanguage(interpretation.Id, languageId);
+
+            if (interpretationTranslation == null)
+                return null;
 
             return _mapper.Map<InterpretationTranslationReadDto>(interpretationTranslation);
         }

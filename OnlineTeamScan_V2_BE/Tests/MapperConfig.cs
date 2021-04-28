@@ -16,6 +16,8 @@ namespace Tests
             {
                 mc.AddProfile(new TeamMemberConfiguration());
                 mc.AddProfile(new IndividualScoreConfiguration());
+                mc.AddProfile(new InterpretationTranslationConfiguration());
+                mc.AddProfile(new InterpretationConfiguration());
             });
 
             return mappingConfig.CreateMapper();           
