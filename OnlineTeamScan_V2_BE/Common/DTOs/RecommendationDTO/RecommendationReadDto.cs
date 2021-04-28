@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common.DTOs.InterpretationTranslationDTO
+namespace Common.DTOs.RecommendationDTO
 {
-    public class InterpretationTranslationRequestDto
+    public class RecommendationReadDto
     {
-        public int LevelId { get; set; }
+        public int Id { get; set; }
         public int DysfunctionId { get; set; }
+        public string Link { get; set; }
     }
 }

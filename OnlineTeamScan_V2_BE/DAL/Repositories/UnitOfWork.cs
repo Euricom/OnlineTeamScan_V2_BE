@@ -5,6 +5,7 @@ using DAL.Repositories.InterpretationRepositories;
 using DAL.Repositories.InterpretationTranslationRepositories;
 using DAL.Repositories.LevelRepositories;
 using DAL.Repositories.QuestionTranslationRepositories;
+using DAL.Repositories.RecommendationTranslationRepositories;
 using DAL.Repositories.TeamMemberRepositories;
 using DAL.Repositories.TeamRepositories;
 using DAL.Repositories.TeamscanRepositories;
@@ -30,6 +31,7 @@ namespace DAL.Repositories
         private IInterpretationRepository _interpretationRepository;
         private ITeamMemberRepository _teamMemberRepository;
         private IQuestionTranslationRepository _questionTranslationRepository;
+        private IRecommendationTranslationRepository _recommendationTranslationRepository;
 
         public UnitOfWork(OnlineTeamScanContext context)
         {
@@ -84,6 +86,11 @@ namespace DAL.Repositories
         public IQuestionTranslationRepository QuestionTranslationRepository
         {
             get { return _questionTranslationRepository ??= new QuestionTranslationRepository(_context); }
+        }
+
+        public IRecommendationTranslationRepository RecommendationTranslationRepository
+        {
+            get { return _recommendationTranslationRepository ??= new RecommendationTranslationRepository(_context); }
         }
 
         public void Commit()
