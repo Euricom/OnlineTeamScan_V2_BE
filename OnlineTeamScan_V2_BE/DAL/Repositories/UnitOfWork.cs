@@ -1,4 +1,5 @@
 ﻿using DAL.Data;
+using DAL.Repositories.DysfunctionRepositories;
 using DAL.Repositories.DysfunctionTranslationRepositories;
 using DAL.Repositories.IndividualScoreRepositories;
 using DAL.Repositories.InterpretationRepositories;
@@ -26,6 +27,7 @@ namespace DAL.Repositories
         private ITeamscanRepository _teamscanRepository;
         private IUserRepository _userRepository;
         private ILevelRepository _levelRepository;
+        private IDysfunctionRepository _dysfunctionRepository;
         private IDysfunctionTranslationRepository _dysfunctionTranslationRepository;
         private IInterpretationTranslationRepository _interpretationTranslationRepository;
         private IInterpretationRepository _interpretationRepository;
@@ -91,6 +93,11 @@ namespace DAL.Repositories
         public IRecommendationTranslationRepository RecommendationTranslationRepository
         {
             get { return _recommendationTranslationRepository ??= new RecommendationTranslationRepository(_context); }
+        }
+
+        public IDysfunctionRepository DysfunctionRepository
+        {
+            get { return _dysfunctionRepository ??= new DysfunctionRepository(_context); }
         }
 
         public void Commit()

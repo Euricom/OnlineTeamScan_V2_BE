@@ -10,10 +10,13 @@ namespace DAL.Repositories.InterpretationTranslationRepositories
         public InterpretationTranslationRepository(OnlineTeamScanContext context) : base(context)
         { }
 
-        public InterpretationTranslation GetInterpretationTranslationByLanguage(int id, int languageId)
+        public InterpretationTranslation GetTranslatedInterpretationTranslationByLevelAndDysfunction(int levelId, int dysfunctionId, int languageId)
         {
-            return GetAll(filter: interpretationTranslation => interpretationTranslation.InterpretationId == id && interpretationTranslation.LanguageId == languageId,
-                includeProperties: interpretationTranslation => interpretationTranslation.Interpretation).FirstOrDefault();
+            return _dbSet.Include(interpretationTranslation => interpretationTranslation.Interpretation)
+                .Where(interpretationTranslation => interpretationTranslation.LanguageId == languageId 
+                 && interpretationTranslation.Interpretation.LevelId == levelId 
+                 && interpretationTranslation.Interpretation.DysfunctionId == dysfunctionId)
+                .FirstOrDefault();
         }
     }
 }

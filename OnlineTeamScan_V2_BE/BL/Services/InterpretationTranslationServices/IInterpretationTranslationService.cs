@@ -9,6 +9,6 @@ namespace BL.Services.InterpretationTranslationServices
 {
     public interface IInterpretationTranslationService
     {
-        public InterpretationTranslationReadDto GetInterpretationTranslationByLevelAndDysfunction(int languageId, int levelId, int dysfunctionId);
+        public IEnumerable<InterpretationTranslationReadDto> GetAllInterpretationTranslationsByLevelAndDysfunction(int languageId, int teamscanId);
     }
 }

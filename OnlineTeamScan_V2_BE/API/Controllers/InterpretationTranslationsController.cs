@@ -19,10 +19,10 @@ namespace API.Controllers
             _service = service;
         }
 
-        [HttpGet("{languageId}/{levelId}/{dysfunctionId}")]
-        public ActionResult<IEnumerable<InterpretationTranslationReadDto>> GetInterpretationTranslationByLevelAndDysfunction(int languageId, int levelId, int dysfunctionId)
+        [HttpGet("{languageId}/{teamscanId}")]
+        public ActionResult<IEnumerable<InterpretationTranslationReadDto>> GetAllInterpretationTranslationsByLevelAndDysfunction(int languageId, int teamscanId)
         {
-            return Ok(_service.GetInterpretationTranslationByLevelAndDysfunction(languageId, levelId, dysfunctionId));
+            return Ok(_service.GetAllInterpretationTranslationsByLevelAndDysfunction(languageId, teamscanId));
         }
     }
 }

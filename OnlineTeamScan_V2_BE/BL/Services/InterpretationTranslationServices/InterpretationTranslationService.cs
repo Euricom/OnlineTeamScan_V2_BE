@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Common.DTOs.InterpretationTranslationDTO;
+using DAL.Models;
 using DAL.Repositories;
 using System;
 using System.Collections.Generic;
@@ -20,19 +21,47 @@ namespace BL.Services.InterpretationTranslationServices
             _mapper = mapper;
         }
 
-        public InterpretationTranslationReadDto GetInterpretationTranslationByLevelAndDysfunction(int languageId, int levelId, int dysfunctionId)
+        public IEnumerable<InterpretationTranslationReadDto> GetAllInterpretationTranslationsByLevelAndDysfunction(int languageId, int teamscanId)
+        {                    
+            var teamscan = _unitOfWork.TeamscanRepository.GetById(teamscanId);
+            var dysfunctions = _unitOfWork.DysfunctionRepository.GetAll().ToList();
+            var levels = _unitOfWork.LevelRepository.GetAll().ToList();
+
+            int trustDysfunctionId = dysfunctions[0].Id, 
+                conflictDysfunctionId = dysfunctions[1].Id,
+                commitmentDysfunctionId = dysfunctions[2].Id, 
+                accountabilityDysfunctionId = dysfunctions[3].Id, 
+                resultsDysfunctionId = dysfunctions[4].Id;
+           
+            int trustLevelId = CalculateLevel(teamscan.ScoreTrust, levels), 
+                conflictLevelId = CalculateLevel(teamscan.ScoreConflict, levels), 
+                commitmentLevelId = CalculateLevel(teamscan.ScoreCommitment, levels), 
+                accountabilityLevelId = CalculateLevel(teamscan.ScoreAccountability, levels), 
+                resultsLevelId = CalculateLevel(teamscan.ScoreResults, levels);
+
+            var trustInterpretation = _unitOfWork.InterpretationTranslationRepository.GetTranslatedInterpretationTranslationByLevelAndDysfunction(trustLevelId, trustDysfunctionId, languageId);
+            var conflictInterpretation = _unitOfWork.InterpretationTranslationRepository.GetTranslatedInterpretationTranslationByLevelAndDysfunction(conflictLevelId, conflictDysfunctionId, languageId);
+            var commitmentInterpretation = _unitOfWork.InterpretationTranslationRepository.GetTranslatedInterpretationTranslationByLevelAndDysfunction(commitmentLevelId, commitmentDysfunctionId, languageId);
+            var accountabilityInterpretation = _unitOfWork.InterpretationTranslationRepository.GetTranslatedInterpretationTranslationByLevelAndDysfunction(accountabilityLevelId, accountabilityDysfunctionId, languageId);
+            var resultsInterpretation = _unitOfWork.InterpretationTranslationRepository.GetTranslatedInterpretationTranslationByLevelAndDysfunction(resultsLevelId, resultsDysfunctionId, languageId);
+
+            var list = new List<InterpretationTranslation>() { trustInterpretation, conflictInterpretation, commitmentInterpretation, accountabilityInterpretation, resultsInterpretation };
+            var interpretationTranslations = _mapper.Map<IEnumerable<InterpretationTranslationReadDto>>(list);
+            return interpretationTranslations;
+        }
+
+        public int CalculateLevel(decimal score, List<Level> levels)
         {
-            var interpretation = _unitOfWork.InterpretationRepository.GetInterpretationByLevelAndDysfunction(levelId, dysfunctionId);
+            int levelId;
+            var lowLevel = levels[0];
+            var midLevel = levels[1];
+            var highLevel = levels[2];
+            var defaultLevel = levels[3];
 
-            if (interpretation == null)
-                return null;
-
-            var interpretationTranslation = _unitOfWork.InterpretationTranslationRepository.GetInterpretationTranslationByLanguage(interpretation.Id, languageId);
-
-            if (interpretationTranslation == null)
-                return null;
-
-            return _mapper.Map<InterpretationTranslationReadDto>(interpretationTranslation);
+            if (score >= lowLevel.LowerLimit && score <= lowLevel.UpperLimit) return lowLevel.Id;
+            if (score >= midLevel.LowerLimit && score <= midLevel.UpperLimit) return midLevel.Id;
+            if (score >= highLevel.LowerLimit && score <= highLevel.UpperLimit) return midLevel.Id;
+            return defaultLevel.Id;
         }
     }
 }
