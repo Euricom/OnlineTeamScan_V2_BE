@@ -32,12 +32,12 @@ namespace BL.Services.InterpretationTranslationServices
                 commitmentDysfunctionId = dysfunctions[2].Id, 
                 accountabilityDysfunctionId = dysfunctions[3].Id, 
                 resultsDysfunctionId = dysfunctions[4].Id;
-           
-            int trustLevelId = CalculateLevel(teamscan.ScoreTrust, levels), 
-                conflictLevelId = CalculateLevel(teamscan.ScoreConflict, levels), 
-                commitmentLevelId = CalculateLevel(teamscan.ScoreCommitment, levels), 
-                accountabilityLevelId = CalculateLevel(teamscan.ScoreAccountability, levels), 
-                resultsLevelId = CalculateLevel(teamscan.ScoreResults, levels);
+
+            int trustLevelId = CalculateLevel(teamscan.ScoreTrust, levels);
+            int conflictLevelId = CalculateLevel(teamscan.ScoreConflict, levels);
+            int commitmentLevelId = CalculateLevel(teamscan.ScoreCommitment, levels);
+            int accountabilityLevelId = CalculateLevel(teamscan.ScoreAccountability, levels);
+            int resultsLevelId = CalculateLevel(teamscan.ScoreResults, levels);
 
             var trustInterpretation = _unitOfWork.InterpretationTranslationRepository.GetTranslatedInterpretationTranslationByLevelAndDysfunction(trustLevelId, trustDysfunctionId, languageId);
             var conflictInterpretation = _unitOfWork.InterpretationTranslationRepository.GetTranslatedInterpretationTranslationByLevelAndDysfunction(conflictLevelId, conflictDysfunctionId, languageId);
@@ -59,7 +59,7 @@ namespace BL.Services.InterpretationTranslationServices
 
             if (score >= lowLevel.LowerLimit && score <= lowLevel.UpperLimit) return lowLevel.Id;
             if (score >= midLevel.LowerLimit && score <= midLevel.UpperLimit) return midLevel.Id;
-            if (score >= highLevel.LowerLimit && score <= highLevel.UpperLimit) return midLevel.Id;
+            if (score >= highLevel.LowerLimit && score <= highLevel.UpperLimit) return highLevel.Id;
             return defaultLevel.Id;
         }
     }
