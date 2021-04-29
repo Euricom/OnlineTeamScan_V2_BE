@@ -52,7 +52,6 @@ namespace BL.Services.InterpretationTranslationServices
 
         public int CalculateLevel(decimal score, List<Level> levels)
         {
-            int levelId;
             var lowLevel = levels[0];
             var midLevel = levels[1];
             var highLevel = levels[2];
