@@ -9,6 +9,6 @@ namespace DAL.Repositories.InterpretationTranslationRepositories
 {
     public interface IInterpretationTranslationRepository : IGenericRepository<InterpretationTranslation>
     {
-        public InterpretationTranslation GetInterpretationTranslationByLanguage(int id, int languageId);
+        public InterpretationTranslation GetTranslatedInterpretationTranslationByLevelAndDysfunction(int levelId, int dysfunctionId, int languageId);
     }
 }

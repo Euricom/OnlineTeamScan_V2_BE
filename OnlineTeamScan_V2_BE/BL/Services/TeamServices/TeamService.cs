@@ -90,7 +90,8 @@ namespace BL.Services.TeamServices
                 };
                 _unitOfWork.TeamMemberRepository.Add(_mapper.Map<TeamMember>(newTeamMember));
                 _unitOfWork.Commit();
-                return _mapper.Map<TeamReadDto>(newTeam);
+                var team = _unitOfWork.TeamRepository.GetTeamIncludingTeamMembersById(newTeam.Id);
+                return _mapper.Map<TeamReadDto>(team);
             }
             catch (DbUpdateException ex) when ((ex.InnerException as SqlException)?.Number == 2601)
             {

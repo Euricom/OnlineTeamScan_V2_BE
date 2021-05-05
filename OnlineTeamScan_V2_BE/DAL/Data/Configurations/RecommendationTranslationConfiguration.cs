@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Common.DTOs.RecommendationTranslationDTO;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -13,7 +14,9 @@ namespace DAL.Data.Configurations
     public class RecommendationTranslationConfiguration : Profile, IEntityTypeConfiguration<RecommendationTranslation>
     {
         public RecommendationTranslationConfiguration()
-        { }
+        {
+            CreateMap<RecommendationTranslation, RecommendationTranslationReadDto>();
+        }
 
         public void Configure(EntityTypeBuilder<RecommendationTranslation> builder)
         {

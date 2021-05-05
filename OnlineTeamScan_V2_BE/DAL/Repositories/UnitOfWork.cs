@@ -1,10 +1,12 @@
 ﻿using DAL.Data;
+using DAL.Repositories.DysfunctionRepositories;
 using DAL.Repositories.DysfunctionTranslationRepositories;
 using DAL.Repositories.IndividualScoreRepositories;
 using DAL.Repositories.InterpretationRepositories;
 using DAL.Repositories.InterpretationTranslationRepositories;
 using DAL.Repositories.LevelRepositories;
 using DAL.Repositories.QuestionTranslationRepositories;
+using DAL.Repositories.RecommendationTranslationRepositories;
 using DAL.Repositories.TeamMemberRepositories;
 using DAL.Repositories.TeamRepositories;
 using DAL.Repositories.TeamscanRepositories;
@@ -25,11 +27,13 @@ namespace DAL.Repositories
         private ITeamscanRepository _teamscanRepository;
         private IUserRepository _userRepository;
         private ILevelRepository _levelRepository;
+        private IDysfunctionRepository _dysfunctionRepository;
         private IDysfunctionTranslationRepository _dysfunctionTranslationRepository;
         private IInterpretationTranslationRepository _interpretationTranslationRepository;
         private IInterpretationRepository _interpretationRepository;
         private ITeamMemberRepository _teamMemberRepository;
         private IQuestionTranslationRepository _questionTranslationRepository;
+        private IRecommendationTranslationRepository _recommendationTranslationRepository;
 
         public UnitOfWork(OnlineTeamScanContext context)
         {
@@ -84,6 +88,16 @@ namespace DAL.Repositories
         public IQuestionTranslationRepository QuestionTranslationRepository
         {
             get { return _questionTranslationRepository ??= new QuestionTranslationRepository(_context); }
+        }
+
+        public IRecommendationTranslationRepository RecommendationTranslationRepository
+        {
+            get { return _recommendationTranslationRepository ??= new RecommendationTranslationRepository(_context); }
+        }
+
+        public IDysfunctionRepository DysfunctionRepository
+        {
+            get { return _dysfunctionRepository ??= new DysfunctionRepository(_context); }
         }
 
         public void Commit()

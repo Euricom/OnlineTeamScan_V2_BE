@@ -1,11 +1,7 @@
-﻿using Common.DTOs.InterpretationTranslationDTO;
-using DAL.Data;
+﻿using DAL.Data;
 using DAL.Models;
-using System;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Repositories.InterpretationTranslationRepositories
 {
@@ -14,9 +10,13 @@ namespace DAL.Repositories.InterpretationTranslationRepositories
         public InterpretationTranslationRepository(OnlineTeamScanContext context) : base(context)
         { }
 
-        public InterpretationTranslation GetInterpretationTranslationByLanguage(int id, int languageId)
+        public InterpretationTranslation GetTranslatedInterpretationTranslationByLevelAndDysfunction(int levelId, int dysfunctionId, int languageId)
         {
-            return GetAll(x => x.InterpretationId == id && x.LanguageId == languageId).FirstOrDefault();
+            return _dbSet.Include(interpretationTranslation => interpretationTranslation.Interpretation)
+                .Where(interpretationTranslation => interpretationTranslation.LanguageId == languageId 
+                 && interpretationTranslation.Interpretation.LevelId == levelId 
+                 && interpretationTranslation.Interpretation.DysfunctionId == dysfunctionId)
+                .FirstOrDefault();
         }
     }
 }

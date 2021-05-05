@@ -19,6 +19,11 @@ namespace DAL.Repositories.TeamRepositories
             return _dbSet.Include(team => team.TeamMembers).Include(team =>team.Teamscans).Include(team => team.Teamleader).Where(x => x.Id == id).FirstOrDefault();
         }
 
+        public Team GetTeamIncludingTeamMembersById(int id)
+        {
+            return _dbSet.Include(team => team.TeamMembers).Where(team => team.Id == id).FirstOrDefault();
+        }
+
         public IEnumerable<Team> GetAllTeamsByUser(int userId)
         {
             return GetAll(team => team.TeamleaderId == userId);

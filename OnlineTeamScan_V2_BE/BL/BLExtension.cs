@@ -1,9 +1,9 @@
 ﻿using BL.Services.DysfunctionTranslationServices;
 using BL.Services.IndividualScoreServices;
-using BL.Services.InterpretationServices;
 using BL.Services.InterpretationTranslationServices;
 using BL.Services.LevelServices;
 using BL.Services.QuestionTranslationServices;
+using BL.Services.RecommendationTranslationServices;
 using BL.Services.TeamMemberServices;
 using BL.Services.TeamscanServices;
 using BL.Services.TeamServices;
@@ -24,9 +24,9 @@ namespace BL
             services.AddTransient<ILevelService, LevelService>();
             services.AddTransient<IDysfunctionTranslationService, DysfunctionTranslationService>();
             services.AddTransient<IInterpretationTranslationService, InterpretationTranslationService>();
-            services.AddTransient<IInterpretationService, InterpretationService>();
             services.AddTransient<ITeamMemberService, TeamMemberService>();
             services.AddTransient<IQuestionTranslationService, QuestionTranslationService>();
+            services.AddTransient<IRecommendationTranslationService, RecommendationTranslationService>();
             return services;
         }
 
