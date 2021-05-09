@@ -80,7 +80,9 @@ namespace BL.Services.TeamscanServices
                 var updatedTeam = SetTeamscanActive(teamId);
                 _unitOfWork.Commit();
 
-                return _mapper.Map<TeamReadDto>(updatedTeam);
+                var newUpdatedTeam = _unitOfWork.TeamRepository.GetFullTeamById(updatedTeam.Id);
+
+                return _mapper.Map<TeamReadDto>(newUpdatedTeam);
             }
             catch (Exception ex)
             {
