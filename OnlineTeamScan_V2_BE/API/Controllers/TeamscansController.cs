@@ -67,7 +67,7 @@ namespace API.Controllers
             try
             {
                 var updatedTeam = _service.AddTeamscan(startedById, teamId);
-                return CreatedAtAction(nameof(GetTeamscanById), new { Id = updatedTeam.Id }, updatedTeam);
+                return Ok(updatedTeam);
             }
             catch (Exception ex)
             {

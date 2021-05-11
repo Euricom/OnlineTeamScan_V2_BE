@@ -20,7 +20,7 @@ steps:
   displayName: Test
   inputs:
     command: 'test'
-    projects: '**/*.test.csproj'
+    projects: '**/Tests/Tests.csproj'
     workingDirectory: 'OnlineTeamScan_V2_BE'
 
 - task: DotNetCoreCLI@2
