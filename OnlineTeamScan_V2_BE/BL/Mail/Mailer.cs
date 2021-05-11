@@ -12,12 +12,18 @@ using System.Threading.Tasks;
 
 namespace BL.Mail
 {
-    public static class Mailer
-    {
-        private const string apiKey = "API_KEY";
-        private static readonly SendGridClient sendGridClient = new SendGridClient(apiKey);
+    public class Mailer
+    {       
+        private readonly SendGridClient _sendGridClient;
+        private readonly IConfiguration _configuration;
 
-        public static async Task InviteTeamscan(TeamMember teamMember, Team team, User teamleader, Guid individualScoreId)
+        public Mailer(IConfiguration configuration)
+        {
+            _configuration = configuration;
+            _sendGridClient = new SendGridClient(_configuration.GetSection("SendGrid:MailerAPIKey").Value);
+        }
+
+        public async Task InviteTeamscan(TeamMember teamMember, Team team, User teamleader, Guid individualScoreId)
         {
             var sendGridMessage = new SendGridMessage();
             sendGridMessage.SetFrom("yanu.szapinszky@euri.com", "Euricom");
@@ -34,7 +40,7 @@ namespace BL.Mail
             sendGridMessage.SetTemplateId(mailtemplate.TemplateId);
             sendGridMessage.SetTemplateData(mailtemplate);
 
-            var response = await sendGridClient.SendEmailAsync(sendGridMessage);
+            var response = await _sendGridClient.SendEmailAsync(sendGridMessage);
         }
     }
 }

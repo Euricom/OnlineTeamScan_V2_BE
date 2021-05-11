@@ -1,4 +1,5 @@
-﻿using BL.Services.DysfunctionTranslationServices;
+﻿using BL.Mail;
+using BL.Services.DysfunctionTranslationServices;
 using BL.Services.IndividualScoreServices;
 using BL.Services.InterpretationTranslationServices;
 using BL.Services.LevelServices;
@@ -27,6 +28,7 @@ namespace BL
             services.AddTransient<ITeamMemberService, TeamMemberService>();
             services.AddTransient<IQuestionTranslationService, QuestionTranslationService>();
             services.AddTransient<IRecommendationTranslationService, RecommendationTranslationService>();
+            services.AddTransient<Mailer>();
             return services;
         }
 

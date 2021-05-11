@@ -20,11 +20,13 @@ namespace BL.Services.TeamscanServices
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly Mailer _mailer;
 
-        public TeamscanService(IUnitOfWork unitOfWork, IMapper mapper) 
+        public TeamscanService(IUnitOfWork unitOfWork, IMapper mapper, Mailer mailer) 
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _mailer = mailer;
         }
 
         public TeamscanReadDto GetFinishedTeamscanById(int id, int userId)
@@ -128,7 +130,7 @@ namespace BL.Services.TeamscanServices
 
                 if(teamMember.Email != teamleader.Email)
                 {
-                    Mailer.InviteTeamscan(teamMember, team, teamleader, newIndividualScore.Id).Wait();
+                    _mailer.InviteTeamscan(teamMember, team, teamleader, newIndividualScore.Id).Wait();
                 }    
             }
         }
