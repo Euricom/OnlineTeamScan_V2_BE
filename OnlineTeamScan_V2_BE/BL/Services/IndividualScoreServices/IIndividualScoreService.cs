@@ -11,7 +11,8 @@ namespace BL.Services.IndividualScoreServices
     public interface IIndividualScoreService
     {
         public IndividualScoreReadDto GetIndividualScoreByIdIncludingTeamscan(Guid id);
+        public IEnumerable<IndividualScoreReadDto> GetAllIndividualScoresByTeamscanWithTeamMembers(int teamscanId);
         public IndividualScoreReadDto GetIndividualScoreById(Guid id);
-        public IndividualScoreReadDto UpdateIndividualScore(Guid id, List<AnswerReadDto> list);      
+        public IndividualScoreReadDto UpdateIndividualScore(Guid id, List<AnswerReadDto> list);
     }
 }

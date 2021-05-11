@@ -22,6 +22,17 @@ namespace API.Controllers
             _service = service;
         }
 
+        [HttpGet("members/{teamscanId}")]
+        public ActionResult<IEnumerable<IndividualScoreReadDto>> GetAllIndividualScoresByTeamscanWithTeamMembers(int teamscanId)
+        {
+            var individualScores = _service.GetAllIndividualScoresByTeamscanWithTeamMembers(teamscanId);
+
+            if (individualScores != null)
+                return Ok(individualScores);
+
+            return NotFound();
+        }
+
         [HttpGet("include/{id}")]
         public ActionResult<IndividualScoreReadDto> GetIndividualScoreByIdIncludingTeamscan(Guid id)
         {

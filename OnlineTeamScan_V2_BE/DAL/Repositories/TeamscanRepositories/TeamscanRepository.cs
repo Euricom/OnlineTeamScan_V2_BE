@@ -44,7 +44,7 @@ namespace DAL.Repositories.TeamscanRepositories
 
         public Teamscan GetFinishedTeamscanById(int id, int userId)
         {
-            return _dbSet.Include(teamscan => teamscan.Team).Where(teamscan => teamscan.Id == id && teamscan.EndDate != null && teamscan.Team.TeamleaderId == userId).FirstOrDefault();
+            return _dbSet.Include(teamscan => teamscan.Team).Include(teamscan => teamscan.StartedBy).Where(teamscan => teamscan.Id == id && teamscan.EndDate != null && teamscan.Team.TeamleaderId == userId).FirstOrDefault();
         }
     }
 }
