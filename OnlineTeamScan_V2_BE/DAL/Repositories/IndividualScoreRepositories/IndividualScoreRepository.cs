@@ -46,5 +46,10 @@ namespace DAL.Repositories.IndividualScoreRepositories
 
             return entry.Entity;
         }
+
+        public IEnumerable<IndividualScore> GetAllIndividualScoresByTeamscanWithTeamMembers(int teamscanId)
+        {
+            return _dbSet.Include(individualScore => individualScore.TeamMember).Where(individualScore => individualScore.TeamscanId == teamscanId);
+        }
     }
 }

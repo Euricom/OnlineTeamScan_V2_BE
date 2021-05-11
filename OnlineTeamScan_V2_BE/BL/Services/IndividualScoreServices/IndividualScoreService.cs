@@ -27,6 +27,16 @@ namespace BL.Services.IndividualScoreServices
             _mapper = mapper;
         }
 
+        public IEnumerable<IndividualScoreReadDto> GetAllIndividualScoresByTeamscanWithTeamMembers(int teamscanId)
+        {
+            var individualScores = _unitOfWork.IndividualScoreRepository.GetAllIndividualScoresByTeamscanWithTeamMembers(teamscanId);
+
+            if (individualScores == null)
+                return null;
+
+            return _mapper.Map<IEnumerable<IndividualScoreReadDto>>(individualScores);
+        }
+
         public IndividualScoreReadDto GetIndividualScoreByIdIncludingTeamscan(Guid id)
         {
             var individualScore = _unitOfWork.IndividualScoreRepository.GetIndividualScoreByIdIncludingTeamscan(id);

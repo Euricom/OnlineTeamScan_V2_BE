@@ -13,5 +13,6 @@ namespace DAL.Repositories.IndividualScoreRepositories
         public IndividualScore GetIndividualScoreById(Guid id);
         public IEnumerable<IndividualScore> GetAllAnsweredByTeamscan(int teamscanId);
         public IndividualScore UpdateIndividualScore(IndividualScore individualScore);
+        public IEnumerable<IndividualScore> GetAllIndividualScoresByTeamscanWithTeamMembers(int teamscanId);
     }
 }
