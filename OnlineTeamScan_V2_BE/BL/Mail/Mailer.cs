@@ -1,4 +1,5 @@
-﻿using BL.MailTemplates;
+﻿using BL.Mail.MailTemplates;
+using BL.MailTemplates;
 using DAL.Models;
 using DAL.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -40,7 +41,26 @@ namespace BL.Mail
             sendGridMessage.SetTemplateId(mailtemplate.TemplateId);
             sendGridMessage.SetTemplateData(mailtemplate);
 
-            var response = await _sendGridClient.SendEmailAsync(sendGridMessage);
+            await _sendGridClient.SendEmailAsync(sendGridMessage);
+        }
+
+        public async Task CompletedTeamscan(string teamName, User teamleader, int teamscanId)
+        {
+            var sendGridMessage = new SendGridMessage();
+            sendGridMessage.SetFrom("yanu.szapinszky@euri.com", "Euricom");
+            sendGridMessage.AddTo(teamleader.Email, $"{teamleader.Firstname} {teamleader.Lastname}");
+
+            var mailtemplate = new MailTemplateCompletedTeamscan
+            {
+                TeamName = teamName,
+                TeamleaderName = $"{teamleader.Firstname} {teamleader.Lastname}",
+                Url = $"http://localhost:3000/scanresults/{teamscanId}"
+            };
+
+            sendGridMessage.SetTemplateId(mailtemplate.TemplateId);
+            sendGridMessage.SetTemplateData(mailtemplate);
+
+            await _sendGridClient.SendEmailAsync(sendGridMessage);
         }
     }
 }
