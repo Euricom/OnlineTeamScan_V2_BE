@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BL.Mail;
 using BL.Services.IndividualScoreServices;
 using Common.DTOs.AnswerDTO;
 using Common.DTOs.IndividualScoreDTO;
@@ -20,6 +21,7 @@ namespace Tests.Tests
         private readonly IndividualScoreService _service;
         private readonly Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
         private readonly IMapper _mapper = MapperConfig.Initialize();
+        private readonly Mock<Mailer> _mailer = new Mock<Mailer>();
 
         private int teamMemberId = 1;
         private int teamscanId = 1;
@@ -45,7 +47,7 @@ namespace Tests.Tests
 
         public IndividualScoreServiceTests()
         {
-            _service = new IndividualScoreService(_unitOfWork.Object, _mapper);
+            _service = new IndividualScoreService(_unitOfWork.Object, _mapper, _mailer.Object);
         }
 
         [Fact]

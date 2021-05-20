@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BL.Mail;
 using Common.DTOs.AnswerDTO;
 using Common.DTOs.IndividualScoreDTO;
 using Common.DTOs.TeamDTO;
@@ -20,11 +21,13 @@ namespace BL.Services.IndividualScoreServices
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly Mailer _mailer;
 
-        public IndividualScoreService(IUnitOfWork unitOfWork, IMapper mapper)
+        public IndividualScoreService(IUnitOfWork unitOfWork, IMapper mapper, Mailer mailer)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _mailer = mailer;
         }
 
         public IEnumerable<IndividualScoreReadDto> GetAllIndividualScoresByTeamscanWithTeamMembers(int teamscanId)
@@ -100,19 +103,20 @@ namespace BL.Services.IndividualScoreServices
             _unitOfWork.TeamscanRepository.UpdateScores(_mapper.Map<Teamscan>(calculatedTeamscan));
 
             if (isTeamscanFinished)
-                UpdateLastTeamscanOfTeam(teamscanToUpdate.TeamId, calculatedTeamscan.EndDate);
+                UpdateLastTeamscanOfTeam(teamscanToUpdate.TeamId, calculatedTeamscan.EndDate, teamscanId);
         }
 
-        public void UpdateLastTeamscanOfTeam(int teamId, DateTime? endDate)
+        public void UpdateLastTeamscanOfTeam(int teamId, DateTime? endDate, int teamscanId)
         {
-            TeamUpdateDto teamUpdateDto = new TeamUpdateDto
-            {
-                Id = teamId,
-                IsTeamscanActive = false,
-                LastTeamScan = endDate
-            };
+            var team = _unitOfWork.TeamRepository.GetById(teamId);
+            team.IsTeamscanActive = false;
+            team.LastTeamScan = endDate;
 
-            _unitOfWork.TeamRepository.UpdateLastTeamscanOfTeam(_mapper.Map<Team>(teamUpdateDto));
+            var teamleader = _unitOfWork.UserRepository.GetById(team.TeamleaderId);
+
+            _mailer.CompletedTeamscan(team.Name, teamleader, teamscanId).Wait();
+
+            _unitOfWork.TeamRepository.UpdateLastTeamscanOfTeam(_mapper.Map<Team>(team));
         }
 
         public TeamscanUpdateDto CalculateTeamscore(int teamscanId, IndividualScore updatedScore, bool isTeamscanFinished)
