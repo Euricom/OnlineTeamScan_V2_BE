@@ -16,12 +16,6 @@ steps:
     command: 'build'
     workingDirectory: 'OnlineTeamScan_V2_BE'
     
-- task: DotNetCoreCLI@2
-  displayName: Test
-  inputs:
-    command: 'test'
-    projects: '**/Tests/Tests.csproj'
-    workingDirectory: 'OnlineTeamScan_V2_BE'
 
 - task: DotNetCoreCLI@2
   displayName: Publish
