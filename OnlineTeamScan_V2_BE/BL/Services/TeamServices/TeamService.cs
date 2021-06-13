@@ -53,6 +53,15 @@ namespace BL.Services.TeamServices
 
             return _mapper.Map<IEnumerable<TeamReadDto>>(teams);
         }
+        public IEnumerable<TeamReadDto> GetAllTeamsByUserIncludingTeamscansSorted(int userId)
+        {
+            var teams = _unitOfWork.TeamRepository.GetAllTeamsByUserIncludingTeamscansSorted(userId);
+
+            if (teams == null)
+                return null;
+
+            return _mapper.Map<IEnumerable<TeamReadDto>>(teams);
+        }
 
         public IEnumerable<TeamReadDto> GetAllTeamsByUserIncludingTeamMembers(int userId)
         {
@@ -119,6 +128,16 @@ namespace BL.Services.TeamServices
         {
             _unitOfWork.TeamRepository.Delete(id);
             _unitOfWork.Commit();
+        }
+
+        public IEnumerable<TeamReadDto> GetAllActiveTeamsByUser(int userId)
+        {
+            var listTeams = _unitOfWork.TeamRepository.GetAllActiveTeamsByUser(userId);
+
+            if (listTeams == null)
+                return null;
+
+            return _mapper.Map<IEnumerable<TeamReadDto>>(listTeams);
         }
     }
 }

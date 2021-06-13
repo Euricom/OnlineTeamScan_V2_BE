@@ -15,5 +15,6 @@ namespace BL.Services.TeamscanServices
         public IEnumerable<TeamscanReadDto> GetAllTeamscansByTeam(int teamId);
         public TeamscanReadDto GetPreviousTeamscan(int teamscanId);
         public TeamReadDto AddTeamscan(int startedById, int teamId);
+        public void RemindTeamscan(Guid individualScoreId);
     }
 }

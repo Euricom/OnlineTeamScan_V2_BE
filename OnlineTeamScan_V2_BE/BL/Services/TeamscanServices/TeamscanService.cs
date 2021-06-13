@@ -147,5 +147,16 @@ namespace BL.Services.TeamscanServices
             var updatedteam = _unitOfWork.TeamRepository.UpdateIsTeamscanActive(teamToUpdate);
             return _mapper.Map<TeamReadDto>(updatedteam);
         }
+
+        public void RemindTeamscan(Guid individualScoreId)
+        {
+            var IndividualScore = _unitOfWork.IndividualScoreRepository.GetIndividualScoreByIdIncludingTeamscan(individualScoreId);
+            var teamMember = _unitOfWork.TeamMemberRepository.GetById(IndividualScore.TeamMemberId);
+            var teamscan = IndividualScore.Teamscan;
+            var team = _unitOfWork.TeamRepository.GetById(teamscan.TeamId);
+            var teamleader = _unitOfWork.UserRepository.GetById(team.TeamleaderId);
+
+            _mailer.RemindTeamscan(teamMember, teamscan.Title, team, teamleader, individualScoreId).Wait();
+        }
     }
 }
