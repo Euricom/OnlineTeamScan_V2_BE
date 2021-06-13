@@ -1,5 +1,6 @@
 ﻿using BL.Services.TeamscanServices;
 using Common.DTOs.TeamDTO;
+using Common.DTOs.TeamMemberDTO;
 using Common.DTOs.TeamscanDTO;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -68,6 +69,22 @@ namespace API.Controllers
             {
                 var updatedTeam = _service.AddTeamscan(startedById, teamId);
                 return Ok(updatedTeam);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("remind/{individualScoreId}")]
+        public ActionResult RemindTeamscan(Guid individualScoreId)
+        {
+            if (individualScoreId == Guid.Empty) return BadRequest();
+
+            try
+            {
+                _service.RemindTeamscan(individualScoreId);
+                return Ok();
             }
             catch (Exception ex)
             {

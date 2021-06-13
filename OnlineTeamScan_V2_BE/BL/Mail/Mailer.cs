@@ -1,4 +1,5 @@
-﻿using BL.MailTemplates;
+﻿using BL.Mail.MailTemplates;
+using BL.MailTemplates;
 using DAL.Models;
 using DAL.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -34,7 +35,28 @@ namespace BL.Mail
                 Name = $"{teamMember.Firstname} {teamMember.Lastname}",
                 TeamleaderName = $"{teamleader.Firstname} {teamleader.Lastname}",
                 TeamName = team.Name,
-                Url = $"http://localhost:3000/teamscan/{individualScoreId}"
+                Url = $"https://stageteamscanstorage.z13.web.core.windows.net/teamscan/{individualScoreId}"
+            };
+
+            sendGridMessage.SetTemplateId(mailtemplate.TemplateId);
+            sendGridMessage.SetTemplateData(mailtemplate);
+
+            var response = await _sendGridClient.SendEmailAsync(sendGridMessage);
+        }
+
+        public async Task RemindTeamscan(TeamMember teamMember, string teamscanName, Team team, User teamleader, Guid individualScoreId)
+        {
+            var sendGridMessage = new SendGridMessage();
+            sendGridMessage.SetFrom("yanu.szapinszky@euri.com", "Euricom");
+            sendGridMessage.AddTo(teamMember.Email, $"{teamMember.Firstname} {teamMember.Lastname}");
+
+            var mailtemplate = new MailTemplateReminderTeamscan
+            {
+                Name = $"{teamMember.Firstname} {teamMember.Lastname}",
+                TeamleaderName = $"{teamleader.Firstname} {teamleader.Lastname}",
+                TeamscanName = teamscanName,
+                TeamName = team.Name,
+                Url = $"https://stageteamscanstorage.z13.web.core.windows.net/teamscan/{individualScoreId}"
             };
 
             sendGridMessage.SetTemplateId(mailtemplate.TemplateId);

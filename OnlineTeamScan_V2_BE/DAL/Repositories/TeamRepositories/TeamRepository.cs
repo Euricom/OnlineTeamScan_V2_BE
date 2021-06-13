@@ -29,6 +29,11 @@ namespace DAL.Repositories.TeamRepositories
             return GetAll(team => team.TeamleaderId == userId);
         }
 
+        public IEnumerable<Team> GetAllActiveTeamsByUser(int userId)
+        {
+            return _dbSet.Include(team => team.Teamscans).Include(team => team.Teamleader).Where(team => team.TeamleaderId == userId && team.IsTeamscanActive == true);
+        }
+
         public IEnumerable<Team> GetAllTeamsByUserIncludingTeamMembers(int userId)
         {
             return GetAll(filter: team => team.TeamleaderId == userId, includeProperties: x => x.TeamMembers);
@@ -37,6 +42,11 @@ namespace DAL.Repositories.TeamRepositories
         public IEnumerable<Team> GetAllTeamsByUserIncludingTeamscans(int userId)
         {
             return GetAll(filter: team => team.TeamleaderId == userId, includeProperties: x => x.Teamscans);
+        }
+
+        public IEnumerable<Team> GetAllTeamsByUserIncludingTeamscansSorted(int userId)
+        {
+            return GetAll(filter: team => team.TeamleaderId == userId, orderBy: team => team.OrderBy(x => x.LastTeamScan) ,includeProperties: x => x.Teamscans);
         }
 
         public Team UpdateTeamName(Team team)

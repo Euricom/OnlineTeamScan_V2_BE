@@ -43,10 +43,27 @@ namespace API.Controllers
             return NotFound();
         }
 
+        [HttpGet("active/{userId}")]
+        public ActionResult<TeamReadDto> GetAllActiveTeamsByUserId(int userId)
+        {
+            var listTeams = _service.GetAllActiveTeamsByUser(userId);
+
+            if (listTeams != null)
+                return Ok(listTeams);
+
+            return NotFound();
+        }
+
         [HttpGet("teamscans/{userId}")]
         public ActionResult<IEnumerable<TeamReadDto>> GetAllTeamsByUserIncludingTeamscans(int userId)
         {
             return Ok(_service.GetAllTeamsByUserIncludingTeamscans(userId));
+        }
+
+        [HttpGet("teamscans/sorted/{userId}")]
+        public ActionResult<IEnumerable<TeamReadDto>> GetAllTeamsByUserIncludingTeamscansSorted(int userId)
+        {
+            return Ok(_service.GetAllTeamsByUserIncludingTeamscansSorted(userId));
         }
 
         [HttpGet("teammembers/{userId}")]
