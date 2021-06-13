@@ -12,8 +12,10 @@ namespace DAL.Repositories.TeamRepositories
         public Team GetFullTeamById(int id);
         public Team GetTeamIncludingTeamMembersById(int id);
         public IEnumerable<Team> GetAllTeamsByUserIncludingTeamscans(int userId);
+        public IEnumerable<Team> GetAllTeamsByUserIncludingTeamscansSorted(int userId);
         public IEnumerable<Team> GetAllTeamsByUserIncludingTeamMembers(int userId);
         public IEnumerable<Team> GetAllTeamsByUser(int userId);
+        public IEnumerable<Team> GetAllActiveTeamsByUser(int userId);
         public Team UpdateTeamName(Team team);
         public Team UpdateIsTeamscanActive(Team team);
         public Team UpdateLastTeamscanOfTeam(Team team);
