@@ -9,7 +9,7 @@ namespace BL.Mail.MailTemplates
 {
     public class MailTemplateCompletedTeamscan
     {
-        public string TemplateId { get; } = "d-3760bdea619141e8b17c23478523fe00";
+        public string TemplateId { get; } = "d-0c42ce8548f94269af4652916204e311";
 
         [JsonProperty("teamname")]
         public string TeamName { get; set; }
