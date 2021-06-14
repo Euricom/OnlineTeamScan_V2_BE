@@ -47,7 +47,7 @@ namespace BL.Mail
         public async Task RemindTeamscan(TeamMember teamMember, string teamscanName, Team team, User teamleader, Guid individualScoreId)
         {
             var sendGridMessage = new SendGridMessage();
-            sendGridMessage.SetFrom("yanu.szapinszky@euri.com", "Euricom");
+            sendGridMessage.SetFrom("vincent.hertens@euri.com", "Euricom");
             sendGridMessage.AddTo(teamMember.Email, $"{teamMember.Firstname} {teamMember.Lastname}");
 
             var mailtemplate = new MailTemplateReminderTeamscan
@@ -68,7 +68,7 @@ namespace BL.Mail
         public async Task CompletedTeamscan(string teamName, User teamleader, int teamscanId)
         {
             var sendGridMessage = new SendGridMessage();
-            sendGridMessage.SetFrom("yanu.szapinszky@euri.com", "Euricom");
+            sendGridMessage.SetFrom("vincent.hertens@euri.com", "Euricom");
             sendGridMessage.AddTo(teamleader.Email, $"{teamleader.Firstname} {teamleader.Lastname}");
 
             var mailtemplate = new MailTemplateCompletedTeamscan
