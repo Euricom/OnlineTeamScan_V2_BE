@@ -27,7 +27,7 @@ namespace BL.Mail
         public async Task InviteTeamscan(TeamMember teamMember, Team team, User teamleader, Guid individualScoreId)
         {
             var sendGridMessage = new SendGridMessage();
-            sendGridMessage.SetFrom("yanu.szapinszky@euri.com", "Euricom");
+            sendGridMessage.SetFrom("vincent.hertens@euri.com", "Euricom");
             sendGridMessage.AddTo(teamMember.Email, $"{teamMember.Firstname} {teamMember.Lastname}");
 
             var mailtemplate = new MailTemplateInviteTeamscan
